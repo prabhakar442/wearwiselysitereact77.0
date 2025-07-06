@@ -74,11 +74,7 @@ const ServicesGrid = () => {
           ))}
         </div>
 
-        <div className="text-center mt-12">
-          <button className="bg-orange-500 text-white px-8 py-3 rounded-full font-medium hover:bg-orange-600 transition-colors">
-            Download Full Price List
-          </button>
-        </div>
+       
       </div>
     </section>
   );
