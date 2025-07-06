@@ -115,7 +115,7 @@ const Header = ({ darkMode, setDarkMode }) => {
 
             <button onClick={handlePricingClick} className="text-gray-700 dark:text-gray-200 hover:text-orange-500 font-medium">Pricing</button>
             <a href="#" className="text-gray-700 dark:text-gray-200 hover:text-orange-500 font-medium">Community</a>
-            <a href="#" className="text-gray-700 dark:text-gray-200 hover:text-orange-500 font-medium">Our Blog</a>
+            <a href="#" className="text-gray-700 dark:text-gray-200 hover:text-orange-500 font-medium">About Us</a>
           </nav>
 
           <div className="hidden md:flex items-center space-x-4">
@@ -192,7 +192,7 @@ const Header = ({ darkMode, setDarkMode }) => {
             Pricing
           </button>
           <a href="#" className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2">Community</a>
-          <a href="#" className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2">Our Blog</a>
+          <a href="#" className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2">About Us</a>
           
           <div className="pt-2 space-y-2">
             <a href="tel:9711758814" className="block bg-orange-500 text-white px-6 py-2 rounded-full text-center font-medium hover:bg-orange-600">
