@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import JacketPage from './components/JacketPage';
 import ShoePage from './components/ShoePage';
 import WhatsappFloat from './components/WhatsappFloat'; // WhatsApp icon import
+import Chatbot from './components/Chatbot';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
