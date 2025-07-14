@@ -108,8 +108,8 @@ const Header = ({ darkMode, setDarkMode }) => {
                   Jacket Cleaning Service
                 </Link>
 
-                <a href="#" className="block px-4 py-2 text-gray-900 dark:text-white font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">Bag Cleaning Service</a>
-                <a href="#" className="block px-4 py-2 text-gray-900 dark:text-white font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">Carpet Cleaning Service</a>
+                 <Link to="/Bag-cleaning" className="block px-4 py-2 text-gray-900 dark:text-white font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">Bag Cleaning Service</Link>
+                <Link to="/Carpet-cleaning" className="block px-4 py-2 text-gray-900 dark:text-white font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">Carpet Cleaning Service</Link>
               </div>
             </div>
 

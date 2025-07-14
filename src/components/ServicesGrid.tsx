@@ -41,7 +41,7 @@ const ServicesGrid = () => {
       description: "Professional bag cleaning for all types including leather and fabric.",
       services: ["Surface and Interior Cleaning", "Stain Removal", "Handle and Hardware Care", "Packaging"],
       buttonText: "Explore",
-      link: "/" // Update when dedicated page is ready
+      link: "/Bag-cleaning" // Update when dedicated page is ready
     },
     {
       icon: <Carpet className="w-12 h-12 text-red-500" />,
@@ -50,7 +50,7 @@ const ServicesGrid = () => {
       description: "Professional carpet cleaning using advanced washing and steam methods.",
       services: ["Vacuuming", "Steam Cleaning", "Low Moisture Cleaning", "Spot Treatment", "Drying"],
       buttonText: "Explore",
-      link: "/" // Update when dedicated page is ready
+      link: "/Carpet-cleaning" // Update when dedicated page is ready
     }
   ];
 

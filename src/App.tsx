@@ -8,8 +8,10 @@ import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 import JacketPage from './components/JacketPage';
 import ShoePage from './components/ShoePage';
-import WhatsappFloat from './components/WhatsappFloat'; // WhatsApp icon import
-import Chatbot from './components/Chatbot';
+import BagPage from './components/BagPage'; // Correct import for BagPage
+import WhatsappFloat from './components/WhatsappFloat';
+import CarpetPage from './components/CarpetPage';
+
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -33,8 +35,8 @@ function App() {
           <Route path="/" element={<><Hero /><ServiceTabs /><ServicesGrid /><FAQ /></>} />
           <Route path="/jacket-cleaning" element={<JacketPage />} />
           <Route path="/shoe-cleaning" element={<ShoePage />} />
-          <Route path="*" element={<h2 className="text-center py-20">Page Not Found</h2>} />
-        </Routes>
+          <Route path="/bag-cleaning" element={<BagPage />} /> {/* Added BagPage route */}
+          <Route path="/carpet-cleaning" element={<CarpetPage />} />        </Routes>
 
         <Footer />
         <WhatsappFloat /> {/* WhatsApp floating button globally visible */}
