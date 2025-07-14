@@ -56,9 +56,7 @@ const ShoePage = () => {
             >
               Book Service Now
             </button>
-            <button className="bg-white text-blue-700 hover:bg-gray-100 px-8 py-3 rounded-lg font-medium transition-all duration-300">
-              Call: +91-9711758814
-            </button>
+        
           </div>
         </div>
       </div>
@@ -254,9 +252,7 @@ const ShoePage = () => {
             >
               Book Now
             </button>
-            <button className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-700 px-8 py-3 rounded-lg font-medium transition-all duration-300">
-              Call: +91-9711758814
-            </button>
+            
           </div>
         </div>
       </div>

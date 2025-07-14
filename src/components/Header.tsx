@@ -114,7 +114,7 @@ const Header = ({ darkMode, setDarkMode }) => {
             </div>
 
             <button onClick={handlePricingClick} className="text-gray-700 dark:text-gray-200 hover:text-orange-500 font-medium">Pricing</button>
-            <a href="#" className="text-gray-700 dark:text-gray-200 hover:text-orange-500 font-medium">Community</a>
+            {/* <a href="#" className="text-gray-700 dark:text-gray-200 hover:text-orange-500 font-medium">Community</a> */}
             <a href="#" className="text-gray-700 dark:text-gray-200 hover:text-orange-500 font-medium">About Us</a>
           </nav>
 
