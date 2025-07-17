@@ -60,66 +60,16 @@ const ServicesGrid = () => {
   ];
 
   const cleaningSteps = [
-    { 
-      number: "1", 
-      title: "Dirty Clothes", 
-      description: "We collect your garments with care",
-      icon: "🧺"
-    },
-    { 
-      number: "2", 
-      title: "Easy Pickup", 
-      description: "Schedule at your convenience",
-      icon: "🚚"
-    },
-    { 
-      number: "3", 
-      title: "Inspection", 
-      description: "Thorough quality check",
-      icon: "🔍"
-    },
-    { 
-      number: "4", 
-      title: "Tagging", 
-      description: "Secure identification",
-      icon: "🏷️"
-    },
-    { 
-      number: "5", 
-      title: "Preprocessing", 
-      description: "Stain removal treatment",
-      icon: "🧴"
-    },
-    { 
-      number: "6", 
-      title: "Processing", 
-      description: "Specialized cleaning",
-      icon: "🧼"
-    },
-    { 
-      number: "7", 
-      title: "Steam Ironing", 
-      description: "Professional finishing",
-      icon: "♨️"
-    },
-    { 
-      number: "8", 
-      title: "Quality Check", 
-      description: "Rigorous inspection",
-      icon: "✅"
-    },
-    { 
-      number: "9", 
-      title: "Packing", 
-      description: "Hygienic packaging",
-      icon: "📦"
-    },
-    { 
-      number: "10", 
-      title: "Delivery", 
-      description: "On-time return",
-      icon: "🛵"
-    }
+    { number: "1", title: "Dirty Clothes", description: "We collect your garments with care", icon: "🧺" },
+    { number: "2", title: "Easy Pickup", description: "Schedule at your convenience", icon: "🚚" },
+    { number: "3", title: "Inspection", description: "Thorough quality check", icon: "🔍" },
+    { number: "4", title: "Tagging", description: "Secure identification", icon: "🏷️" },
+    { number: "5", title: "Preprocessing", description: "Stain removal treatment", icon: "🧴" },
+    { number: "6", title: "Processing", description: "Specialized cleaning", icon: "🧼" },
+    { number: "7", title: "Steam Ironing", description: "Professional finishing", icon: "♨️" },
+    { number: "8", title: "Quality Check", description: "Rigorous inspection", icon: "✅" },
+    { number: "9", title: "Packing", description: "Hygienic packaging", icon: "📦" },
+    { number: "10", title: "Delivery", description: "On-time return", icon: "🛵" }
   ];
 
   return (
@@ -171,7 +121,7 @@ const ServicesGrid = () => {
             {cleaningSteps.map((step, index) => (
               <div 
                 key={index} 
-                className={`bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-800 dark:to-gray-700 p-4 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-blue-100 dark:border-gray-700`}
+                className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-800 dark:to-gray-700 p-4 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-blue-100 dark:border-gray-700"
               >
                 <div className="flex flex-col items-center text-center h-full">
                   <div className="w-14 h-14 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mb-3">
@@ -189,15 +139,6 @@ const ServicesGrid = () => {
                 </div>
               </div>
             ))}
-          </div>
-
-          <div className="mt-12 text-center">
-            <button 
-              onClick={() => navigate('/dry-clean')}
-              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-3 rounded-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
-            >
-              Learn More About Our Process
-            </button>
           </div>
         </div>
       </div>

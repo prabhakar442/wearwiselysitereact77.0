@@ -228,7 +228,7 @@ const JacketPage = () => {
         </div>
       </section>
 
-      {/* Gallery Section */}
+      {/* Gallery Section
       <section className="max-w-6xl mx-auto py-16 px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4">Before & After Gallery</h2>
@@ -251,7 +251,7 @@ const JacketPage = () => {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/* Enhanced Price Table */}
       <section className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900 py-16 px-4">
@@ -389,10 +389,7 @@ const JacketPage = () => {
               <FaThumbsUp className="inline mr-2" />
               Book Service Now
             </button>
-            <button className="border-2 border-white text-white hover:bg-white hover:text-blue-700 px-10 py-4 rounded-full font-medium transition-all duration-300 transform hover:scale-105">
-              <FaClock className="inline mr-2" />
-              Quick Quote
-            </button>
+            
           </div>
         </div>
       </section>
