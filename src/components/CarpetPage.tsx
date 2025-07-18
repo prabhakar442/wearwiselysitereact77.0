@@ -103,21 +103,6 @@ const CarpetPage = () => {
         <div className="absolute bottom-10 right-10 w-1 h-1 bg-purple-400 rounded-full animate-ping opacity-30"></div>
       </div>
 
-      {/* Floating Action Buttons - Mobile Only */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3 md:hidden">
-        <a 
-          href="tel:+919711758814"
-          className="bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition-colors animate-bounce"
-        >
-          <FaPhone className="text-xl" />
-        </a>
-        <a 
-          href="https://wa.me/919711758814"
-          className="bg-[#25D366] text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:bg-[#128C7E] transition-colors animate-bounce delay-100"
-        >
-          <FaWhatsapp className="text-2xl" />
-        </a>
-      </div>
 
       {/* Hero Banner with Enhanced Animation */}
       <section className="relative bg-gradient-to-br from-blue-700 via-blue-800 to-blue-900 text-white py-20 px-4 text-center overflow-hidden">
