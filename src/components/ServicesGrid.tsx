@@ -1,6 +1,16 @@
 import React from 'react';
 import ServiceCard from './ServiceCard';
-import { Shirt, Package, ShoppingBag, Car as Carpet } from 'lucide-react';
+import { 
+  Shirt, 
+  Package, 
+  ShoppingBag, 
+  Car as Carpet,
+  Sparkles,
+  Shield,
+  Footprints,
+  Briefcase,
+  Zap
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const ServicesGrid = () => {
@@ -18,7 +28,7 @@ const ServicesGrid = () => {
       bgColor: "bg-blue-50 dark:bg-blue-900/20"
     },
     {
-      icon: <Package className="w-12 h-12 text-purple-500" />,
+      icon: <Shield className="w-12 h-12 text-purple-500" />,
       title: "Leather Jacket",
       price: "₹99 per pc",
       description: "Dry cleaning for delicate leather preservation. Professional leather care specialists.",
@@ -28,7 +38,7 @@ const ServicesGrid = () => {
       bgColor: "bg-purple-50 dark:bg-purple-900/20"
     },
     {
-      icon: <ShoppingBag className="w-12 h-12 text-indigo-500" />,
+      icon: <Footprints className="w-12 h-12 text-indigo-500" />,
       title: "Shoe",
       price: "₹89 per pair",
       description: "Our specialized shoe care services maintain your footwear investment.",
@@ -38,7 +48,7 @@ const ServicesGrid = () => {
       bgColor: "bg-indigo-50 dark:bg-indigo-900/20"
     },
     {
-      icon: <ShoppingBag className="w-12 h-12 text-pink-500" />,
+      icon: <Briefcase className="w-12 h-12 text-pink-500" />,
       title: "Bag",
       price: "₹140 per pc",
       description: "Professional bag cleaning for all types including leather and fabric.",
@@ -48,7 +58,7 @@ const ServicesGrid = () => {
       bgColor: "bg-pink-50 dark:bg-pink-900/20"
     },
     {
-      icon: <Carpet className="w-12 h-12 text-red-500" />,
+      icon: <Sparkles className="w-12 h-12 text-red-500" />,
       title: "Carpet",
       price: "₹18 per sqft",
       description: "Professional carpet cleaning using advanced washing and steam methods.",

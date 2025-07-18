@@ -17,7 +17,7 @@ const JacketPage = () => {
       description: 'Professional cleaning and conditioning'
     },
     {
-      url: 'https://images.unsplash.com/photo-1544966503-7cc536d4e77d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+      url: 'https://imgs.search.brave.com/Q830efoWH1W_lzx6YCwCij5GUf6Jchjv8A4S1OPDFqs/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/YW5nZWxqYWNrZXRz/LmNvbS9pbWFnZXMv/YmxvZy1pbWFnZXMv/c3VlZGUtbGVhdGhl/ci1qYWNrZXQud2Vi/cA',
       title: 'Suede Jacket Restoration',
       description: 'Specialized suede cleaning techniques'
     },
