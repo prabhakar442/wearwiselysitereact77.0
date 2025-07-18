@@ -143,90 +143,96 @@ const Header = ({ darkMode, setDarkMode }) => {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden bg-white dark:bg-gray-800 shadow-lg px-4 py-4 space-y-3">
-          
-          <button 
-            onClick={() => setServicesOpen(!servicesOpen)} 
-            className="block text-gray-700 dark:text-gray-200 w-full text-left flex justify-between items-center"
-          >
-            Our Services
-            <svg 
-              className={`h-4 w-4 transition-transform duration-200 ${servicesOpen ? 'rotate-180' : ''}`} 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
+  <div className="md:hidden bg-white dark:bg-gray-800 shadow-lg px-4 py-4 space-y-3">
+    <button 
+      onClick={() => setServicesOpen(!servicesOpen)} 
+      className="block text-gray-700 dark:text-gray-200 w-full text-left flex justify-between items-center"
+    >
+      Our Services
+      <svg 
+        className={`h-4 w-4 transition-transform duration-200 ${servicesOpen ? 'rotate-180' : ''}`} 
+        fill="none" 
+        stroke="currentColor" 
+        viewBox="0 0 24 24"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
 
-          {servicesOpen && (
-            <div className="pl-4 space-y-2 mt-2">
-              <a href="#" className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2">Laundry Service</a>
-              <a href="#" className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2">Dry Clean Service</a>
-              <Link 
-                to="/shoe-cleaning" 
-                className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2"
-                onClick={() => setMenuOpen(false)}
-              >
-                Shoe Cleaning Service
-              </Link>
-              <Link 
-                to="/jacket-cleaning" 
-                className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2"
-                onClick={() => setMenuOpen(false)}
-              >
-                Jacket Cleaning Service
-              </Link>
-              <a href="#" className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2">Bag Cleaning Service</a>
-              <a href="#" className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2">Sofa Cleaning Service</a>
-              <a href="#" className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2">Carpet Cleaning Service</a>
-              <a href="#" className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2">Steam Ironing Service</a>
-            </div>
-          )}
+    {servicesOpen && (
+      <div className="pl-4 space-y-2 mt-2">
+        <a href="#" className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2">Dry Clean Service</a>
+        <Link 
+          to="/shoe-cleaning" 
+          className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2"
+          onClick={() => setMenuOpen(false)}
+        >
+          Shoe Cleaning Service
+        </Link>
+        <Link 
+          to="/jacket-cleaning" 
+          className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2"
+          onClick={() => setMenuOpen(false)}
+        >
+          Jacket Cleaning Service
+        </Link>
+        <Link 
+          to="/Bag-cleaning" 
+          className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2"
+          onClick={() => setMenuOpen(false)}
+        >
+          Bag Cleaning Service
+        </Link>
+        <Link 
+          to="/Carpet-cleaning" 
+          className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2"
+          onClick={() => setMenuOpen(false)}
+        >
+          Carpet Cleaning Service
+        </Link>
+      </div>
+    )}
 
-          <button 
-            onClick={handlePricingClick} 
-            className="block w-full text-left py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2"
-          >
-            Pricing
-          </button>
-          <a href="#" className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2">Community</a>
-          <a href="#" className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2">About Us</a>
-          
-          <div className="pt-2 space-y-2">
-            <a href="tel:9711758814" className="block bg-orange-500 text-white px-6 py-2 rounded-full text-center font-medium hover:bg-orange-600">
-              Call Us
-            </a>
-            <button 
-              onClick={() => {
-                setShowPopup(true);
-                setMenuOpen(false);
-              }} 
-              className="block w-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-full hover:bg-gray-50 dark:hover:bg-gray-700"
-            >
-              Request Call Back
-            </button>
-            <button 
-              onClick={() => setDarkMode(!darkMode)} 
-              className="block w-full border px-3 py-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 flex justify-center items-center gap-2"
-            >
-              {darkMode ? (
-                <>
-                  <Sun className="h-4 w-4 text-yellow-400" />
-                  <span>Light Mode</span>
-                </>
-              ) : (
-                <>
-                  <Moon className="h-4 w-4 text-gray-700" />
-                  <span>Dark Mode</span>
-                </>
-              )}
-            </button>
-          </div>
-        </div>
-      )}
-
+    <button 
+      onClick={handlePricingClick} 
+      className="block w-full text-left py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2"
+    >
+      Pricing
+    </button>
+    <a href="#" className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2">About Us</a>
+    
+    <div className="pt-2 space-y-2">
+      <a href="tel:9711758814" className="block bg-orange-500 text-white px-6 py-2 rounded-full text-center font-medium hover:bg-orange-600">
+        Call Us
+      </a>
+      <button 
+        onClick={() => {
+          setShowPopup(true);
+          setMenuOpen(false);
+        }} 
+        className="block w-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-full hover:bg-gray-50 dark:hover:bg-gray-700"
+      >
+        Request Call Back
+      </button>
+      <button 
+        onClick={() => setDarkMode(!darkMode)} 
+        className="block w-full border px-3 py-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 flex justify-center items-center gap-2"
+      >
+        {darkMode ? (
+          <>
+            <Sun className="h-4 w-4 text-yellow-400" />
+            <span>Light Mode</span>
+          </>
+        ) : (
+          <>
+            <Moon className="h-4 w-4 text-gray-700" />
+            <span>Dark Mode</span>
+          </>
+        )}
+      </button>
+    </div>
+  </div>
+)}
       {/* Callback Popup */}
       {showPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
