@@ -1,103 +1,132 @@
 import React from 'react';
-import ServiceCard from './ServiceCard';
-import { 
-  Shirt, 
-  Package, 
-  ShoppingBag, 
-  Car as Carpet,
-  Sparkles,
+import { useNavigate } from 'react-router-dom';
+import {
+  Shirt,
   Shield,
   Footprints,
   Briefcase,
+  Sparkles,
   Zap
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+
+const ServiceCard = ({ icon, title, price, description, services, buttonText, onButtonClick, bgColor }) => {
+  return (
+    <div
+      onClick={onButtonClick}
+      className={`${bgColor} cursor-pointer rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-white/20 dark:border-gray-700/30 backdrop-blur-sm relative overflow-hidden group hover:-translate-y-2`}
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent dark:from-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+      <div className="relative z-10">
+        <div className="flex items-center justify-center w-20 h-20 bg-white/80 dark:bg-gray-800/80 rounded-2xl mb-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 shadow-lg backdrop-blur-sm">
+          {icon}
+        </div>
+
+        <div className="flex justify-between items-start mb-4">
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+            {title}
+          </h3>
+          <span className="text-2xl font-bold text-blue-600 dark:text-blue-400 bg-white/80 dark:bg-gray-800/80 px-3 py-1 rounded-full shadow-sm backdrop-blur-sm">
+            {price}
+          </span>
+        </div>
+
+        <p className="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
+          {description}
+        </p>
+
+        <div className="space-y-2 mb-8">
+          {services.map((item, idx) => (
+            <div key={idx} className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
+              <span className="text-sm text-gray-700 dark:text-gray-300">{item}</span>
+            </div>
+          ))}
+        </div>
+
+        <button
+          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+        >
+          {buttonText}
+        </button>
+      </div>
+    </div>
+  );
+};
 
 const ServicesGrid = () => {
   const navigate = useNavigate();
 
   const services = [
     {
+      id: 'dry-clean',
       icon: <Shirt className="w-12 h-12 text-blue-500" />,
       title: "DryClean",
       price: "₹30 per kg",
       description: "Premium quality dry cleaning that extends the lifespan of your clothes.",
       services: ["Non-Damaging Treatment", "Spotting", "Ironing and Pressing"],
       buttonText: "Explore",
-      link: "/dry-clean",
-      bgColor: "bg-blue-50 dark:bg-blue-900/20"
+      bgColor: "bg-gradient-to-br from-blue-50 via-blue-100 to-cyan-50 dark:from-blue-900/30 dark:via-blue-800/20 dark:to-cyan-900/30"
     },
     {
+      id: 'jacket-cleaning',
       icon: <Shield className="w-12 h-12 text-purple-500" />,
       title: "Leather Jacket",
       price: "₹99 per pc",
       description: "Dry cleaning for delicate leather preservation. Professional leather care specialists.",
       services: ["Eco Treatment", "Steam Cleaning", "Caidron Cleaning", "Drying & Finishing"],
       buttonText: "Explore",
-      link: "/jacket-cleaning",
-      bgColor: "bg-purple-50 dark:bg-purple-900/20"
+      bgColor: "bg-gradient-to-br from-purple-50 via-purple-100 to-pink-50 dark:from-purple-900/30 dark:via-purple-800/20 dark:to-pink-900/30"
     },
     {
+      id: 'shoe-cleaning',
       icon: <Footprints className="w-12 h-12 text-indigo-500" />,
       title: "Shoe",
       price: "₹89 per pair",
       description: "Our specialized shoe care services maintain your footwear investment.",
       services: ["Shoe Leather / Suede", "Eco Treatment", "Polishing and Finishing", "Deodorizing and Disinfecting"],
       buttonText: "Explore",
-      link: "/shoe-cleaning",
-      bgColor: "bg-indigo-50 dark:bg-indigo-900/20"
+      bgColor: "bg-gradient-to-br from-indigo-50 via-indigo-100 to-blue-50 dark:from-indigo-900/30 dark:via-indigo-800/20 dark:to-blue-900/30"
     },
     {
+      id: 'bag-cleaning',
       icon: <Briefcase className="w-12 h-12 text-pink-500" />,
       title: "Bag",
       price: "₹140 per pc",
       description: "Professional bag cleaning for all types including leather and fabric.",
       services: ["Surface and Interior Cleaning", "Stain Removal", "Handle and Hardware Care", "Packaging"],
       buttonText: "Explore",
-      link: "/bag-cleaning",
-      bgColor: "bg-pink-50 dark:bg-pink-900/20"
+      bgColor: "bg-gradient-to-br from-pink-50 via-pink-100 to-rose-50 dark:from-pink-900/30 dark:via-pink-800/20 dark:to-rose-900/30"
     },
     {
+      id: 'carpet-cleaning',
       icon: <Sparkles className="w-12 h-12 text-red-500" />,
       title: "Carpet",
       price: "₹18 per sqft",
       description: "Professional carpet cleaning using advanced washing and steam methods.",
       services: ["Vacuuming", "Steam Cleaning", "Low Moisture Cleaning", "Spot Treatment", "Drying"],
       buttonText: "Explore",
-      link: "/carpet-cleaning",
-      bgColor: "bg-red-50 dark:bg-red-900/20"
+      bgColor: "bg-gradient-to-br from-red-50 via-red-100 to-orange-50 dark:from-red-900/30 dark:via-red-800/20 dark:to-orange-900/30"
     }
   ];
 
-  const cleaningSteps = [
-    { number: "1", title: "Dirty Clothes", description: "We collect your garments with care", icon: "🧺" },
-    { number: "2", title: "Easy Pickup", description: "Schedule at your convenience", icon: "🚚" },
-    { number: "3", title: "Inspection", description: "Thorough quality check", icon: "🔍" },
-    { number: "4", title: "Tagging", description: "Secure identification", icon: "🏷️" },
-    { number: "5", title: "Preprocessing", description: "Stain removal treatment", icon: "🧴" },
-    { number: "6", title: "Processing", description: "Specialized cleaning", icon: "🧼" },
-    { number: "7", title: "Steam Ironing", description: "Professional finishing", icon: "♨️" },
-    { number: "8", title: "Quality Check", description: "Rigorous inspection", icon: "✅" },
-    { number: "9", title: "Packing", description: "Hygienic packaging", icon: "📦" },
-    { number: "10", title: "Delivery", description: "On-time return", icon: "🛵" }
-  ];
-
   return (
-    <section id="services-section" className="py-16 bg-white dark:bg-gray-900">
+    <section className="py-20 bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <span className="inline-block px-3 py-1 text-sm font-medium text-blue-700 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-200 mb-4">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-blue-700 bg-gradient-to-r from-blue-100 to-cyan-100 rounded-full dark:from-blue-900/50 dark:to-cyan-900/50 dark:text-blue-300 mb-6 shadow-lg backdrop-blur-sm border border-blue-200/50 dark:border-blue-700/50 hover:scale-105 transition-transform duration-300">
+            <Sparkles className="w-4 h-4" />
             Our Services
-          </span>
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          </div>
+          <h2 className="text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent dark:from-white dark:via-blue-300 dark:to-purple-300 mb-6">
             Premium Cleaning Solutions
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
             We use eco-friendly products and advanced techniques to give your belongings a new life.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <ServiceCard
               key={index}
@@ -107,49 +136,10 @@ const ServicesGrid = () => {
               description={service.description}
               services={service.services}
               buttonText={service.buttonText}
-              onButtonClick={() => service.link && navigate(service.link)}
+              onButtonClick={() => navigate(`/${service.id}`)}
               bgColor={service.bgColor}
             />
           ))}
-        </div>
-
-        {/* 10-Step Cleaning Process Section */}
-        <div className="mt-16">
-          <div className="text-center mb-12">
-            <span className="inline-block px-3 py-1 text-sm font-medium text-blue-700 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-200 mb-4">
-              Our Process
-            </span>
-            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              10-Step Formula for Exceptional Cleaning
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Our meticulous process ensures your items receive the best care possible.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-            {cleaningSteps.map((step, index) => (
-              <div 
-                key={index} 
-                className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-800 dark:to-gray-700 p-4 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-blue-100 dark:border-gray-700"
-              >
-                <div className="flex flex-col items-center text-center h-full">
-                  <div className="w-14 h-14 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mb-3">
-                    {step.icon}
-                  </div>
-                  <div className="text-xs font-semibold text-blue-600 dark:text-blue-400 mb-1">
-                    Step {step.number}
-                  </div>
-                  <h3 className="font-bold text-gray-900 dark:text-white mb-2 text-sm">
-                    {step.title}
-                  </h3>
-                  <p className="text-xs text-gray-600 dark:text-gray-300 flex-grow">
-                    {step.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </section>

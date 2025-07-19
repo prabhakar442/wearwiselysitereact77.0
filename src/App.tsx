@@ -12,6 +12,10 @@ import BagPage from './components/BagPage';
 import WhatsappFloat from './components/WhatsappFloat';
 import CarpetPage from './components/CarpetPage';
 import LoadingSpinner from './components/LoadingSpinner';
+import Chatbot from './components/Chatbot';
+
+
+
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
