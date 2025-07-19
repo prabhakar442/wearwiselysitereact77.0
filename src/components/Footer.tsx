@@ -81,7 +81,7 @@ const Footer = () => {
             </div>
             
             <div className="text-sm text-gray-600 dark:text-gray-400">
-              <p className="mb-2">📞 +91 9711758814</p>
+              <p className="mb-2">📞 +91 7599764668</p>
               <p className="mb-2">📧 hello@ WearWisely Laundry.com</p>
               <p>🏢  WearWisely Laundry.in</p>
             </div>

@@ -128,7 +128,7 @@ const CarpetPage = () => {
               Request Call Back
             </button>
             <button className="bg-white text-blue-700 hover:bg-gray-100 px-8 py-4 rounded-full font-medium transition-all duration-300 transform hover:scale-105">
-              Call: +91-9711758814
+              Call: +91-7599764668
             </button>
           </div>
         </div>
@@ -371,7 +371,7 @@ const CarpetPage = () => {
               Book Service Now
             </button>
             <a 
-              href="tel:+919711758814"
+              href="tel:+917599764668"
               className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-700 px-10 py-4 rounded-full font-medium transition-all duration-300 flex items-center justify-center gap-2"
             >
               <FaPhone /> Call Now
