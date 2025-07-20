@@ -124,7 +124,7 @@ const Header = ({ darkMode, setDarkMode }) => {
           </nav>
 
           <div className="hidden md:flex items-center space-x-4">
-            <a href="tel:7599764668" className="bg-orange-500 text-white px-6 py-2 rounded-full font-medium hover:bg-orange-600 transition">Call Us</a>
+            <a href="tel:9711758814" className="bg-orange-500 text-white px-6 py-2 rounded-full font-medium hover:bg-orange-600 transition">Call Us</a>
             <button onClick={() => setShowPopup(true)} className="border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-full font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition">Request Call Back</button>
             <button 
               onClick={() => setDarkMode(!darkMode)} 
@@ -207,7 +207,7 @@ const Header = ({ darkMode, setDarkMode }) => {
     <a href="#" className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2">About Us</a>
     
     <div className="pt-2 space-y-2">
-      <a href="tel:7599764668" className="block bg-orange-500 text-white px-6 py-2 rounded-full text-center font-medium hover:bg-orange-600">
+      <a href="tel:9711758814" className="block bg-orange-500 text-white px-6 py-2 rounded-full text-center font-medium hover:bg-orange-600">
         Call Us
       </a>
       <button 

@@ -11,11 +11,8 @@ import ShoePage from './components/ShoePage';
 import BagPage from './components/BagPage';
 import WhatsappFloat from './components/WhatsappFloat';
 import CarpetPage from './components/CarpetPage';
-import LoadingSpinner from './components/LoadingSpinner';
-import Chatbot from './components/Chatbot';
-
-
-
+import DryCleanPage from './components/DryCleanPage';
+import AdminOrderPage from './components/AdminOrderPage'; // ✅ Added admin component
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -32,18 +29,31 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className={`min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100`}>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
         <Header darkMode={darkMode} setDarkMode={setDarkMode} />
 
         <Routes>
-          <Route path="/" element={<><Hero /><ServiceTabs /><ServicesGrid /><FAQ /></>} />
+          <Route
+            path="/"
+            element={
+              <>
+                <Hero />
+                <ServiceTabs />
+                <ServicesGrid />
+                <FAQ />
+              </>
+            }
+          />
+          <Route path="/dry-clean" element={<DryCleanPage />} />
           <Route path="/jacket-cleaning" element={<JacketPage />} />
           <Route path="/shoe-cleaning" element={<ShoePage />} />
-          <Route path="/bag-cleaning" element={<BagPage />} /> {/* Added BagPage route */}
-          <Route path="/carpet-cleaning" element={<CarpetPage />} />        </Routes>
+          <Route path="/bag-cleaning" element={<BagPage />} />
+          <Route path="/carpet-cleaning" element={<CarpetPage />} />
+          <Route path="/admin" element={<AdminOrderPage />} /> {/* ✅ Admin Route */}
+        </Routes>
 
         <Footer />
-        <WhatsappFloat /> {/* WhatsApp floating button globally visible */}
+        <WhatsappFloat />
       </div>
     </BrowserRouter>
   );
