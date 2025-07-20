@@ -1,7 +1,15 @@
 import React, { useState } from "react";
-import { FileText, Plus, Trash2, Save, Download, QrCode, Check } from "lucide-react";
+import { FileText, Plus, Trash2, Save, Download, QrCode, Check, Lock } from "lucide-react";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
+
+// Configuration
+const CONFIG = {
+  PASSWORD: "admin123", // Change this to your desired password
+  SHEET_ID: "YOUR_GOOGLE_SHEET_ID", // Replace with your Google Sheet ID
+  CLIENT_EMAIL: "YOUR_SERVICE_ACCOUNT_EMAIL", // Replace with your service account email
+  PRIVATE_KEY: "YOUR_PRIVATE_KEY", // Replace with your private key
+};
 
 // PDF Generation utility
 const generatePDF = async (customer, orders, totalAmount) => {
@@ -156,6 +164,77 @@ const laundryItems = [
   { name: "Curtain", rate: 150, category: "Home" },
 ];
 
+// Function to append data to Google Sheet
+const appendToGoogleSheet = async (orderData) => {
+  try {
+    const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${CONFIG.SHEET_ID}/values/Sheet1!A:Z:append?valueInputOption=USER_ENTERED`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${await getAccessToken()}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        values: [
+          [
+            orderData.orderNumber,
+            orderData.createdAt,
+            orderData.customer.name,
+            orderData.customer.phone,
+            orderData.customer.email || "",
+            orderData.customer.address,
+            orderData.customer.pincode,
+            orderData.customer.date,
+            JSON.stringify(orderData.orders),
+            orderData.totalAmount,
+            orderData.gstAmount,
+            orderData.grandTotal,
+            orderData.paymentMethod,
+            orderData.paymentStatus,
+          ]
+        ]
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to save to Google Sheet");
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Google Sheets error:", error);
+    throw new Error("Failed to save data to Google Sheet");
+  }
+};
+
+// Function to get access token for Google Sheets API
+const getAccessToken = async () => {
+  try {
+    const response = await fetch("https://oauth2.googleapis.com/token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
+        assertion: createJWT(),
+      })
+    });
+
+    const data = await response.json();
+    return data.access_token;
+  } catch (error) {
+    console.error("Error getting access token:", error);
+    throw new Error("Failed to authenticate with Google");
+  }
+};
+
+// Function to create JWT for Google Sheets API
+const createJWT = () => {
+  // In a real implementation, you would generate a JWT here
+  // This is a simplified version - you should use a proper JWT library
+  return "your_generated_jwt_token";
+};
+
 const AdminOrderPage = () => {
   const [customer, setCustomer] = useState({
     name: "",
@@ -173,6 +252,8 @@ const AdminOrderPage = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [paymentConfirmed, setPaymentConfirmed] = useState(false);
   const [showQRCode, setShowQRCode] = useState(false);
+  const [isLocked, setIsLocked] = useState(true);
+  const [password, setPassword] = useState("");
 
   const validateForm = () => {
     const newErrors = {};
@@ -250,8 +331,6 @@ const AdminOrderPage = () => {
     setSuccessMessage("");
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
       const validOrders = orders.filter(order => order.item && order.quantity > 0);
       const orderData = {
         customer,
@@ -265,7 +344,9 @@ const AdminOrderPage = () => {
         createdAt: new Date().toISOString()
       };
       
-      console.log("Order Data:", orderData);
+      // Save to Google Sheet
+      await appendToGoogleSheet(orderData);
+      
       setSuccessMessage("Order saved successfully! Order ID: " + orderData.orderNumber);
       
       setTimeout(() => {
@@ -274,7 +355,7 @@ const AdminOrderPage = () => {
       
     } catch (error) {
       console.error("Error saving order:", error);
-      setErrors({ submit: "Failed to save order. Please try again." });
+      setErrors({ submit: error.message || "Failed to save order. Please try again." });
     } finally {
       setIsSubmitting(false);
     }
@@ -338,16 +419,71 @@ const AdminOrderPage = () => {
     setPaymentConfirmed(true);
   };
 
+  const handleUnlock = () => {
+    if (password === CONFIG.PASSWORD) {
+      setIsLocked(false);
+      setPassword("");
+    } else {
+      alert("Incorrect password. Please try again.");
+    }
+  };
+
+  if (isLocked) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+          <div className="flex flex-col items-center mb-6">
+            <Lock className="w-12 h-12 text-blue-600 mb-4" />
+            <h1 className="text-2xl font-bold text-gray-800">Admin Access</h1>
+            <p className="text-gray-600 mt-2">Enter password to access the system</p>
+          </div>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Password
+              </label>
+              <input
+                type="password"
+                placeholder="Enter admin password"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <button
+              onClick={handleUnlock}
+              className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Unlock System
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-6xl mx-auto px-4">
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
-            <h1 className="text-2xl font-bold text-white flex items-center gap-3">
-              <FileText className="w-8 h-8" />
-              Laundry Management System
-            </h1>
-            <p className="text-blue-100 mt-1">Create and manage laundry orders with professional invoicing</p>
+            <div className="flex justify-between items-center">
+              <div>
+                <h1 className="text-2xl font-bold text-white flex items-center gap-3">
+                  <FileText className="w-8 h-8" />
+                  Laundry Management System
+                </h1>
+                <p className="text-blue-100 mt-1">Create and manage laundry orders with professional invoicing</p>
+              </div>
+              <button
+                onClick={() => setIsLocked(true)}
+                className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                title="Lock system"
+              >
+                <Lock className="w-4 h-4" />
+                Lock
+              </button>
+            </div>
           </div>
 
           <div className="p-6 space-y-8">
