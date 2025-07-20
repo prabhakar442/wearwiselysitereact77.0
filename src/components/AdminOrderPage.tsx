@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { FileText, Plus, Trash2, Save, Download, QrCode, Check } from "lucide-react";
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
 
 // PDF Generation utility
 const generatePDF = async (customer, orders, totalAmount) => {
   try {
-    const { jsPDF } = await import("jspdf");
     await import("jspdf-autotable");
 
     const gstRate = 0.18;
