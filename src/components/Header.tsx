@@ -248,7 +248,7 @@ const Header = ({ darkMode, setDarkMode }) => {
           {servicesOpen && (
             <div className="pl-4 space-y-2 mt-2">
               <Link
-                to="/dry-clean"
+                to="/dryclean"
                 className="block px-4 py-2 text-gray-900 dark:text-white font-semibold hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 Dry Clean Service

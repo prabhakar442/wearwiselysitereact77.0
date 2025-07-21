@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { FileText, Plus, Trash2, Save, Download, QrCode, Check, Lock } from "lucide-react";
+import React, { useState, useMemo } from "react";
+import { FileText, Plus, Trash2, Save, Download, QrCode, Check, Lock, Search } from "lucide-react";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 
@@ -151,17 +151,149 @@ const generatePDF = async (customer, orders, totalAmount) => {
   }
 };
 
+// Updated laundry items from the Excel file
 const laundryItems = [
-  { name: "Shirt", rate: 30, category: "Clothing" },
-  { name: "Pant", rate: 40, category: "Clothing" },
-  { name: "T-Shirt", rate: 25, category: "Clothing" },
-  { name: "Saree", rate: 60, category: "Traditional" },
-  { name: "Kurti", rate: 45, category: "Traditional" },
-  { name: "Jacket", rate: 80, category: "Outerwear" },
-  { name: "Blazer", rate: 100, category: "Outerwear" },
-  { name: "Bedsheet", rate: 100, category: "Home" },
-  { name: "Pillow Cover", rate: 20, category: "Home" },
-  { name: "Curtain", rate: 150, category: "Home" },
+  // Daily Wear
+  { name: "Shirt Starch", rate: 50, category: "Daily" },
+  { name: "Shirt", rate: 90, category: "Daily" },
+  { name: "Shirt Designer", rate: 120, category: "Daily" },
+  { name: "T Shirt", rate: 80, category: "Daily" },
+  { name: "Ladies Top", rate: 80, category: "Daily" },
+  { name: "Trouser/Pant Starch", rate: 100, category: "Daily" },
+  { name: "Trouser / Pant", rate: 90, category: "Daily" },
+  { name: "Jeans", rate: 100, category: "Daily" },
+  { name: "Skirt Half", rate: 100, category: "Daily" },
+  { name: "Skirt Long", rate: 150, category: "Daily" },
+  { name: "Jump Suit Heavy", rate: 300, category: "Daily" },
+  { name: "Jump Suit Plain", rate: 200, category: "Daily" },
+  { name: "Gown Plain", rate: 250, category: "Daily" },
+  { name: "Gown M", rate: 350, category: "Daily" },
+  { name: "Gown H", rate: 700, category: "Daily" },
+
+  // Ethnic Wear
+  { name: "Payjama / Salwar/ Legging Starch", rate: 60, category: "Ethnic" },
+  { name: "Payjama / Salwar/ Legging", rate: 100, category: "Ethnic" },
+  { name: "Plazo Plain", rate: 110, category: "Ethnic" },
+  { name: "Plazo H", rate: 200, category: "Ethnic" },
+  { name: "Kurta / Kameez Starch", rate: 60, category: "Ethnic" },
+  { name: "Kurta / Kameez", rate: 90, category: "Ethnic" },
+  { name: "Kurta / Kameez - Work", rate: 120, category: "Ethnic" },
+  { name: "Gents Kurta", rate: 90, category: "Ethnic" },
+  { name: "Gents Kurta Work", rate: 120, category: "Ethnic" },
+  { name: "Kurta / Kameez - Light Work Starch", rate: 60, category: "Ethnic" },
+  { name: "Kurta / Kameez - Light Work", rate: 120, category: "Ethnic" },
+  { name: "Sharara - R", rate: 200, category: "Ethnic" },
+  { name: "Sharara - M", rate: 300, category: "Ethnic" },
+  { name: "Sharara - H", rate: 400, category: "Ethnic" },
+  { name: "Dupatta", rate: 60, category: "Ethnic" },
+  { name: "Blouse", rate: 60, category: "Ethnic" },
+  { name: "Blouse - H", rate: 80, category: "Ethnic" },
+  { name: "Saree - R", rate: 160, category: "Ethnic" },
+  { name: "Saree - M", rate: 180, category: "Ethnic" },
+  { name: "Saree - H", rate: 250, category: "Ethnic" },
+  { name: "Saree - R Starch", rate: 80, category: "Ethnic" },
+  { name: "Saree - H Starch", rate: 100, category: "Ethnic" },
+  { name: "Gents Sherwani - R", rate: 250, category: "Ethnic" },
+  { name: "Gents Sherwani - H", rate: 300, category: "Ethnic" },
+  { name: "Gents Indo Western - R", rate: 300, category: "Ethnic" },
+  { name: "Gents Indo Western - H", rate: 400, category: "Ethnic" },
+  { name: "Lehnga / Ghagra - R", rate: 300, category: "Ethnic" },
+  { name: "Lehnga / Ghagra - H", rate: 1000, category: "Ethnic" },
+  { name: "Lehnga / Bridal - H", rate: 1200, category: "Ethnic" },
+  { name: "Bridal Gown", rate: 400, category: "Ethnic" },
+  { name: "Choli - R", rate: 80, category: "Ethnic" },
+  { name: "Chaniya - R", rate: 150, category: "Ethnic" },
+  { name: "Anarkali Suit - R", rate: 250, category: "Ethnic" },
+  { name: "Anarkali Suit - M", rate: 300, category: "Ethnic" },
+  { name: "Shrug Long", rate: 120, category: "Ethnic" },
+  { name: "Zooba", rate: 150, category: "Ethnic" },
+  { name: "kids Kurta", rate: 60, category: "Ethnic" },
+  { name: "Kids Sherwani - R", rate: 120, category: "Ethnic" },
+  { name: "Kids Coat Pant", rate: 250, category: "Ethnic" },
+
+  // Woolen
+  { name: "Sweat shirt", rate: 190, category: "Woolen" },
+  { name: "Sweat Pants", rate: 172, category: "Woolen" },
+  { name: "Sweater Half", rate: 130, category: "Woolen" },
+  { name: "Sweater Full", rate: 180, category: "Woolen" },
+  { name: "Waist Coat", rate: 180, category: "Woolen" },
+  { name: "Coat", rate: 220, category: "Woolen" },
+  { name: "Coat Designer", rate: 260, category: "Woolen" },
+  { name: "Over Coat", rate: 300, category: "Woolen" },
+  { name: "Half Koti - R", rate: 180, category: "Woolen" },
+  { name: "Jacket Half", rate: 180, category: "Woolen" },
+  { name: "Jacket Full", rate: 250, category: "Woolen" },
+  { name: "Jacket Fur", rate: 260, category: "Woolen" },
+  { name: "Shawl", rate: 200, category: "Woolen" },
+  { name: "Blanket AC / Small", rate: 200, category: "Woolen" },
+  { name: "Blanket AC / Large", rate: 250, category: "Woolen" },
+  { name: "Comforter - D", rate: 250, category: "Woolen" },
+  { name: "Comforter - S", rate: 180, category: "Woolen" },
+  { name: "Blanket - S", rate: 250, category: "Woolen" },
+  { name: "Blanket - D", rate: 350, category: "Woolen" },
+  { name: "Quilt / Rajai - S", rate: 250, category: "Woolen" },
+  { name: "Quilt / Rajai - D", rate: 350, category: "Woolen" },
+  { name: "Blanket Kids", rate: 150, category: "Woolen" },
+
+  // Household
+  { name: "Bedsheet - S", rate: 120, category: "Household" },
+  { name: "Bedsheet - D", rate: 180, category: "Household" },
+  { name: "Bed Cover - S", rate: 150, category: "Household" },
+  { name: "Bed Cover _ D", rate: 250, category: "Household" },
+  { name: "Pillow Cover", rate: 60, category: "Household" },
+  { name: "Cushion Cover", rate: 70, category: "Household" },
+  { name: "Window Curtain", rate: 100, category: "Household" },
+  { name: "Door Curtain", rate: 150, category: "Household" },
+  { name: "Net Curtain", rate: 180, category: "Household" },
+  { name: "Teddy - M", rate: 300, category: "Household" },
+  { name: "Teddy - Large", rate: 500, category: "Household" },
+
+  // Shoe Cleaning
+  { name: "Ankle", rate: 300, category: "Shoe Cleaning" },
+  { name: "Ankle Premium", rate: 400, category: "Shoe Cleaning" },
+  { name: "Belle", rate: 200, category: "Shoe Cleaning" },
+  { name: "Belle Designer", rate: 250, category: "Shoe Cleaning" },
+  { name: "Leather", rate: 300, category: "Shoe Cleaning" },
+  { name: "Leather Premium", rate: 400, category: "Shoe Cleaning" },
+  { name: "Boots", rate: 400, category: "Shoe Cleaning" },
+  { name: "Sleppers", rate: 97, category: "Shoe Cleaning" },
+  { name: "Sports", rate: 200, category: "Shoe Cleaning" },
+  { name: "Sports Premium", rate: 250, category: "Shoe Cleaning" },
+  { name: "Sneakers", rate: 200, category: "Shoe Cleaning" },
+  { name: "Jorden Shoes", rate: 250, category: "Shoe Cleaning" },
+  { name: "Kids Shoe", rate: 150, category: "Shoe Cleaning" },
+  { name: "Suede", rate: 350, category: "Shoe Cleaning" },
+
+  // Jacket Cleaning
+  { name: "Leather Jacket", rate: 400, category: "Jacket Cleaning" },
+  { name: "Leather Jacket H", rate: 300, category: "Jacket Cleaning" },
+  { name: "Leather Jacket Rexine", rate: 250, category: "Jacket Cleaning" },
+  { name: "Leather Jacket Suede", rate: 400, category: "Jacket Cleaning" },
+
+  // Handbag Cleaning
+  { name: "Backpack Leather", rate: 400, category: "Handbag Cleaning" },
+  { name: "Ladies Hand Purse", rate: 200, category: "Handbag Cleaning" },
+  { name: "Ladies Purse", rate: 300, category: "Handbag Cleaning" },
+  { name: "Laptop Bag", rate: 200, category: "Handbag Cleaning" },
+  { name: "Backpack", rate: 200, category: "Handbag Cleaning" },
+  { name: "Kids School Bag", rate: 200, category: "Handbag Cleaning" },
+
+  // Steam Press
+  { name: "Shirt (Steam Press)", rate: 40, category: "Steam Press" },
+  { name: "Shirt Designer (Steam Press)", rate: 50, category: "Steam Press" },
+  { name: "T-Shirt (Steam Press)", rate: 40, category: "Steam Press" },
+  { name: "Ladies Top (Steam Press)", rate: 40, category: "Steam Press" },
+  { name: "Trouser / Pant (Steam Press)", rate: 40, category: "Steam Press" },
+  { name: "Jeans (Steam Press)", rate: 40, category: "Steam Press" },
+  { name: "Skirt Half (Steam Press)", rate: 50, category: "Steam Press" },
+  { name: "Skirt Full (Steam Press)", rate: 100, category: "Steam Press" },
+  { name: "Dress (Steam Press)", rate: 100, category: "Steam Press" },
+  { name: "Dress Designer (Steam Press)", rate: 120, category: "Steam Press" },
+  { name: "Jump Suit R (Steam Press)", rate: 100, category: "Steam Press" },
+  { name: "Gown Plain (Steam Press)", rate: 150, category: "Steam Press" },
+  { name: "Gown M (Steam Press)", rate: 195, category: "Steam Press" },
+  { name: "Gown H (Steam Press)", rate: 200, category: "Steam Press" },
+  { name: "Kids Dress (Steam Press)", rate: 50, category: "Steam Press" },
 ];
 
 // Function to append data to Google Sheet
@@ -254,6 +386,8 @@ const AdminOrderPage = () => {
   const [showQRCode, setShowQRCode] = useState(false);
   const [isLocked, setIsLocked] = useState(true);
   const [password, setPassword] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   const validateForm = () => {
     const newErrors = {};
@@ -427,6 +561,21 @@ const AdminOrderPage = () => {
       alert("Incorrect password. Please try again.");
     }
   };
+
+  // Filter items based on search and category
+  const filteredItems = useMemo(() => {
+    return laundryItems.filter(item => {
+      const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
+      return matchesSearch && matchesCategory;
+    });
+  }, [searchTerm, selectedCategory]);
+
+  // Get unique categories for the filter dropdown
+  const categories = useMemo(() => {
+    const uniqueCategories = [...new Set(laundryItems.map(item => item.category))];
+    return ["All", ...uniqueCategories];
+  }, []);
 
   if (isLocked) {
     return (
@@ -659,7 +808,7 @@ const AdminOrderPage = () => {
                           onChange={(e) => handleOrderChange(index, "item", e.target.value)}
                         >
                           <option value="">Select an item</option>
-                          {laundryItems.map((item) => (
+                          {filteredItems.map((item) => (
                             <option key={item.name} value={item.name}>
                               {item.name} - ₹{item.rate} ({item.category})
                             </option>
@@ -717,6 +866,43 @@ const AdminOrderPage = () => {
                     </div>
                   </div>
                 ))}
+              </div>
+
+              {/* Search and filter section */}
+              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Search Items
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <Search className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Search for items..."
+                      className="pl-10 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Filter by Category
+                  </label>
+                  <select
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                  >
+                    {categories.map((category) => (
+                      <option key={category} value={category}>
+                        {category}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
 
