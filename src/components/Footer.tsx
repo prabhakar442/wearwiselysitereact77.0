@@ -137,7 +137,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3 text-gray-300 hover:text-orange-400 transition-colors">
                 <Globe className="h-5 w-5 text-orange-400" />
-                <span>WearWiselyLaundry.in</span>
+                <span>WearWisely.in</span>
               </div>
             </div>
 

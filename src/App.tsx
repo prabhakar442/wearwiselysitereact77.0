@@ -12,7 +12,7 @@ import BagPage from './components/BagPage';
 import WhatsappFloat from './components/WhatsappFloat';
 import CarpetPage from './components/CarpetPage';
 import DryCleanPage from './components/DryCleanPage';
-import AdminOrderPage from './components/AdminOrderPage'; // ✅ Added admin component
+import AdminOrderPage from './components/AdminOrderPage';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -44,12 +44,12 @@ function App() {
               </>
             }
           />
-          <Route path="/dry-clean" element={<DryCleanPage />} />
+          <Route path="/dryclean" element={<DryCleanPage />} />
           <Route path="/jacket-cleaning" element={<JacketPage />} />
           <Route path="/shoe-cleaning" element={<ShoePage />} />
           <Route path="/bag-cleaning" element={<BagPage />} />
           <Route path="/carpet-cleaning" element={<CarpetPage />} />
-          <Route path="/admin" element={<AdminOrderPage />} /> {/* ✅ Admin Route */}
+          <Route path="/admin" element={<AdminOrderPage />} />
         </Routes>
 
         <Footer />
