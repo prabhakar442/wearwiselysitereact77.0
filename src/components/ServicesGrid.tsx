@@ -59,7 +59,7 @@ const ServicesGrid = () => {
 
   const services = [
     {
-      id: 'dry-clean',
+      id: 'dryclean',
       icon: <Shirt className="w-12 h-12 text-blue-500" />,
       title: "DryClean",
       price: "₹30 per kg",
