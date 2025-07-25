@@ -14,17 +14,17 @@ const AboutUs = () => {
   }, []);
 
   const features = [
-    { icon: Clock, title: "25+ Years Experience", desc: "Trusted expertise since 1999" },
+    { icon: Clock, title: "22+ Years Experience", desc: "Trusted expertise since 1999" },
     { icon: Truck, title: "Doorstep Service", desc: "Pickup & delivery at your convenience" },
     { icon: Shield, title: "Quality Guarantee", desc: "Professional care for every garment" },
     { icon: Heart, title: "Personal Touch", desc: "Treating your clothes like our own" }
   ];
 
   const timeline = [
-    { year: "1999", event: "Started neighborhood shop in New Delhi", icon: "🏪" },
+    { year: "2003", event: "Started neighborhood shop in New Delhi", icon: "🏪" },
     { year: "2010", event: "Expanded to serve multiple generations", icon: "👨‍👩‍👧‍👦" },
     { year: "2020", event: "Embraced digital transformation", icon: "💻" },
-    { year: "2024", event: "Launched Wear Wisely online platform", icon: "🚀" }
+    { year: "2025", event: "Launched Wear Wisely online platform", icon: "🚀" }
   ];
 
   return (
