@@ -9,6 +9,8 @@ const DryCleanPage = () => {
   const [isVisible, setIsVisible] = useState({});
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [activeFaq, setActiveFaq] = useState(null);
+  const [activeCategory, setActiveCategory] = useState('Daily');
+  const [searchTerm, setSearchTerm] = useState('');
   const carouselRef = useRef(null);
 
   const openCallbackForm = () => {
@@ -33,6 +35,108 @@ const DryCleanPage = () => {
       description: 'Gentle on fabrics, safe for you'
     }
   ];
+
+  const pricingData = {
+    Daily: [
+      { item: "Shirt Starch", rate: 50 },
+      { item: "Shirt", rate: 90 },
+      { item: "Shirt Designer", rate: 120 },
+      { item: "T Shirt", rate: 80 },
+      { item: "Ladies Top", rate: 80 },
+      { item: "Trouser/Pant Starch", rate: 100 },
+      { item: "Trouser / Pant", rate: 90 },
+      { item: "Jeans", rate: 100 },
+      { item: "Skirt Half", rate: 100 },
+      { item: "Skirt Long", rate: 150 },
+      { item: "Jump Suit Heavy", rate: 300 },
+      { item: "Jump Suit Plain", rate: 200 },
+      { item: "Gown Plain", rate: 250 },
+      { item: "Gown M", rate: 350 },
+      { item: "Gown H", rate: 700 }
+    ],
+    Ethnic: [
+      { item: "Payjama / Salwar/ Legging Starch", rate: 60 },
+      { item: "Payjama / Salwar/ Legging", rate: 100 },
+      { item: "Plazo Plain", rate: 110 },
+      { item: "Plazo H", rate: 200 },
+      { item: "Kurta / Kameez Starch", rate: 60 },
+      { item: "Kurta / Kameez", rate: 90 },
+      { item: "Kurta / Kameez - Work", rate: 120 },
+      { item: "Gents Kurta", rate: 90 },
+      { item: "Gents Kurta Work", rate: 120 },
+      { item: "Kurta / Kameez - Light Work Starch", rate: 60 },
+      { item: "Kurta / Kameez - Light Work", rate: 120 },
+      { item: "Sharara - R", rate: 200 },
+      { item: "Sharara - M", rate: 300 },
+      { item: "Sharara - H", rate: 400 },
+      { item: "Dupatta", rate: 60 },
+      { item: "Blouse", rate: 60 },
+      { item: "Blouse - H", rate: 80 },
+      { item: "Saree - R", rate: 160 },
+      { item: "Saree - M", rate: 180 },
+      { item: "Saree - H", rate: 250 },
+      { item: "Saree - R Starch", rate: 80 },
+      { item: "Saree - H Starch", rate: 100 },
+      { item: "Gents Sherwani - R", rate: 250 },
+      { item: "Gents Sherwani - H", rate: 300 },
+      { item: "Gents Indo Western - R", rate: 300 },
+      { item: "Gents Indo Western - H", rate: 400 },
+      { item: "Lehnga / Ghagra - R", rate: 300 },
+      { item: "Lehnga / Ghagra - H", rate: 1000 },
+      { item: "Lehnga / Bridal - H", rate: 1200 },
+      { item: "Bridal Gown", rate: 400 },
+      { item: "Choli - R", rate: 80 },
+      { item: "Chaniya - R", rate: 150 },
+      { item: "Anarkali Suit - R", rate: 250 },
+      { item: "Anarkali Suit - M", rate: 300 },
+      { item: "Shrug Long", rate: 120 },
+      { item: "Zooba", rate: 150 },
+      { item: "Kids Kurta", rate: 60 },
+      { item: "Kids Sherwani - R", rate: 120 },
+      { item: "Kids Coat Pant", rate: 250 }
+    ],
+    Woolen: [
+      { item: "Sweat shirt", rate: 190 },
+      { item: "Sweat Pants", rate: 172 },
+      { item: "Sweater Half", rate: 130 },
+      { item: "Sweater Full", rate: 180 },
+      { item: "Waist Coat", rate: 180 },
+      { item: "Coat", rate: 220 },
+      { item: "Coat Designer", rate: 260 },
+      { item: "Over Coat", rate: 300 },
+      { item: "Half Koti - R", rate: 180 },
+      { item: "Jacket Half", rate: 180 },
+      { item: "Jacket Full", rate: 250 },
+      { item: "Jacket Fur", rate: 260 },
+      { item: "Shawl", rate: 200 },
+      { item: "Blanket AC / Small", rate: 200 },
+      { item: "Blanket AC / Large", rate: 250 },
+      { item: "Comforter - D", rate: 250 },
+      { item: "Comforter - S", rate: 180 },
+      { item: "Blanket - S", rate: 250 },
+      { item: "Blanket - D", rate: 350 },
+      { item: "Quilt / Rajai - S", rate: 250 },
+      { item: "Quilt / Rajai - D", rate: 350 },
+      { item: "Blanket Kids", rate: 150 }
+    ],
+    Household: [
+      { item: "Bedsheet - S", rate: 120 },
+      { item: "Bedsheet - D", rate: 180 },
+      { item: "Bed Cover - S", rate: 150 },
+      { item: "Bed Cover _ D", rate: 250 },
+      { item: "Pillow Cover", rate: 60 },
+      { item: "Cushion Cover", rate: 70 },
+      { item: "Window Curtain", rate: 100 },
+      { item: "Door Curtain", rate: 150 },
+      { item: "Net Curtain", rate: 180 },
+      { item: "Teddy - M", rate: 300 },
+      { item: "Teddy - Large", rate: 500 }
+    ]
+  };
+
+  const filteredItems = pricingData[activeCategory].filter(item =>
+    item.item.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   // Auto-rotate carousel with pause on hover
   useEffect(() => {
@@ -81,24 +185,6 @@ const DryCleanPage = () => {
       observer.disconnect();
     };
   }, []);
-
-  const pricingData = [
-    { category: "Shirt (Regular)", original: 240, discounted: 199 },
-    { category: "Shirt (Designer)", original: 720, discounted: 599 },
-    { category: "T-Shirt", original: 240, discounted: 199 },
-    { category: "Trouser/Pant", original: 279, discounted: 229 },
-    { category: "Jeans", original: 239, discounted: 199 },
-    { category: "Suit (2-piece)", original: 720, discounted: 599 },
-    { category: "Suit (3-piece)", original: 950, discounted: 799 },
-    { category: "Kurta/Kameez", original: 544, discounted: 449 },
-    { category: "Saree (Regular)", original: 299, discounted: 249 },
-    { category: "Saree (Heavy)", original: 565, discounted: 499 },
-    { category: "Lehnga/Ghagra", original: 589, discounted: 499 },
-    { category: "Blouse", original: 299, discounted: 249 },
-    { category: "Dress (Regular)", original: 299, discounted: 249 },
-    { category: "Dress (Designer)", original: 419, discounted: 349 },
-    { category: "Jacket", original: 349, discounted: 299 },
-  ];
 
   const services = [
     { icon: <FaCheckCircle className="text-blue-500 text-3xl" />, title: "Expert Cleaning", description: "Specialized care for delicate fabrics", delay: "delay-100" },
@@ -260,38 +346,133 @@ const DryCleanPage = () => {
       </section>
 
       {/* Process Steps */}
-      <section className="bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 py-16 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Our Dry Cleaning Process</h2>
-            <p className="text-gray-700 dark:text-gray-300">From pickup to delivery, we ensure quality at every step</p>
+      <section className="bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-800 dark:via-gray-900 dark:to-blue-900 py-20 px-4 relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute top-10 left-10 w-32 h-32 bg-blue-200/30 rounded-full blur-2xl animate-pulse"></div>
+        <div className="absolute bottom-10 right-10 w-40 h-40 bg-purple-200/30 rounded-full blur-2xl animate-pulse delay-1000"></div>
+        
+        <div className="max-w-7xl mx-auto relative">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+                <FaRecycle className="text-white text-2xl" />
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
+                Our Dry Cleaning Process
+              </h2>
+            </div>
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
+              From pickup to delivery, we ensure quality at every step
+            </p>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mt-6 rounded-full"></div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
             {processSteps.map((step, index) => (
-              <div key={index} className="relative">
-                <div className="flex flex-col items-center text-center bg-white dark:bg-gray-700 p-6 rounded-lg shadow-md h-full">
-                  <div className="w-14 h-14 bg-white dark:bg-gray-600 rounded-full flex items-center justify-center shadow-md mb-4 transform hover:scale-110 transition-transform duration-300">
-                    {step.icon}
-                  </div>
-                  <h3 className="font-semibold mb-2 text-lg">{step.title}</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">{step.description}</p>
-                </div>
+              <div key={index} className="relative group">
+                {/* Connecting line for desktop */}
                 {index < processSteps.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 left-full w-full h-1 bg-gradient-to-r from-blue-400 to-purple-400 transform -translate-x-1/2 -translate-y-1/2"></div>
+                  <div className="hidden lg:block absolute top-20 left-full w-full h-0.5 bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 transform -translate-x-1/2 z-0">
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 animate-pulse"></div>
+                  </div>
                 )}
+                
+                {/* Step Card */}
+                <div className="relative bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 group-hover:scale-105 z-10 border border-gray-100 dark:border-gray-700">
+                  {/* Step Number */}
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                    <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg">
+                      {index + 1}
+                    </div>
+                  </div>
+                  
+                  {/* Icon Container */}
+                  <div className="flex justify-center mb-6 mt-4">
+                    <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/50 dark:to-purple-900/50 rounded-2xl flex items-center justify-center shadow-inner group-hover:shadow-lg transition-all duration-300 transform group-hover:rotate-6">
+                      <div className="text-3xl transform group-hover:scale-110 transition-transform duration-300">
+                        {step.icon}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Content */}
+                  <div className="text-center">
+                    <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                      {step.title}
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">
+                      {step.description}
+                    </p>
+                  </div>
+                  
+                  {/* Hover effect overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-purple-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
               </div>
             ))}
+          </div>
+          
+          {/* Bottom CTA */}
+          <div className="text-center mt-16">
+            <div className="inline-flex items-center gap-4 bg-white dark:bg-gray-800 px-8 py-4 rounded-full shadow-lg border border-gray-200 dark:border-gray-700">
+              <div className="flex -space-x-2">
+                <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                  <FaCheckCircle className="text-white text-sm" />
+                </div>
+                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                  <FaShieldAlt className="text-white text-sm" />
+                </div>
+                <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
+                  <FaAward className="text-white text-sm" />
+                </div>
+              </div>
+              <span className="text-gray-700 dark:text-gray-300 font-medium">
+                Professional • Reliable • Quality Guaranteed
+              </span>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Price Table */}
       <section className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900 py-16 px-4">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Transparent Pricing</h2>
             <p className="text-gray-700 dark:text-gray-300">Competitive rates for premium dry cleaning services</p>
+          </div>
+
+          {/* Search Bar */}
+          <div className="mb-6 max-w-md mx-auto">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search items..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-4 py-3 pl-10 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-300"
+              />
+              <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+          </div>
+
+          {/* Category Tabs */}
+          <div className="flex flex-wrap justify-center gap-2 mb-8">
+            {Object.keys(pricingData).map((category) => (
+              <button
+                key={category}
+                onClick={() => setActiveCategory(category)}
+                className={`px-6 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 ${
+                  activeCategory === category
+                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg'
+                    : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 shadow-md'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
           </div>
 
           <div className="bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden">
@@ -299,28 +480,29 @@ const DryCleanPage = () => {
               <table className="w-full">
                 <thead className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
                   <tr>
-                    <th className="p-4 sm:p-6 text-left">Garment Type</th>
-                    <th className="p-4 sm:p-6 text-right">Original Price</th>
-                    <th className="p-4 sm:p-6 text-right">Discounted Price</th>
-                    <th className="p-4 sm:p-6 text-right">You Save</th>
+                    <th className="p-4 sm:p-6 text-left">Item</th>
+                    <th className="p-4 sm:p-6 text-right">Rate (₹)</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 dark:divide-gray-600">
-                  {pricingData.map((item, index) => (
+                  {filteredItems.map((item, index) => (
                     <tr 
                       key={index} 
                       className="hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-200"
                     >
-                      <td className="p-4 sm:p-6 font-medium">{item.category}</td>
-                      <td className="p-4 sm:p-6 text-right line-through text-gray-500">₹{item.original}</td>
-                      <td className="p-4 sm:p-6 text-right font-bold text-blue-600 dark:text-blue-400">₹{item.discounted}</td>
-                      <td className="p-4 sm:p-6 text-right text-green-600 dark:text-green-400 font-semibold">
-                        ₹{item.original - item.discounted}
-                      </td>
+                      <td className="p-4 sm:p-6 font-medium">{item.item}</td>
+                      <td className="p-4 sm:p-6 text-right font-bold text-blue-600 dark:text-blue-400">₹{item.rate}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
+            </div>
+            
+            {/* Rate information note */}
+            <div className="bg-blue-50 dark:bg-blue-900/20 border-t border-blue-200 dark:border-blue-800 p-4">
+              <p className="text-sm text-blue-800 dark:text-blue-200 text-center">
+                💼 Professional dry cleaning rates - Quality service guaranteed
+              </p>
             </div>
           </div>
 
@@ -329,7 +511,7 @@ const DryCleanPage = () => {
               onClick={openCallbackForm}
               className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-8 py-3 sm:px-10 sm:py-4 rounded-full font-medium transition-all duration-300 inline-flex items-center transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
-              <FaStar className="mr-2" /> Get Special Discount
+              <FaStar className="mr-2" /> Get Quote Now
             </button>
           </div>
         </div>
