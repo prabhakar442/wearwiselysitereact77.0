@@ -1,27 +1,147 @@
 import React, { useState, useMemo } from "react";
-import { FileText, Plus, Trash2, Save, Download, QrCode, Check, Lock, Search } from "lucide-react";
+import { FileText, Plus, Trash2, Download, QrCode, Check, Lock, Search } from "lucide-react";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
+import emailjs from '@emailjs/browser';
+
+// Initialize EmailJS
+emailjs.init("yKzPEtzad9qgCuM2M"); // Replace with your public key
 
 // Configuration
 const CONFIG = {
-  PASSWORD: "admin123", // Change this to your desired password
-  SHEET_ID: "YOUR_GOOGLE_SHEET_ID", // Replace with your Google Sheet ID
-  CLIENT_EMAIL: "YOUR_SERVICE_ACCOUNT_EMAIL", // Replace with your service account email
-  PRIVATE_KEY: "YOUR_PRIVATE_KEY", // Replace with your private key
+  PASSWORD: "admin123",
+  ADMIN_EMAIL: "prabhakarjd2@gmail.com",
+  COMPANY_NAME: "WearWisely Laundry",
+  COMPANY_ADDRESS: "123 Service Street, Laundry District",
+  COMPANY_PHONE: "+91 9876543210",
+  COMPANY_EMAIL: "info@wearwisely.com",
+  COMPANY_GST: "12ABCDE3456F7Z8",
+  UPI_ID: "yourbusiness@upi",
+  EMAILJS_SERVICE_ID: "service_0fz254l",
+  EMAILJS_TEMPLATE_ID: "template_76c0gch",
+  SPREADSHEET_URL: "https://script.google.com/macros/s/YOUR_GOOGLE_SCRIPT_ID/exec" // Replace with your Google Apps Script URL
 };
 
-// PDF Generation utility
-const generatePDF = async (customer, orders, totalAmount) => {
-  try {
-    await import("jspdf-autotable");
+// Laundry items data
+const laundryItems = [
+  { name: "Shirt Starch", rate: 50, category: "Daily" },
+  { name: "Shirt", rate: 90, category: "Daily" },
+  { name: "Shirt Designer", rate: 120, category: "Daily" },
+  { name: "T Shirt", rate: 80, category: "Daily" },
+  { name: "Ladies Top", rate: 80, category: "Daily" },
+  { name: "Trouser/Pant Starch", rate: 100, category: "Daily" },
+  { name: "Trouser / Pant", rate: 90, category: "Daily" },
+  { name: "Jeans", rate: 100, category: "Daily" },
+  { name: "Skirt Half", rate: 100, category: "Daily" },
+  { name: "Skirt Long", rate: 150, category: "Daily" },
+  { name: "Jump Suit Heavy", rate: 300, category: "Daily" },
+  { name: "Jump Suit Plain", rate: 200, category: "Daily" },
+  { name: "Gown Plain", rate: 250, category: "Daily" },
+  { name: "Gown M", rate: 350, category: "Daily" },
+  { name: "Gown H", rate: 700, category: "Daily" }
+];
 
-    const gstRate = 0.18;
-    const gstAmount = totalAmount * gstRate;
-    const grandTotal = totalAmount + gstAmount;
-    const invoiceNumber = `INV-${Date.now()}`;
-    const currentDate = new Date().toLocaleDateString('en-IN');
+const AdminOrderPage = () => {
+  const [customer, setCustomer] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    address: "",
+    pincode: "",
+    date: new Date().toISOString().split('T')[0],
+  });
 
+  const [orders, setOrders] = useState([{ item: "", quantity: 1, rate: 0 }]);
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [paymentConfirmed, setPaymentConfirmed] = useState(false);
+  const [showQRCode, setShowQRCode] = useState(false);
+  const [isLocked, setIsLocked] = useState(true);
+  const [password, setPassword] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [quantityOptions, setQuantityOptions] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+
+  // Form validation
+  const validateForm = () => {
+    const newErrors = {};
+    
+    if (!customer.name.trim()) newErrors.name = "Name is required";
+    if (!customer.phone.trim()) newErrors.phone = "Phone is required";
+    if (!/^\d{10}$/.test(customer.phone.replace(/\s|-/g, ''))) {
+      newErrors.phone = "Please enter a valid 10-digit phone number";
+    }
+    if (customer.email && !/\S+@\S+\.\S+/.test(customer.email)) {
+      newErrors.email = "Please enter a valid email";
+    }
+    if (!customer.address.trim()) newErrors.address = "Address is required";
+    if (!customer.pincode.trim()) newErrors.pincode = "Pincode is required";
+    if (!/^\d{6}$/.test(customer.pincode)) {
+      newErrors.pincode = "Please enter a valid 6-digit pincode";
+    }
+    if (!customer.date) newErrors.date = "Date is required";
+    if (!paymentMethod) newErrors.paymentMethod = "Please select a payment method";
+    
+    const validOrders = orders.filter(order => order.item && order.quantity > 0);
+    if (validOrders.length === 0) {
+      newErrors.orders = "Please add at least one item";
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Order management
+  const handleOrderChange = (index, field, value) => {
+    const updated = [...orders];
+    if (field === "item") {
+      const selected = laundryItems.find((i) => i.name === value);
+      updated[index].item = value;
+      updated[index].rate = selected?.rate || 0;
+    } else {
+      updated[index][field] = Math.max(0, value);
+    }
+    setOrders(updated);
+    
+    if (errors.orders) {
+      setErrors({ ...errors, orders: null });
+    }
+  };
+
+  const handleCustomQuantity = (index, value) => {
+    const updatedOrders = [...orders];
+    const numValue = parseInt(value) || 1;
+    updatedOrders[index].quantity = Math.max(1, numValue);
+    setOrders(updatedOrders);
+    
+    if (!quantityOptions.includes(numValue) && numValue <= 100) {
+      setQuantityOptions([...quantityOptions, numValue].sort((a, b) => a - b));
+    }
+  };
+
+  const addOrder = () => {
+    setOrders([...orders, { item: "", quantity: 1, rate: 0 }]);
+  };
+
+  const removeOrder = (index) => {
+    if (orders.length > 1) {
+      setOrders(orders.filter((_, i) => i !== index));
+    }
+  };
+
+  // Calculations
+  const totalAmount = orders.reduce(
+    (sum, o) => sum + (o.quantity || 0) * (o.rate || 0),
+    0
+  );
+
+  const gstAmount = totalAmount * 0.18;
+  const grandTotal = totalAmount + gstAmount;
+
+  // PDF Generation
+  const generatePDF = () => {
     const doc = new jsPDF();
     
     // Header
@@ -30,12 +150,15 @@ const generatePDF = async (customer, orders, totalAmount) => {
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(24);
     doc.setFont('helvetica', 'bold');
-    doc.text('WearWisely Laundry', 20, 20);
+    doc.text(CONFIG.COMPANY_NAME, 20, 20);
     doc.setFontSize(12);
     doc.setFont('helvetica', 'normal');
     doc.text('Premium Quality • Quick Service • Affordable Rates', 20, 28);
 
     // Invoice details
+    const invoiceNumber = `INV-${Date.now()}`;
+    const currentDate = new Date().toLocaleDateString('en-IN');
+    
     doc.setTextColor(51, 51, 51);
     doc.setFontSize(16);
     doc.setFont('helvetica', 'bold');
@@ -51,11 +174,11 @@ const generatePDF = async (customer, orders, totalAmount) => {
     doc.text('From:', 20, 50);
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(10);
-    doc.text('WearWisely Laundry', 20, 58);
-    doc.text('123 Service Street, Laundry District', 20, 65);
-    doc.text('Phone: +91 xxxxxxxx', 20, 72);
-    doc.text('Email: info@laundryservice.com', 20, 79);
-    doc.text('GST: 12ABCDE3456F7Z8', 20, 86);
+    doc.text(CONFIG.COMPANY_NAME, 20, 58);
+    doc.text(CONFIG.COMPANY_ADDRESS, 20, 65);
+    doc.text(`Phone: ${CONFIG.COMPANY_PHONE}`, 20, 72);
+    doc.text(`Email: ${CONFIG.COMPANY_EMAIL}`, 20, 79);
+    doc.text(`GST: ${CONFIG.COMPANY_GST}`, 20, 86);
 
     // Customer details
     doc.setFontSize(12);
@@ -138,363 +261,53 @@ const generatePDF = async (customer, orders, totalAmount) => {
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(9);
     doc.text('Thank you for choosing Professional Laundry Service!', 20, footerY);
-    doc.text('For any queries, please contact us at +91 98765 43210', 20, footerY + 8);
-    doc.text('Visit us: www.professionallaundry.com', 20, footerY + 16);
+    doc.text(`For any queries, please contact us at ${CONFIG.COMPANY_PHONE}`, 20, footerY + 8);
+    doc.text(`Visit us: ${CONFIG.COMPANY_EMAIL}`, 20, footerY + 16);
     doc.setFontSize(8);
     doc.setTextColor(150, 150, 150);
     doc.text('Terms & Conditions: Payment due within 30 days. Goods once delivered cannot be returned.', 20, footerY + 30);
 
-    return { doc, invoiceNumber };
-  } catch (error) {
-    console.error("PDF generation error:", error);
-    throw new Error("Failed to generate PDF. Please try again.");
-  }
-};
-
-// Updated laundry items from the Excel file
-const laundryItems = [
-  // Daily Wear
-  { name: "Shirt Starch", rate: 50, category: "Daily" },
-  { name: "Shirt", rate: 90, category: "Daily" },
-  { name: "Shirt Designer", rate: 120, category: "Daily" },
-  { name: "T Shirt", rate: 80, category: "Daily" },
-  { name: "Ladies Top", rate: 80, category: "Daily" },
-  { name: "Trouser/Pant Starch", rate: 100, category: "Daily" },
-  { name: "Trouser / Pant", rate: 90, category: "Daily" },
-  { name: "Jeans", rate: 100, category: "Daily" },
-  { name: "Skirt Half", rate: 100, category: "Daily" },
-  { name: "Skirt Long", rate: 150, category: "Daily" },
-  { name: "Jump Suit Heavy", rate: 300, category: "Daily" },
-  { name: "Jump Suit Plain", rate: 200, category: "Daily" },
-  { name: "Gown Plain", rate: 250, category: "Daily" },
-  { name: "Gown M", rate: 350, category: "Daily" },
-  { name: "Gown H", rate: 700, category: "Daily" },
-
-  // Ethnic Wear
-  { name: "Payjama / Salwar/ Legging Starch", rate: 60, category: "Ethnic" },
-  { name: "Payjama / Salwar/ Legging", rate: 100, category: "Ethnic" },
-  { name: "Plazo Plain", rate: 110, category: "Ethnic" },
-  { name: "Plazo H", rate: 200, category: "Ethnic" },
-  { name: "Kurta / Kameez Starch", rate: 60, category: "Ethnic" },
-  { name: "Kurta / Kameez", rate: 90, category: "Ethnic" },
-  { name: "Kurta / Kameez - Work", rate: 120, category: "Ethnic" },
-  { name: "Gents Kurta", rate: 90, category: "Ethnic" },
-  { name: "Gents Kurta Work", rate: 120, category: "Ethnic" },
-  { name: "Kurta / Kameez - Light Work Starch", rate: 60, category: "Ethnic" },
-  { name: "Kurta / Kameez - Light Work", rate: 120, category: "Ethnic" },
-  { name: "Sharara - R", rate: 200, category: "Ethnic" },
-  { name: "Sharara - M", rate: 300, category: "Ethnic" },
-  { name: "Sharara - H", rate: 400, category: "Ethnic" },
-  { name: "Dupatta", rate: 60, category: "Ethnic" },
-  { name: "Blouse", rate: 60, category: "Ethnic" },
-  { name: "Blouse - H", rate: 80, category: "Ethnic" },
-  { name: "Saree - R", rate: 160, category: "Ethnic" },
-  { name: "Saree - M", rate: 180, category: "Ethnic" },
-  { name: "Saree - H", rate: 250, category: "Ethnic" },
-  { name: "Saree - R Starch", rate: 80, category: "Ethnic" },
-  { name: "Saree - H Starch", rate: 100, category: "Ethnic" },
-  { name: "Gents Sherwani - R", rate: 250, category: "Ethnic" },
-  { name: "Gents Sherwani - H", rate: 300, category: "Ethnic" },
-  { name: "Gents Indo Western - R", rate: 300, category: "Ethnic" },
-  { name: "Gents Indo Western - H", rate: 400, category: "Ethnic" },
-  { name: "Lehnga / Ghagra - R", rate: 300, category: "Ethnic" },
-  { name: "Lehnga / Ghagra - H", rate: 1000, category: "Ethnic" },
-  { name: "Lehnga / Bridal - H", rate: 1200, category: "Ethnic" },
-  { name: "Bridal Gown", rate: 400, category: "Ethnic" },
-  { name: "Choli - R", rate: 80, category: "Ethnic" },
-  { name: "Chaniya - R", rate: 150, category: "Ethnic" },
-  { name: "Anarkali Suit - R", rate: 250, category: "Ethnic" },
-  { name: "Anarkali Suit - M", rate: 300, category: "Ethnic" },
-  { name: "Shrug Long", rate: 120, category: "Ethnic" },
-  { name: "Zooba", rate: 150, category: "Ethnic" },
-  { name: "kids Kurta", rate: 60, category: "Ethnic" },
-  { name: "Kids Sherwani - R", rate: 120, category: "Ethnic" },
-  { name: "Kids Coat Pant", rate: 250, category: "Ethnic" },
-
-  // Woolen
-  { name: "Sweat shirt", rate: 190, category: "Woolen" },
-  { name: "Sweat Pants", rate: 172, category: "Woolen" },
-  { name: "Sweater Half", rate: 130, category: "Woolen" },
-  { name: "Sweater Full", rate: 180, category: "Woolen" },
-  { name: "Waist Coat", rate: 180, category: "Woolen" },
-  { name: "Coat", rate: 220, category: "Woolen" },
-  { name: "Coat Designer", rate: 260, category: "Woolen" },
-  { name: "Over Coat", rate: 300, category: "Woolen" },
-  { name: "Half Koti - R", rate: 180, category: "Woolen" },
-  { name: "Jacket Half", rate: 180, category: "Woolen" },
-  { name: "Jacket Full", rate: 250, category: "Woolen" },
-  { name: "Jacket Fur", rate: 260, category: "Woolen" },
-  { name: "Shawl", rate: 200, category: "Woolen" },
-  { name: "Blanket AC / Small", rate: 200, category: "Woolen" },
-  { name: "Blanket AC / Large", rate: 250, category: "Woolen" },
-  { name: "Comforter - D", rate: 250, category: "Woolen" },
-  { name: "Comforter - S", rate: 180, category: "Woolen" },
-  { name: "Blanket - S", rate: 250, category: "Woolen" },
-  { name: "Blanket - D", rate: 350, category: "Woolen" },
-  { name: "Quilt / Rajai - S", rate: 250, category: "Woolen" },
-  { name: "Quilt / Rajai - D", rate: 350, category: "Woolen" },
-  { name: "Blanket Kids", rate: 150, category: "Woolen" },
-
-  // Household
-  { name: "Bedsheet - S", rate: 120, category: "Household" },
-  { name: "Bedsheet - D", rate: 180, category: "Household" },
-  { name: "Bed Cover - S", rate: 150, category: "Household" },
-  { name: "Bed Cover _ D", rate: 250, category: "Household" },
-  { name: "Pillow Cover", rate: 60, category: "Household" },
-  { name: "Cushion Cover", rate: 70, category: "Household" },
-  { name: "Window Curtain", rate: 100, category: "Household" },
-  { name: "Door Curtain", rate: 150, category: "Household" },
-  { name: "Net Curtain", rate: 180, category: "Household" },
-  { name: "Teddy - M", rate: 300, category: "Household" },
-  { name: "Teddy - Large", rate: 500, category: "Household" },
-
-  // Shoe Cleaning
-  { name: "Ankle", rate: 300, category: "Shoe Cleaning" },
-  { name: "Ankle Premium", rate: 400, category: "Shoe Cleaning" },
-  { name: "Belle", rate: 200, category: "Shoe Cleaning" },
-  { name: "Belle Designer", rate: 250, category: "Shoe Cleaning" },
-  { name: "Leather", rate: 300, category: "Shoe Cleaning" },
-  { name: "Leather Premium", rate: 400, category: "Shoe Cleaning" },
-  { name: "Boots", rate: 400, category: "Shoe Cleaning" },
-  { name: "Sleppers", rate: 97, category: "Shoe Cleaning" },
-  { name: "Sports", rate: 200, category: "Shoe Cleaning" },
-  { name: "Sports Premium", rate: 250, category: "Shoe Cleaning" },
-  { name: "Sneakers", rate: 200, category: "Shoe Cleaning" },
-  { name: "Jorden Shoes", rate: 250, category: "Shoe Cleaning" },
-  { name: "Kids Shoe", rate: 150, category: "Shoe Cleaning" },
-  { name: "Suede", rate: 350, category: "Shoe Cleaning" },
-
-  // Jacket Cleaning
-  { name: "Leather Jacket", rate: 400, category: "Jacket Cleaning" },
-  { name: "Leather Jacket H", rate: 300, category: "Jacket Cleaning" },
-  { name: "Leather Jacket Rexine", rate: 250, category: "Jacket Cleaning" },
-  { name: "Leather Jacket Suede", rate: 400, category: "Jacket Cleaning" },
-
-  // Handbag Cleaning
-  { name: "Backpack Leather", rate: 400, category: "Handbag Cleaning" },
-  { name: "Ladies Hand Purse", rate: 200, category: "Handbag Cleaning" },
-  { name: "Ladies Purse", rate: 300, category: "Handbag Cleaning" },
-  { name: "Laptop Bag", rate: 200, category: "Handbag Cleaning" },
-  { name: "Backpack", rate: 200, category: "Handbag Cleaning" },
-  { name: "Kids School Bag", rate: 200, category: "Handbag Cleaning" },
-
-  // Steam Press
-  { name: "Shirt (Steam Press)", rate: 40, category: "Steam Press" },
-  { name: "Shirt Designer (Steam Press)", rate: 50, category: "Steam Press" },
-  { name: "T-Shirt (Steam Press)", rate: 40, category: "Steam Press" },
-  { name: "Ladies Top (Steam Press)", rate: 40, category: "Steam Press" },
-  { name: "Trouser / Pant (Steam Press)", rate: 40, category: "Steam Press" },
-  { name: "Jeans (Steam Press)", rate: 40, category: "Steam Press" },
-  { name: "Skirt Half (Steam Press)", rate: 50, category: "Steam Press" },
-  { name: "Skirt Full (Steam Press)", rate: 100, category: "Steam Press" },
-  { name: "Dress (Steam Press)", rate: 100, category: "Steam Press" },
-  { name: "Dress Designer (Steam Press)", rate: 120, category: "Steam Press" },
-  { name: "Jump Suit R (Steam Press)", rate: 100, category: "Steam Press" },
-  { name: "Gown Plain (Steam Press)", rate: 150, category: "Steam Press" },
-  { name: "Gown M (Steam Press)", rate: 195, category: "Steam Press" },
-  { name: "Gown H (Steam Press)", rate: 200, category: "Steam Press" },
-  { name: "Kids Dress (Steam Press)", rate: 50, category: "Steam Press" },
-];
-
-// Function to append data to Google Sheet
-const appendToGoogleSheet = async (orderData) => {
-  try {
-    const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${CONFIG.SHEET_ID}/values/Sheet1!A:Z:append?valueInputOption=USER_ENTERED`, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${await getAccessToken()}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        values: [
-          [
-            orderData.orderNumber,
-            orderData.createdAt,
-            orderData.customer.name,
-            orderData.customer.phone,
-            orderData.customer.email || "",
-            orderData.customer.address,
-            orderData.customer.pincode,
-            orderData.customer.date,
-            JSON.stringify(orderData.orders),
-            orderData.totalAmount,
-            orderData.gstAmount,
-            orderData.grandTotal,
-            orderData.paymentMethod,
-            orderData.paymentStatus,
-          ]
-        ]
-      })
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to save to Google Sheet");
-    }
-
-    return true;
-  } catch (error) {
-    console.error("Google Sheets error:", error);
-    throw new Error("Failed to save data to Google Sheet");
-  }
-};
-
-// Function to get access token for Google Sheets API
-const getAccessToken = async () => {
-  try {
-    const response = await fetch("https://oauth2.googleapis.com/token", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
-        assertion: createJWT(),
-      })
-    });
-
-    const data = await response.json();
-    return data.access_token;
-  } catch (error) {
-    console.error("Error getting access token:", error);
-    throw new Error("Failed to authenticate with Google");
-  }
-};
-
-// Function to create JWT for Google Sheets API
-const createJWT = () => {
-  // In a real implementation, you would generate a JWT here
-  // This is a simplified version - you should use a proper JWT library
-  return "your_generated_jwt_token";
-};
-
-const AdminOrderPage = () => {
-  const [customer, setCustomer] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    address: "",
-    pincode: "",
-    date: new Date().toISOString().split('T')[0],
-  });
-
-  const [orders, setOrders] = useState([{ item: "", quantity: 1, rate: 0 }]);
-  const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("");
-  const [paymentConfirmed, setPaymentConfirmed] = useState(false);
-  const [showQRCode, setShowQRCode] = useState(false);
-  const [isLocked, setIsLocked] = useState(true);
-  const [password, setPassword] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
-
-  const validateForm = () => {
-    const newErrors = {};
-    
-    if (!customer.name.trim()) newErrors.name = "Name is required";
-    if (!customer.phone.trim()) newErrors.phone = "Phone is required";
-    if (!/^\d{10}$/.test(customer.phone.replace(/\s|-/g, ''))) {
-      newErrors.phone = "Please enter a valid 10-digit phone number";
-    }
-    if (customer.email && !/\S+@\S+\.\S+/.test(customer.email)) {
-      newErrors.email = "Please enter a valid email";
-    }
-    if (!customer.address.trim()) newErrors.address = "Address is required";
-    if (!customer.pincode.trim()) newErrors.pincode = "Pincode is required";
-    if (!/^\d{6}$/.test(customer.pincode)) {
-      newErrors.pincode = "Please enter a valid 6-digit pincode";
-    }
-    if (!customer.date) newErrors.date = "Date is required";
-    if (!paymentMethod) newErrors.paymentMethod = "Please select a payment method";
-    
-    const validOrders = orders.filter(order => order.item && order.quantity > 0);
-    if (validOrders.length === 0) {
-      newErrors.orders = "Please add at least one item";
-    }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return { doc, invoiceNumber, currentDate };
   };
 
-  const handleOrderChange = (index, field, value) => {
-    const updated = [...orders];
-    if (field === "item") {
-      const selected = laundryItems.find((i) => i.name === value);
-      updated[index].item = value;
-      updated[index].rate = selected?.rate || 0;
-    } else {
-      updated[index][field] = Math.max(0, value);
-    }
-    setOrders(updated);
-    
-    if (errors.orders) {
-      setErrors({ ...errors, orders: null });
-    }
-  };
-
-  const addOrder = () => {
-    setOrders([...orders, { item: "", quantity: 1, rate: 0 }]);
-  };
-
-  const removeOrder = (index) => {
-    if (orders.length > 1) {
-      setOrders(orders.filter((_, i) => i !== index));
-    }
-  };
-
-  const totalAmount = orders.reduce(
-    (sum, o) => sum + (o.quantity || 0) * (o.rate || 0),
-    0
-  );
-
-  const gstAmount = totalAmount * 0.18;
-  const grandTotal = totalAmount + gstAmount;
-
-  const handleSubmit = async () => {
-    if (!validateForm()) {
-      return;
-    }
-
-    if (!paymentConfirmed && paymentMethod !== "paylater") {
-      alert("Please complete the payment first");
-      return;
-    }
-
-    setIsSubmitting(true);
-    setSuccessMessage("");
-
+  // Save data to Google Spreadsheet
+  const saveToSpreadsheet = async (invoiceNumber) => {
     try {
-      const validOrders = orders.filter(order => order.item && order.quantity > 0);
-      const orderData = {
+      const orderDetails = orders.map(order => ({
+        item: order.item,
+        quantity: order.quantity,
+        rate: order.rate,
+        amount: order.quantity * order.rate
+      }));
+
+      const data = {
+        invoiceNumber,
         customer,
-        orders: validOrders,
-        totalAmount,
-        gstAmount,
+        orderDetails,
+        subtotal: totalAmount,
+        gst: gstAmount,
         grandTotal,
         paymentMethod,
-        paymentStatus: paymentMethod === "paylater" ? "pending" : "completed",
-        orderNumber: `ORD-${Date.now()}`,
-        createdAt: new Date().toISOString()
+        paymentStatus: paymentConfirmed ? "Confirmed" : "Pending",
+        date: customer.date
       };
-      
-      // Save to Google Sheet
-      await appendToGoogleSheet(orderData);
-      
-      setSuccessMessage("Order saved successfully! Order ID: " + orderData.orderNumber);
-      
-      setTimeout(() => {
-        setSuccessMessage("");
-      }, 5000);
-      
+
+      const response = await fetch(CONFIG.SPREADSHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      });
+
+      console.log('Data saved to spreadsheet:', data);
     } catch (error) {
-      console.error("Error saving order:", error);
-      setErrors({ submit: error.message || "Failed to save order. Please try again." });
-    } finally {
-      setIsSubmitting(false);
+      console.error('Error saving to spreadsheet:', error);
     }
   };
 
+  // Generate PDF and send email
   const generatePDFInvoice = async () => {
     if (!validateForm()) {
       return;
@@ -506,28 +319,108 @@ const AdminOrderPage = () => {
     }
 
     try {
-      const validOrders = orders.filter(order => order.item && order.quantity > 0);
+      setIsSubmitting(true);
+      const { doc, invoiceNumber, currentDate } = generatePDF();
       
-      if (validOrders.length === 0) {
-        alert("Please add at least one item to generate invoice.");
-        return;
+      // Save PDF locally
+      const pdfFileName = `Invoice-${invoiceNumber}-${customer.name.replace(/\s+/g, '-')}.pdf`;
+      doc.save(pdfFileName);
+
+      // Generate PDF as blob for email attachment
+      const pdfOutput = doc.output('datauristring');
+      const pdfBlob = dataURItoBlob(pdfOutput);
+      const pdfFile = new File([pdfBlob], pdfFileName, { type: 'application/pdf' });
+
+      // Save data to Google Spreadsheet
+      await saveToSpreadsheet(invoiceNumber);
+
+      // Prepare email data
+      const emailData = {
+        to_name: customer.name,
+        from_name: CONFIG.COMPANY_NAME,
+        subject: `Invoice #${invoiceNumber} from ${CONFIG.COMPANY_NAME}`,
+        message: `Dear ${customer.name},\n\nPlease find attached your invoice #${invoiceNumber} dated ${currentDate}.\n\nTotal Amount: ₹${grandTotal.toFixed(2)}\n\nThank you for your business!\n\n${CONFIG.COMPANY_NAME}\n${CONFIG.COMPANY_PHONE}`,
+        invoice_number: invoiceNumber,
+        invoice_date: currentDate,
+        total_amount: `₹${grandTotal.toFixed(2)}`,
+        customer_phone: customer.phone,
+      };
+
+      // Helper function to convert data URI to Blob
+      function dataURItoBlob(dataURI) {
+        const byteString = atob(dataURI.split(',')[1]);
+        const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+        const ab = new ArrayBuffer(byteString.length);
+        const ia = new Uint8Array(ab);
+        for (let i = 0; i < byteString.length; i++) {
+          ia[i] = byteString.charCodeAt(i);
+        }
+        return new Blob([ab], { type: mimeString });
       }
 
-      setIsSubmitting(true);
-      const { doc, invoiceNumber } = await generatePDF(customer, validOrders, totalAmount);
-      
-      doc.save(`Invoice-${invoiceNumber}-${customer.name.replace(/\s+/g, '-')}.pdf`);
-      
-      alert(`Invoice generated successfully!\nInvoice Number: ${invoiceNumber}`);
-      
+      // Send email using EmailJS
+      try {
+        // First send to customer if email exists
+        if (customer.email) {
+          await emailjs.send(
+            CONFIG.EMAILJS_SERVICE_ID,
+            CONFIG.EMAILJS_TEMPLATE_ID,
+            {
+              ...emailData,
+              to_email: customer.email,
+              attachments: [pdfFile]
+            }
+          );
+        }
+
+        // Always send to admin (with different subject)
+        await emailjs.send(
+          CONFIG.EMAILJS_SERVICE_ID,
+          CONFIG.EMAILJS_TEMPLATE_ID,
+          {
+            ...emailData,
+            to_name: "Admin",
+            to_email: CONFIG.ADMIN_EMAIL,
+            subject: `[ADMIN COPY] Invoice #${invoiceNumber} - ${customer.name}`,
+            message: `Admin,\n\nPlease find attached the invoice #${invoiceNumber} for ${customer.name} dated ${currentDate}.\n\nTotal Amount: ₹${grandTotal.toFixed(2)}\nCustomer Phone: ${customer.phone}\n\n${CONFIG.COMPANY_NAME}`,
+            attachments: [pdfFile]
+          }
+        );
+
+        setSuccessMessage(`✅ Invoice ${customer.email ? `sent to customer and ` : ''}admin, data saved to spreadsheet`);
+      } catch (emailError) {
+        console.error("Email sending error:", emailError);
+        setSuccessMessage("✅ Invoice generated and data saved! (Email sending failed - check console)");
+      }
+
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 10000);
+
     } catch (error) {
       console.error("Error generating PDF:", error);
-      alert(error.message);
+      alert("Failed to generate invoice. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  // Filter items based on search and category
+  const filteredItems = useMemo(() => {
+    return laundryItems.filter(item => {
+      const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
+      return matchesSearch && matchesCategory;
+    });
+  }, [searchTerm, selectedCategory]);
+
+  // Get unique categories
+  const categories = useMemo(() => {
+    const uniqueCategories = [...new Set(laundryItems.map(item => item.category))];
+    return ["All", ...uniqueCategories];
+  }, []);
+
+  // Reset form
   const resetForm = () => {
     setCustomer({
       name: "",
@@ -545,14 +438,7 @@ const AdminOrderPage = () => {
     setShowQRCode(false);
   };
 
-  const handlePaymentConfirmation = () => {
-    if (paymentMethod === "upi" && !paymentConfirmed) {
-      setShowQRCode(true);
-      return;
-    }
-    setPaymentConfirmed(true);
-  };
-
+  // Password protection
   const handleUnlock = () => {
     if (password === CONFIG.PASSWORD) {
       setIsLocked(false);
@@ -561,21 +447,6 @@ const AdminOrderPage = () => {
       alert("Incorrect password. Please try again.");
     }
   };
-
-  // Filter items based on search and category
-  const filteredItems = useMemo(() => {
-    return laundryItems.filter(item => {
-      const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
-      return matchesSearch && matchesCategory;
-    });
-  }, [searchTerm, selectedCategory]);
-
-  // Get unique categories for the filter dropdown
-  const categories = useMemo(() => {
-    const uniqueCategories = [...new Set(laundryItems.map(item => item.category))];
-    return ["All", ...uniqueCategories];
-  }, []);
 
   if (isLocked) {
     return (
@@ -820,15 +691,25 @@ const AdminOrderPage = () => {
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                           Quantity
                         </label>
-                        <input
-                          type="number"
-                          min="1"
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                          value={order.quantity}
-                          onChange={(e) =>
-                            handleOrderChange(index, "quantity", parseInt(e.target.value) || 1)
-                          }
-                        />
+                        <div className="flex gap-2">
+                          <select
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            value={order.quantity}
+                            onChange={(e) => handleOrderChange(index, "quantity", parseInt(e.target.value))}
+                          >
+                            {quantityOptions.map(qty => (
+                              <option key={qty} value={qty}>{qty}</option>
+                            ))}
+                          </select>
+                          <input
+                            type="number"
+                            min="1"
+                            max="100"
+                            placeholder="Custom"
+                            className="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            onChange={(e) => handleCustomQuantity(index, e.target.value)}
+                          />
+                        </div>
                       </div>
 
                       <div>
@@ -954,7 +835,7 @@ const AdminOrderPage = () => {
                 {paymentMethod === "upi" && !paymentConfirmed && (
                   <div className="mt-4">
                     <button
-                      onClick={handlePaymentConfirmation}
+                      onClick={() => setShowQRCode(true)}
                       className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                     >
                       <QrCode className="w-4 h-4" />
@@ -972,7 +853,7 @@ const AdminOrderPage = () => {
                         <span className="text-gray-500">UPI QR Code Here</span>
                       </div>
                       <p className="text-sm text-gray-600 mb-2">Amount: ₹{grandTotal.toFixed(2)}</p>
-                      <p className="text-sm text-gray-600">UPI ID: yourbusiness@upi</p>
+                      <p className="text-sm text-gray-600">UPI ID: {CONFIG.UPI_ID}</p>
                     </div>
                     <div className="mt-4">
                       <button
@@ -1036,15 +917,6 @@ const AdminOrderPage = () => {
               >
                 <Download className="w-4 h-4" />
                 {isSubmitting ? "Generating PDF..." : "Generate Invoice"}
-              </button>
-              <button
-                type="button"
-                onClick={handleSubmit}
-                disabled={isSubmitting || totalAmount === 0}
-                className="flex items-center gap-2 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
-              >
-                <Save className="w-4 h-4" />
-                {isSubmitting ? "Saving..." : "Save Order"}
               </button>
             </div>
           </div>

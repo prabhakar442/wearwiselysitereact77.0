@@ -195,26 +195,26 @@ const Header = ({ darkMode, setDarkMode }) => {
                   Jacket Cleaning Service
                 </Link>
 
-                <Link to="/Bag-cleaning" className="block px-4 py-2 text-gray-900 dark:text-white font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">Bag Cleaning Service</Link>
-                <Link to="/Carpet-cleaning" className="block px-4 py-2 text-gray-900 dark:text-white font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">Carpet Cleaning Service</Link>
+                <Link to="/bag-cleaning" className="block px-4 py-2 text-gray-900 dark:text-white font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">Bag Cleaning Service</Link>
+                <Link to="/carpet-cleaning" className="block px-4 py-2 text-gray-900 dark:text-white font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">Carpet Cleaning Service</Link>
               </div>
             </div>
 
             <button onClick={handlePricingClick} className="text-gray-700 dark:text-gray-200 hover:text-orange-500 font-medium">Pricing</button>
-            <a href="#" className="text-gray-700 dark:text-gray-200 hover:text-orange-500 font-medium">About Us</a>
-          </nav>
+            <Link to="/about" className="text-gray-700 dark:text-gray-200 hover:text-orange-500 font-medium">About Us</Link>
 
-          <div className="hidden md:flex items-center space-x-4">
-            <a href="tel:9711758814" className="bg-orange-500 text-white px-6 py-2 rounded-full font-medium hover:bg-orange-600 transition">Call Us</a>
-            <button onClick={() => setShowPopup(true)} className="border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-full font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition">Request Call Back</button>
-            <button 
-              onClick={() => setDarkMode(!darkMode)} 
-              className="ml-2 border px-3 py-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transform transition-all duration-300 hover:scale-110 shadow-sm"
-              aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
-            >
-              {darkMode ? <Sun className="h-4 w-4 text-yellow-400" /> : <Moon className="h-4 w-4 text-gray-700" />}
-            </button>
-          </div>
+            <div className="flex items-center space-x-4">
+              <a href="tel:9711758814" className="bg-orange-500 text-white px-6 py-2 rounded-full font-medium hover:bg-orange-600 transition">Call Us</a>
+              <button onClick={() => setShowPopup(true)} className="border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-full font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition">Request Call Back</button>
+              <button 
+                onClick={() => setDarkMode(!darkMode)} 
+                className="ml-2 border px-3 py-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transform transition-all duration-300 hover:scale-110 shadow-sm"
+                aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+              >
+                {darkMode ? <Sun className="h-4 w-4 text-yellow-400" /> : <Moon className="h-4 w-4 text-gray-700" />}
+              </button>
+            </div>
+          </nav>
 
           <div className="md:hidden">
             <button 
@@ -286,7 +286,7 @@ const Header = ({ darkMode, setDarkMode }) => {
           >
             Pricing
           </button>
-          <a href="#" className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2">About Us</a>
+          <Link to="/about" className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2">About Us</Link>
           
           <div className="pt-2 space-y-2">
             <a href="tel:9711758814" className="block bg-orange-500 text-white px-6 py-2 rounded-full text-center font-medium hover:bg-orange-600">

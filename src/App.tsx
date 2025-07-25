@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+// Component imports
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ServiceTabs from './components/ServiceTabs';
@@ -9,10 +11,11 @@ import Footer from './components/Footer';
 import JacketPage from './components/JacketPage';
 import ShoePage from './components/ShoePage';
 import BagPage from './components/BagPage';
-import WhatsappFloat from './components/WhatsappFloat';
 import CarpetPage from './components/CarpetPage';
 import DryCleanPage from './components/DryCleanPage';
 import AdminOrderPage from './components/AdminOrderPage';
+import AboutUs from './components/AboutUs';  // ✅ Corrected casing
+import WhatsappFloat from './components/WhatsappFloat';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -44,6 +47,7 @@ function App() {
               </>
             }
           />
+          <Route path="/about" element={<AboutUs />} />
           <Route path="/dryclean" element={<DryCleanPage />} />
           <Route path="/jacket-cleaning" element={<JacketPage />} />
           <Route path="/shoe-cleaning" element={<ShoePage />} />

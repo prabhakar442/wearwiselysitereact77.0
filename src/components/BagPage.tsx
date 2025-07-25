@@ -8,20 +8,13 @@ const BagPage = () => {
   };
 
   const pricingData = [
-    { category: "Ladies Backpack", original: 660, discounted: 495 },
-    { category: "Mens Backpack", original: 660, discounted: 495 },
-    { category: "Ladies Handbag", original: 249, discounted: 187 },
-    { category: "Ladies Purse", original: 660, discounted: 495 },
-    { category: "Premium Purse", original: 1319, discounted: 989 },
-    { category: "Designer Purse", original: 879, discounted: 659 },
-    { category: "Laptop Bag", original: 1759, discounted: 1319 },
-    { category: "Leather Wallet", original: 989, discounted: 742 },
-    { category: "Premium Wallet", original: 1979, discounted: 1484 },
-    { category: "Trolley Bag", original: 329, discounted: 247 },
-    { category: "Leather Bag", original: 549, discounted: 412 },
-    { category: "Premium Bag", original: 660, discounted: 495 },
-    { category: "Designer Bag", original: 819, discounted: 614 },
-    { category: "Trolley-S Bag", original: 989, discounted: 742 },
+    { category: "Backpack Leather", original: 660, discounted: 400 },
+    { category: "Ladies Hand Purse", original: 460, discounted: 200 },
+    { category: "Ladies Purse", original: 450, discounted: 300 },
+    { category: "Laptop Bag", original: 460, discounted: 200 },
+    { category: "Backpack", original: 319, discounted: 200 },
+    { category: "Kids School Bag", original: 439, discounted: 200 },
+  
   ];
 
   const services = [
@@ -57,7 +50,7 @@ const BagPage = () => {
               Book Service Now
             </button>
             <button className="bg-white text-blue-700 hover:bg-gray-100 px-8 py-3 rounded-lg font-medium transition-all duration-300">
-              Call: +91-7599764668
+              Call: +91-9711758814
             </button>
           </div>
         </div>
@@ -255,7 +248,7 @@ const BagPage = () => {
               Book Now
             </button>
             <button className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-700 px-8 py-3 rounded-lg font-medium transition-all duration-300">
-              Call: +91-7599764668
+              Call: +91-9711758814
             </button>
           </div>
         </div>
