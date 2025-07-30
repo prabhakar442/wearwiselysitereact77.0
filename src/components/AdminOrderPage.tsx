@@ -10,7 +10,7 @@ emailjs.init("XTMFu1O4ZXhgU_alV"); // Replace with your actual public key
 // Configuration
 const CONFIG = {
   PASSWORD: "admin123",
-  ADMIN_EMAIL: "prabhakarjd2@gmail.com", // Your admin email
+  ADMIN_EMAIL: "", // Your admin email
   COMPANY_NAME: "WearWisely Laundry",
   COMPANY_ADDRESS: "123 Service Street, Laundry District",
   COMPANY_PHONE: "+91 9876543210",

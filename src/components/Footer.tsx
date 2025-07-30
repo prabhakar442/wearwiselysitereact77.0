@@ -133,7 +133,8 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3 text-gray-300 hover:text-orange-400 transition-colors">
                 <Mail className="h-5 w-5 text-orange-400" />
-                <span>hello@wearwiselylaundry.com</span>
+                <span>
+wearwiselydrycleaner@gmail.com</span>
               </div>
               <div className="flex items-center space-x-3 text-gray-300 hover:text-orange-400 transition-colors">
                 <Globe className="h-5 w-5 text-orange-400" />
@@ -167,7 +168,7 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-center md:text-left">
               <p className="text-gray-400 text-sm">
-                © Copyright 2017-2025 Owned by Star Points for Laundry Private Limited
+                © Copyright 2003-2025 Owned by Star Points for Laundry Private Limited
               </p>
               <p className="text-gray-500 text-xs mt-1">All rights reserved. Made with care in India</p>
             </div>
