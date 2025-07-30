@@ -145,6 +145,10 @@ const AdminOrderPage = () => {
   const generatePDF = () => {
     const doc = new jsPDF();
     
+    // Generate invoice number from customer name (first 2 letters) and phone (last 4 digits)
+    const invoiceNumber = `INV-${customer.name.slice(0, 2).toUpperCase()}${customer.phone.slice(-4)}`;
+    const currentDate = new Date().toLocaleDateString('en-IN');
+    
     // Header
     doc.setFillColor(41, 98, 255);
     doc.rect(0, 0, 210, 35, 'F');
@@ -157,9 +161,6 @@ const AdminOrderPage = () => {
     doc.text('Premium Quality • Quick Service • Affordable Rates', 20, 28);
 
     // Invoice details
-    const invoiceNumber = `INV-${Date.now()}`;
-    const currentDate = new Date().toLocaleDateString('en-IN');
-    
     doc.setTextColor(51, 51, 51);
     doc.setFontSize(16);
     doc.setFont('helvetica', 'bold');
