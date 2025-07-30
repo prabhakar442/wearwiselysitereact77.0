@@ -311,39 +311,7 @@ const DryCleanPage = () => {
         </div>
       </section>
 
-      {/* Services Section */}
-      <section id="services" data-animate className="max-w-6xl mx-auto py-16 px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Expert Garment Care
-          </h2>
-          <p className="text-lg text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
-            We provide specialized dry cleaning services to keep your clothes looking their best while extending their lifespan.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.map((service, index) => (
-            <div 
-              key={index} 
-              id={`service-${index}`}
-              className={`group bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${
-                isVisible[`service-${index}`] ? `animate-fade-in-up ${service.delay}` : 'opacity-0'
-              }`}
-            >
-              <div className="flex justify-center mb-4 transform group-hover:scale-110 transition-transform duration-300">
-                {service.icon}
-              </div>
-              <h3 className="text-xl font-semibold text-center mb-3 group-hover:text-blue-600 transition-colors duration-300">
-                {service.title}
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 text-center leading-relaxed">
-                {service.description}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
+      
 
       {/* Process Steps */}
       <section className="bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-800 dark:via-gray-900 dark:to-blue-900 py-20 px-4 relative overflow-hidden">

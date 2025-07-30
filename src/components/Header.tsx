@@ -118,7 +118,7 @@ const Header = ({ darkMode, setDarkMode }) => {
     }
 
     const templateParams = { name, phone, address, email, location: searchTerm };
-    emailjs.send('service_0fz254l', 'template_8tjm8ap', templateParams, 'yKzPEtzad9qgCuM2M')
+    emailjs.send('service_6guir0d', 'template_ruxloc9', templateParams, 'XTMFu1O4ZXhgU_alV')
       .then(() => console.log('Email sent'))
       .catch((err) => console.error('Email Error:', err));
 

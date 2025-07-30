@@ -139,7 +139,6 @@ const CallBackPopup = () => {
 
             <div className="text-xs text-gray-500 mb-4">
               <input type="checkbox" checked readOnly className="mr-2" />
-              I understand that the DhobiLite representative will contact me via call, SMS, WhatsApp, or RCS.
             </div>
 
             <button className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 mb-2">

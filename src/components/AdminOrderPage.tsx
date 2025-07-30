@@ -1,25 +1,24 @@
-import React, { useState, useMemo } from "react";
-import { FileText, Plus, Trash2, Download, QrCode, Check, Lock, Search } from "lucide-react";
-import { jsPDF } from "jspdf";
-import "jspdf-autotable";
+import React, { useState, useMemo } from 'react';
+import { FileText, Plus, Trash2, Download, QrCode, Check, Lock, Search } from 'lucide-react';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
 import emailjs from '@emailjs/browser';
 
 // Initialize EmailJS
-emailjs.init("yKzPEtzad9qgCuM2M"); // Replace with your public key
+emailjs.init("XTMFu1O4ZXhgU_alV"); // Replace with your actual public key
 
 // Configuration
 const CONFIG = {
   PASSWORD: "admin123",
-  ADMIN_EMAIL: "prabhakarjd2@gmail.com",
+  ADMIN_EMAIL: "prabhakarjd2@gmail.com", // Your admin email
   COMPANY_NAME: "WearWisely Laundry",
   COMPANY_ADDRESS: "123 Service Street, Laundry District",
   COMPANY_PHONE: "+91 9876543210",
   COMPANY_EMAIL: "info@wearwisely.com",
   COMPANY_GST: "12ABCDE3456F7Z8",
   UPI_ID: "yourbusiness@upi",
-  EMAILJS_SERVICE_ID: "service_0fz254l",
-  EMAILJS_TEMPLATE_ID: "template_76c0gch",
-  SPREADSHEET_URL: "https://script.google.com/macros/s/YOUR_GOOGLE_SCRIPT_ID/exec" // Replace with your Google Apps Script URL
+  EMAILJS_SERVICE_ID: "service_xslis2c",
+  EMAILJS_TEMPLATE_ID: "template_qqo32i9"
 };
 
 // Laundry items data
@@ -42,6 +41,7 @@ const laundryItems = [
 ];
 
 const AdminOrderPage = () => {
+  // Customer state
   const [customer, setCustomer] = useState({
     name: "",
     phone: "",
@@ -51,6 +51,7 @@ const AdminOrderPage = () => {
     date: new Date().toISOString().split('T')[0],
   });
 
+  // Orders state
   const [orders, setOrders] = useState([{ item: "", quantity: 1, rate: 0 }]);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -93,7 +94,7 @@ const AdminOrderPage = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Order management
+  // Order management functions
   const handleOrderChange = (index, field, value) => {
     const updated = [...orders];
     if (field === "item") {
@@ -270,40 +271,67 @@ const AdminOrderPage = () => {
     return { doc, invoiceNumber, currentDate };
   };
 
-  // Save data to Google Spreadsheet
-  const saveToSpreadsheet = async (invoiceNumber) => {
+  // Send data to admin email
+  const sendDataToEmail = async (invoiceNumber, currentDate) => {
     try {
-      const orderDetails = orders.map(order => ({
-        item: order.item,
-        quantity: order.quantity,
-        rate: order.rate,
-        amount: order.quantity * order.rate
-      }));
+      // Format order details for email
+      const orderDetails = orders.map(order => 
+        `• ${order.item}: ${order.quantity} × ₹${order.rate} = ₹${order.quantity * order.rate}`
+      ).join('\n');
 
-      const data = {
-        invoiceNumber,
-        customer,
-        orderDetails,
-        subtotal: totalAmount,
-        gst: gstAmount,
-        grandTotal,
-        paymentMethod,
-        paymentStatus: paymentConfirmed ? "Confirmed" : "Pending",
-        date: customer.date
+      // Prepare email content
+      const emailData = {
+        to_name: "Admin",
+        to_email: CONFIG.ADMIN_EMAIL,
+        subject: `New Order #${invoiceNumber} - ${customer.name}`,
+        message: `
+          NEW ORDER DETAILS
+          =================
+          
+          Invoice No.: ${invoiceNumber}
+          Date: ${currentDate}
+          
+          CUSTOMER INFORMATION:
+          --------------------
+          Name: ${customer.name}
+          Phone: ${customer.phone}
+          Email: ${customer.email || 'Not provided'}
+          Address: ${customer.address}
+          Pincode: ${customer.pincode}
+          Order Date: ${customer.date}
+          
+          ORDER ITEMS:
+          ------------
+          ${orderDetails}
+          
+          PAYMENT DETAILS:
+          ----------------
+          Subtotal: ₹${totalAmount.toFixed(2)}
+          GST (18%): ₹${gstAmount.toFixed(2)}
+          Grand Total: ₹${grandTotal.toFixed(2)}
+          Payment Method: ${paymentMethod}
+          Payment Status: ${paymentConfirmed ? "Confirmed" : "Pending"}
+          
+          SYSTEM GENERATED ON: ${new Date().toLocaleString()}
+        `,
+        invoice_number: invoiceNumber,
+        customer_name: customer.name,
+        customer_phone: customer.phone,
+        total_amount: grandTotal.toFixed(2)
       };
 
-      const response = await fetch(CONFIG.SPREADSHEET_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-      });
+      // Send email to admin
+      await emailjs.send(
+        CONFIG.EMAILJS_SERVICE_ID,
+        CONFIG.EMAILJS_TEMPLATE_ID,
+        emailData
+      );
 
-      console.log('Data saved to spreadsheet:', data);
+      console.log('Data sent to email successfully');
+      return true;
     } catch (error) {
-      console.error('Error saving to spreadsheet:', error);
+      console.error('Error sending data to email:', error);
+      return false;
     }
   };
 
@@ -326,71 +354,13 @@ const AdminOrderPage = () => {
       const pdfFileName = `Invoice-${invoiceNumber}-${customer.name.replace(/\s+/g, '-')}.pdf`;
       doc.save(pdfFileName);
 
-      // Generate PDF as blob for email attachment
-      const pdfOutput = doc.output('datauristring');
-      const pdfBlob = dataURItoBlob(pdfOutput);
-      const pdfFile = new File([pdfBlob], pdfFileName, { type: 'application/pdf' });
-
-      // Save data to Google Spreadsheet
-      await saveToSpreadsheet(invoiceNumber);
-
-      // Prepare email data
-      const emailData = {
-        to_name: customer.name,
-        from_name: CONFIG.COMPANY_NAME,
-        subject: `Invoice #${invoiceNumber} from ${CONFIG.COMPANY_NAME}`,
-        message: `Dear ${customer.name},\n\nPlease find attached your invoice #${invoiceNumber} dated ${currentDate}.\n\nTotal Amount: ₹${grandTotal.toFixed(2)}\n\nThank you for your business!\n\n${CONFIG.COMPANY_NAME}\n${CONFIG.COMPANY_PHONE}`,
-        invoice_number: invoiceNumber,
-        invoice_date: currentDate,
-        total_amount: `₹${grandTotal.toFixed(2)}`,
-        customer_phone: customer.phone,
-      };
-
-      // Helper function to convert data URI to Blob
-      function dataURItoBlob(dataURI) {
-        const byteString = atob(dataURI.split(',')[1]);
-        const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-        const ab = new ArrayBuffer(byteString.length);
-        const ia = new Uint8Array(ab);
-        for (let i = 0; i < byteString.length; i++) {
-          ia[i] = byteString.charCodeAt(i);
-        }
-        return new Blob([ab], { type: mimeString });
-      }
-
-      // Send email using EmailJS
-      try {
-        // First send to customer if email exists
-        if (customer.email) {
-          await emailjs.send(
-            CONFIG.EMAILJS_SERVICE_ID,
-            CONFIG.EMAILJS_TEMPLATE_ID,
-            {
-              ...emailData,
-              to_email: customer.email,
-              attachments: [pdfFile]
-            }
-          );
-        }
-
-        // Always send to admin (with different subject)
-        await emailjs.send(
-          CONFIG.EMAILJS_SERVICE_ID,
-          CONFIG.EMAILJS_TEMPLATE_ID,
-          {
-            ...emailData,
-            to_name: "Admin",
-            to_email: CONFIG.ADMIN_EMAIL,
-            subject: `[ADMIN COPY] Invoice #${invoiceNumber} - ${customer.name}`,
-            message: `Admin,\n\nPlease find attached the invoice #${invoiceNumber} for ${customer.name} dated ${currentDate}.\n\nTotal Amount: ₹${grandTotal.toFixed(2)}\nCustomer Phone: ${customer.phone}\n\n${CONFIG.COMPANY_NAME}`,
-            attachments: [pdfFile]
-          }
-        );
-
-        setSuccessMessage(`✅ Invoice ${customer.email ? `sent to customer and ` : ''}admin, data saved to spreadsheet`);
-      } catch (emailError) {
-        console.error("Email sending error:", emailError);
-        setSuccessMessage("✅ Invoice generated and data saved! (Email sending failed - check console)");
+      // Send data to admin email
+      const emailSuccess = await sendDataToEmail(invoiceNumber, currentDate);
+      
+      if (emailSuccess) {
+        setSuccessMessage("✅ Invoice generated and data sent to admin email!");
+      } else {
+        setSuccessMessage("✅ Invoice generated! (Email sending failed - check console)");
       }
 
       setTimeout(() => {
@@ -398,7 +368,7 @@ const AdminOrderPage = () => {
       }, 10000);
 
     } catch (error) {
-      console.error("Error generating PDF:", error);
+      console.error("Error:", error);
       alert("Failed to generate invoice. Please try again.");
     } finally {
       setIsSubmitting(false);
