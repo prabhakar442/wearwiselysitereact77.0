@@ -14,8 +14,9 @@ import BagPage from './components/BagPage';
 import CarpetPage from './components/CarpetPage';
 import DryCleanPage from './components/DryCleanPage';
 import AdminOrderPage from './components/AdminOrderPage';
-import AboutUs from './components/AboutUs';  // ✅ Corrected casing
+import AboutUs from './components/AboutUs';
 import WhatsappFloat from './components/WhatsappFloat';
+import FloatingProductCalculator from './components/FloatingProductCalculator'; // Add this import
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -58,6 +59,7 @@ function App() {
 
         <Footer />
         <WhatsappFloat />
+        <FloatingProductCalculator /> {/* Add this line */}
       </div>
     </BrowserRouter>
   );
