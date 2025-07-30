@@ -16,20 +16,41 @@ import DryCleanPage from './components/DryCleanPage';
 import AdminOrderPage from './components/AdminOrderPage';
 import AboutUs from './components/AboutUs';
 import WhatsappFloat from './components/WhatsappFloat';
-import FloatingProductCalculator from './components/FloatingProductCalculator'; // Add this import
+import FloatingProductCalculator from './components/FloatingProductCalculator';
+import ImageOverlay from './components/ImageOverlay';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
+  const [showWelcomeBanner, setShowWelcomeBanner] = useState(false);
 
+  // Initialize dark mode and welcome banner
   useEffect(() => {
-    const saved = localStorage.getItem('darkMode');
-    if (saved === 'true') setDarkMode(true);
+    // Dark mode setup
+    const savedDarkMode = localStorage.getItem('darkMode');
+    if (savedDarkMode === 'true') setDarkMode(true);
+
+    // Welcome banner setup - show on new session
+    const lastSessionTime = localStorage.getItem('lastSessionTime');
+    const currentTime = new Date().getTime();
+
+    // FIXED: Closing parenthesis added here ✅
+    if (!lastSessionTime || (currentTime - Number(lastSessionTime) > 30 * 60 * 1000)) {
+      setShowWelcomeBanner(true);
+    }
+
+    // Update session time
+    localStorage.setItem('lastSessionTime', currentTime.toString());
   }, []);
 
+  // Apply dark mode class
   useEffect(() => {
     document.documentElement.classList.toggle('dark', darkMode);
     localStorage.setItem('darkMode', String(darkMode));
   }, [darkMode]);
+
+  const handleCloseWelcomeBanner = () => {
+    setShowWelcomeBanner(false);
+  };
 
   return (
     <BrowserRouter>
@@ -59,7 +80,12 @@ function App() {
 
         <Footer />
         <WhatsappFloat />
-        <FloatingProductCalculator /> {/* Add this line */}
+        <FloatingProductCalculator />
+
+        {/* Welcome Banner Overlay - shows for new sessions */}
+        {showWelcomeBanner && (
+          <ImageOverlay onClose={handleCloseWelcomeBanner} />
+        )}
       </div>
     </BrowserRouter>
   );
