@@ -162,10 +162,10 @@ const Header = ({ darkMode, setDarkMode }) => {
         <div className="flex justify-between items-center h-16">
 
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 rounded-full overflow-hidden">
+            <div className="w-12 h-12 rounded-full overflow-hidden">
               <img src={logo} alt="WW" className="w-full h-full object-contain" />
             </div>
-            <span className="text-xl font-bold text-gray-900 dark:text-white">WearWisely Laundry</span>
+            <span className="text-xl font-bold text-gray-900 dark:text-white">WearWisely Dryclean</span>
           </Link>
 
           {/* Desktop Menu */}
@@ -197,6 +197,9 @@ const Header = ({ darkMode, setDarkMode }) => {
 
                 <Link to="/bag-cleaning" className="block px-4 py-2 text-gray-900 dark:text-white font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">Bag Cleaning Service</Link>
                 <Link to="/carpet-cleaning" className="block px-4 py-2 text-gray-900 dark:text-white font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">Carpet Cleaning Service</Link>
+                <Link to="/steam-ironing" className="block px-4 py-2 text-gray-900 dark:text-white font-semibold hover:bg-gray-100 dark:hover:bg-gray-700">
+                 Steam Ironing Service
+                </Link>
               </div>
             </div>
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, X, ShoppingCart, Trash2, Menu } from 'lucide-react';
+import { Plus, X, ShoppingCart, Trash2, Search, Shirt } from 'lucide-react';
 
 interface Product {
   id: number;
@@ -207,99 +207,100 @@ const FloatingProductCalculator: React.FC = () => {
 
   return (
     <>
-      {/* Mobile Toggle Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`fixed left-4 top-1/2 transform -translate-y-1/2 z-50 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 lg:hidden ${
-          isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'
-        }`}
-      >
-        <ShoppingCart size={24} />
-        {totalItems > 0 && (
-          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center">
-            {totalItems}
-          </span>
-        )}
-      </button>
-
-      {/* Desktop Toggle Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`hidden lg:flex fixed left-4 top-1/2 transform -translate-y-1/2 z-50 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full shadow-lg transition-all duration-300 items-center space-x-2 ${
-          isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'
-        }`}
-      >
-        <ShoppingCart size={20} />
-        <span className="font-medium">Price Calculator</span>
-        {totalItems > 0 && (
-          <span className="bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-            {totalItems}
-          </span>
-        )}
-      </button>
+      {/* Floating Toggle Button - Compact Professional Design */}
+      <div className="fixed left-4 top-20 z-50">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className={`group relative bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-full shadow-lg transition-all duration-300 ${
+            isOpen ? 'opacity-0 pointer-events-none scale-95' : 'opacity-100 scale-100 hover:scale-105'
+          }`}
+        >
+          <div className="flex items-center p-3">
+            <Shirt size={20} />
+            {totalItems > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium animate-pulse">
+                {totalItems}
+              </span>
+            )}
+          </div>
+          
+          {/* Tooltip */}
+          <div className="absolute left-full ml-3 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white text-sm px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+            Laundry Calculator
+          </div>
+        </button>
+      </div>
 
       {/* Overlay Backdrop */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          className="fixed inset-0 bg-black bg-opacity-25 z-40 backdrop-blur-sm"
           onClick={() => setIsOpen(false)}
         />
       )}
 
-      {/* Sidebar */}
+      {/* Sidebar Panel */}
       <div
-        className={`fixed left-0 top-0 h-full w-full sm:max-w-md lg:max-w-lg bg-white shadow-2xl z-50 transform transition-transform duration-300 ${
+        className={`fixed left-0 top-0 h-full w-96 bg-white shadow-2xl z-50 transform transition-all duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 flex justify-between items-center">
-            <div>
-              <h2 className="text-lg sm:text-xl font-bold">Laundry Services</h2>
-              <p className="text-blue-100 text-sm">Price Calculator</p>
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center space-x-3">
+                <div className="bg-white bg-opacity-20 p-2 rounded-full">
+                  <Shirt size={20} />
+                </div>
+                <div>
+                  <h2 className="text-lg font-bold">Laundry Services</h2>
+                  <p className="text-blue-100 text-sm">Price Calculator</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="hover:bg-white hover:bg-opacity-20 p-2 rounded-full transition-colors"
+              >
+                <X size={20} />
+              </button>
             </div>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="hover:bg-blue-800 p-2 rounded-full transition-colors"
-            >
-              <X size={20} />
-            </button>
           </div>
 
-          {/* Search and Add Section */}
+          {/* Search Section */}
           <div className="p-4 border-b bg-gray-50">
             <div className="relative">
               <input
                 type="text"
-                placeholder="Search services..."
+                placeholder="Search laundry services..."
                 value={searchTerm}
                 onChange={(e) => {
                   setSearchTerm(e.target.value);
                   setShowProductList(true);
                 }}
                 onFocus={() => setShowProductList(true)}
-                className="w-full p-3 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base"
+                className="w-full p-3 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
-              <Menu className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
             </div>
 
             {/* Product Dropdown */}
             {showProductList && (
-              <div className="absolute z-10 mt-1 w-full max-w-md lg:max-w-lg left-4 right-4 max-h-80 overflow-auto bg-white border border-gray-300 rounded-lg shadow-xl">
+              <div className="absolute z-10 mt-2 left-4 right-4 max-h-80 overflow-auto bg-white border border-gray-300 rounded-lg shadow-xl">
                 {filteredCategories.length > 0 ? (
                   filteredCategories.map((category) => (
                     <div key={category.category}>
-                      <div className="px-4 py-2 bg-blue-50 font-semibold text-sm text-blue-800 sticky top-0 border-b">
-                        {category.category}
+                      <div className="px-4 py-3 bg-blue-50 font-semibold text-sm text-blue-800 sticky top-0 border-b flex items-center space-x-2">
+                        <Shirt size={16} className="text-blue-600" />
+                        <span>{category.category}</span>
                       </div>
                       {category.items.map((item) => (
                         <div
                           key={item.id}
-                          className="px-4 py-3 hover:bg-blue-50 cursor-pointer flex justify-between items-center border-b border-gray-100 transition-colors"
+                          className="px-4 py-3 hover:bg-blue-50 cursor-pointer flex justify-between items-center border-b border-gray-100 transition-colors group"
                           onClick={() => addToCart(item)}
                         >
-                          <span className="font-medium text-gray-800">{item.name}</span>
+                          <span className="font-medium text-gray-800 group-hover:text-blue-700">{item.name}</span>
                           <span className="text-blue-600 font-bold">₹{item.price}</span>
                         </div>
                       ))}
@@ -307,13 +308,14 @@ const FloatingProductCalculator: React.FC = () => {
                   ))
                 ) : (
                   <div className="px-4 py-8 text-center text-gray-500">
-                    No services found
+                    <Shirt size={32} className="mx-auto mb-2 text-gray-300" />
+                    <p>No services found</p>
                   </div>
                 )}
-                <div className="p-2 bg-gray-50 border-t">
+                <div className="p-3 bg-gray-50 border-t">
                   <button
                     onClick={() => setShowProductList(false)}
-                    className="w-full text-center text-sm text-gray-600 hover:text-gray-800"
+                    className="w-full text-center text-sm text-gray-600 hover:text-gray-800 py-1"
                   >
                     Close
                   </button>
@@ -325,11 +327,14 @@ const FloatingProductCalculator: React.FC = () => {
           {/* Cart Items */}
           <div className="flex-1 overflow-y-auto p-4">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="font-semibold text-lg">Selected Items ({totalItems})</h3>
+              <h3 className="font-semibold text-lg flex items-center space-x-2">
+                <ShoppingCart size={18} />
+                <span>Selected Items ({totalItems})</span>
+              </h3>
               {cart.length > 0 && (
                 <button
                   onClick={clearCart}
-                  className="text-red-600 hover:text-red-800 text-sm font-medium"
+                  className="text-red-600 hover:text-red-800 text-sm font-medium px-2 py-1 rounded hover:bg-red-50 transition-colors"
                 >
                   Clear All
                 </button>
@@ -338,42 +343,49 @@ const FloatingProductCalculator: React.FC = () => {
 
             {cart.length === 0 ? (
               <div className="text-center py-12">
-                <ShoppingCart size={48} className="mx-auto text-gray-300 mb-4" />
+                <div className="bg-gray-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                  <Shirt size={32} className="text-gray-400" />
+                </div>
                 <p className="text-gray-500 text-lg mb-2">No items selected</p>
-                <p className="text-gray-400 text-sm">Search and add services above</p>
+                <p className="text-gray-400 text-sm">Search and add laundry services above</p>
               </div>
             ) : (
               <div className="space-y-3">
                 {cart.map((item) => (
                   <div
                     key={item.id}
-                    className="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-lg shadow-sm"
+                    className="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow"
                   >
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-gray-900 truncate">{item.name}</p>
-                      <p className="text-blue-600 font-semibold">₹{item.price} each</p>
+                    <div className="flex items-center space-x-3 flex-1 min-w-0">
+                      <div className="bg-blue-50 p-2 rounded-full">
+                        <Shirt size={16} className="text-blue-600" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="font-medium text-gray-900 truncate">{item.name}</p>
+                        <p className="text-blue-600 font-semibold text-sm">₹{item.price} each</p>
+                      </div>
                     </div>
                     <div className="flex items-center space-x-2 ml-4">
-                      <div className="flex items-center space-x-1 bg-gray-100 rounded-lg">
+                      <div className="flex items-center bg-gray-100 rounded-lg overflow-hidden">
                         <button
                           onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                          className="p-1 hover:bg-gray-200 rounded-l-lg"
+                          className="p-2 hover:bg-gray-200 transition-colors"
                         >
-                          <span className="text-lg font-bold text-gray-600">−</span>
+                          <span className="text-lg font-bold text-gray-600 leading-none">−</span>
                         </button>
-                        <span className="px-3 py-1 font-semibold min-w-[2rem] text-center">
+                        <span className="px-3 py-2 font-semibold min-w-[2.5rem] text-center bg-white">
                           {item.quantity}
                         </span>
                         <button
                           onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          className="p-1 hover:bg-gray-200 rounded-r-lg"
+                          className="p-2 hover:bg-gray-200 transition-colors"
                         >
-                          <span className="text-lg font-bold text-gray-600">+</span>
+                          <span className="text-lg font-bold text-gray-600 leading-none">+</span>
                         </button>
                       </div>
                       <button
                         onClick={() => removeFromCart(item.id)}
-                        className="text-red-500 hover:text-red-700 p-1 rounded"
+                        className="text-red-500 hover:text-red-700 p-1 rounded hover:bg-red-50 transition-colors"
                       >
                         <Trash2 size={16} />
                       </button>
@@ -396,12 +408,17 @@ const FloatingProductCalculator: React.FC = () => {
                   <span className="text-gray-700">GST (18%):</span>
                   <span className="font-semibold">₹{gstAmount.toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between text-xl font-bold border-t pt-3">
-                  <span className="text-gray-800">Total Amount:</span>
-                  <span className="text-blue-600">₹{total.toFixed(2)}</span>
+                <div className="flex justify-between text-xl font-bold border-t pt-3 text-blue-700">
+                  <span>Total Amount:</span>
+                  <span>₹{total.toFixed(2)}</span>
                 </div>
-                <div className="text-center text-sm text-gray-600 mt-2">
-                  Total Items: {totalItems} • All prices include 18% GST
+                <div className="text-center text-sm text-gray-600 mt-2 flex items-center justify-center space-x-4">
+                  <span className="flex items-center space-x-1">
+                    <Shirt size={14} />
+                    <span>{totalItems} Items</span>
+                  </span>
+                  <span>•</span>
+                  <span>Incl. 18% GST</span>
                 </div>
               </div>
             </div>

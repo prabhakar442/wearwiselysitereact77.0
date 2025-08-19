@@ -13,6 +13,7 @@ import ShoePage from './components/ShoePage';
 import BagPage from './components/BagPage';
 import CarpetPage from './components/CarpetPage';
 import DryCleanPage from './components/DryCleanPage';
+import SteamIroningPage from './components/SteamIroningPage';
 import AdminOrderPage from './components/AdminOrderPage';
 import AboutUs from './components/AboutUs';
 import WhatsappFloat from './components/WhatsappFloat';
@@ -33,7 +34,6 @@ function App() {
     const lastSessionTime = localStorage.getItem('lastSessionTime');
     const currentTime = new Date().getTime();
 
-    // FIXED: Closing parenthesis added here ✅
     if (!lastSessionTime || (currentTime - Number(lastSessionTime) > 30 * 60 * 1000)) {
       setShowWelcomeBanner(true);
     }
@@ -71,6 +71,7 @@ function App() {
           />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/dryclean" element={<DryCleanPage />} />
+          <Route path="/steam-ironing" element={<SteamIroningPage />} />
           <Route path="/jacket-cleaning" element={<JacketPage />} />
           <Route path="/shoe-cleaning" element={<ShoePage />} />
           <Route path="/bag-cleaning" element={<BagPage />} />

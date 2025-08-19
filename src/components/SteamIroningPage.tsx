@@ -2,14 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   FaCheckCircle, FaShieldAlt, FaClock, FaRecycle, 
   FaStar, FaPhone, FaWhatsapp, FaQuestionCircle, 
-  FaPlay, FaHeart, FaAward, FaTruck, FaThumbsUp 
+  FaPlay, FaHeart, FaAward, FaTruck, FaThumbsUp,
+  FaFire, FaTshirt, FaHome, FaLeaf
 } from 'react-icons/fa';
 
-const DryCleanPage = () => {
+const SteamIroningPage = () => {
   const [isVisible, setIsVisible] = useState({});
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [activeFaq, setActiveFaq] = useState(null);
-  const [activeCategory, setActiveCategory] = useState('Daily');
+  const [activeCategory, setActiveCategory] = useState('Daily Wear');
   const [searchTerm, setSearchTerm] = useState('');
   const carouselRef = useRef(null);
 
@@ -20,119 +21,94 @@ const DryCleanPage = () => {
   // Mock image URLs - replace with your actual imports
   const carouselImages = [
     {
-      url: 'https://imgs.search.brave.com/E75bjkOvMQ_f6uo4QHuhk566h0FfhbDcp5Gi4FV_gz8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by9kcnljbGVhbmlu/Zy1zZXJ2aWNlLXdv/bWFuLWhvbGRpbmct/c2hpcnQtcGxhc3Rp/Yy1iYWctaW5kb29y/cy1jbG9zZXVwXzQ5/NTQyMy02ODg4OC5q/cGc_c2VtdD1haXNf/aHlicmlkJnc9NzQw',
-      title: 'Premium Dry Cleaning',
-      description: 'Expert care for your delicate garments'
+      url: 'https://imgs.search.brave.com/1U8hYh2vLh1hQv5kQy3Q0p9N8xL2wXq9J2f3Z3Z3Z3Z3/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudW5zcGxhc2gu/Y29tL3Bob3RvLTE1/ODQ4MjQ5ODQtNmQ0/MjE3YzM1Y2Y0P3E9/ODAmdz0xMDAwJmF1/dG89Zm9ybWF0JmZp/dD1jcm9wJml4bGli/PXJiLTQuMC4zJml4/aWQ9TTN3eE1qQTNm/REI4TUh4elpXRnlZ/Mmg4TVRKOGZIQmhi/R1ZsY21sdVp3dzlm/SEJ5YjJ4cFpYTjgm/Z3c9MTAwMCZzaXpl/PTEwMCZvcGFjaXR5/PTg1',
+      title: 'Professional Steam Ironing',
+      description: 'Crisp, wrinkle-free finish for all your garments'
     },
     {
-      url: 'https://imgs.search.brave.com/auR8wxPJd1EmSOT35LCgVB-QxzvwFwDUpCBSoAViIIQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/aWhhdGVpcm9uaW5n/LmNvbS9ibG9nL3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDI0LzEx/L2RyeS1jbGVhbmlu/Zy1zdGFpbi1yZW1v/dmFsLWloYXRlaXJv/bmluZy5wbmc',
-      title: 'Stain Removal Specialists',
-      description: 'Advanced techniques for tough stains'
+      url: 'https://imgs.search.brave.com/2Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudW5zcGxhc2gu/Y29tL3Bob3RvLTE1/ODQ4MjQ5ODQtNmQ0/MjE3YzM1Y2Y0P3E9/ODAmdz0xMDAwJmF1/dG89Zm9ybWF0JmZp/dD1jcm9wJml4bGli/PXJiLTQuMC4zJml4/aWQ9TTN3eE1qQTNm/REI4TUh4elpXRnlZ/Mmg4TVRKOGZIQmhi/R1ZsY21sdVp3dzlm/SEJ5YjJ4cFpYTjgm/Z3c9MTAwMCZzaXpl/PTEwMCZvcGFjaXR5/PTg1',
+      title: 'Express Service',
+      description: 'Quick turnaround for your urgent ironing needs'
     },
     {
-      url: 'https://imgs.search.brave.com/uhnpcAjPtGwQWwOU3UJzmgfibcu3-nuYU6oc6JOj5xw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly8zMjF6/aXBzLmNvbS93cC1j/b250ZW50L3VwbG9h/ZHMvMjAyNC8wNy9z/aHV0dGVyc3RvY2tf/MTg0NjM3NjE4Mi04/MDB4NTM0LmpwZw',
-      title: 'Eco-Friendly Dry Cleaning',
-      description: 'Gentle on fabrics, safe for you'
+      url: 'https://imgs.search.brave.com/3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudW5zcGxhc2gu/Y29tL3Bob3RvLTE1/ODQ4MjQ5ODQtNmQ0/MjE3YzM1Y2Y0P3E9/ODAmdz0xMDAwJmF1/dG89Zm9ybWF0JmZp/dD1jcm9wJml4bGli/PXJiLTQuMC4zJml4/aWQ9TTN3eE1qQTNm/REI4TUh4elpXRnlZ/Mmg4TVRKOGZIQmhi/R1ZsY21sdVp3dzlm/SEJ5YjJ4cFpYTjgm/Z3c9MTAwMCZzaXpl/PTEwMCZvcGFjaXR5/PTg1',
+      title: 'Eco-Friendly Process',
+      description: 'Steam technology that is gentle on fabrics and environment'
     }
   ];
 
   const pricingData = {
-    Daily: [
-      { item: "Shirt Starch", rate: 50 },
-      { item: "Shirt", rate: 90 },
-      { item: "Shirt Designer", rate: 120 },
-      { item: "T Shirt", rate: 80 },
-      { item: "Ladies Top", rate: 80 },
-      { item: "Trouser/Pant Starch", rate: 100 },
-      { item: "Trouser / Pant", rate: 90 },
-      { item: "Jeans", rate: 100 },
-      { item: "Skirt Half", rate: 100 },
-      { item: "Skirt Long", rate: 150 },
-      { item: "Jump Suit Heavy", rate: 300 },
-      { item: "Jump Suit Plain", rate: 200 },
-      { item: "Gown Plain", rate: 250 },
-      { item: "Gown M", rate: 350 },
-      { item: "Gown H", rate: 700 }
-    ],
-    Ethnic: [
-      { item: "Payjama / Salwar/ Legging Starch", rate: 60 },
-      { item: "Payjama / Salwar/ Legging", rate: 100 },
-      { item: "Plazo Plain", rate: 110 },
-      { item: "Plazo H", rate: 200 },
-      { item: "Kurta / Kameez Starch", rate: 60 },
-      { item: "Kurta / Kameez", rate: 90 },
-      { item: "Kurta / Kameez - Work", rate: 120 },
-      { item: "Gents Kurta", rate: 90 },
-      { item: "Gents Kurta Work", rate: 120 },
-      { item: "Kurta / Kameez - Light Work Starch", rate: 60 },
-      { item: "Kurta / Kameez - Light Work", rate: 120 },
-      { item: "Sharara - R", rate: 200 },
-      { item: "Sharara - M", rate: 300 },
-      { item: "Sharara - H", rate: 400 },
-      { item: "Dupatta", rate: 60 },
-      { item: "Blouse", rate: 60 },
-      { item: "Blouse - H", rate: 80 },
-      { item: "Saree - R", rate: 160 },
-      { item: "Saree - M", rate: 180 },
-      { item: "Saree - H", rate: 250 },
-      { item: "Saree - R Starch", rate: 80 },
-      { item: "Saree - H Starch", rate: 100 },
-      { item: "Gents Sherwani - R", rate: 250 },
-      { item: "Gents Sherwani - H", rate: 300 },
-      { item: "Gents Indo Western - R", rate: 300 },
-      { item: "Gents Indo Western - H", rate: 400 },
-      { item: "Lehnga / Ghagra - R", rate: 300 },
-      { item: "Lehnga / Ghagra - H", rate: 1000 },
-      { item: "Lehnga / Bridal - H", rate: 1200 },
-      { item: "Bridal Gown", rate: 400 },
-      { item: "Choli - R", rate: 80 },
-      { item: "Chaniya - R", rate: 150 },
-      { item: "Anarkali Suit - R", rate: 250 },
-      { item: "Anarkali Suit - M", rate: 300 },
-      { item: "Shrug Long", rate: 120 },
-      { item: "Zooba", rate: 150 },
-      { item: "Kids Kurta", rate: 60 },
-      { item: "Kids Sherwani - R", rate: 120 },
-      { item: "Kids Coat Pant", rate: 250 }
-    ],
-    Woolen: [
-      { item: "Sweat shirt", rate: 190 },
-      { item: "Sweat Pants", rate: 172 },
-      { item: "Sweater Half", rate: 130 },
-      { item: "Sweater Full", rate: 180 },
-      { item: "Waist Coat", rate: 180 },
-      { item: "Coat", rate: 220 },
-      { item: "Coat Designer", rate: 260 },
-      { item: "Over Coat", rate: 300 },
-      { item: "Half Koti - R", rate: 180 },
-      { item: "Jacket Half", rate: 180 },
-      { item: "Jacket Full", rate: 250 },
-      { item: "Jacket Fur", rate: 260 },
-      { item: "Shawl", rate: 200 },
-      { item: "Blanket AC / Small", rate: 200 },
-      { item: "Blanket AC / Large", rate: 250 },
-      { item: "Comforter - D", rate: 250 },
-      { item: "Comforter - S", rate: 180 },
-      { item: "Blanket - S", rate: 250 },
-      { item: "Blanket - D", rate: 350 },
-      { item: "Quilt / Rajai - S", rate: 250 },
-      { item: "Quilt / Rajai - D", rate: 350 },
-      { item: "Blanket Kids", rate: 150 }
-    ],
-    Household: [
-      { item: "Bedsheet - S", rate: 120 },
-      { item: "Bedsheet - D", rate: 180 },
-      { item: "Bed Cover - S", rate: 150 },
-      { item: "Bed Cover _ D", rate: 250 },
-      { item: "Pillow Cover", rate: 60 },
-      { item: "Cushion Cover", rate: 70 },
-      { item: "Window Curtain", rate: 100 },
-      { item: "Door Curtain", rate: 150 },
-      { item: "Net Curtain", rate: 180 },
-      { item: "Teddy - M", rate: 300 },
-      { item: "Teddy - Large", rate: 500 }
-    ]
-  };
+  "Daily Wear": [
+    { "item": "Shirt", "rate": 40 },
+    { "item": "Shirt Designer", "rate": 50 },
+    { "item": "T-Shirt", "rate": 40 },
+    { "item": "Ladies Top", "rate": 40 },
+    { "item": "Trouser / Pant", "rate": 40 },
+    { "item": "Jeans", "rate": 40 },
+    { "item": "Skirt Half", "rate": 50 },
+    { "item": "Skirt Full", "rate": 100 },
+    { "item": "Dress", "rate": 100 },
+    { "item": "Dress Designer", "rate": 120 },
+    { "item": "Jump Suit R", "rate": 100 },
+    { "item": "Gown Plain", "rate": 150 },
+    { "item": "Gown M", "rate": 195 },
+    { "item": "Gown H", "rate": 200 },
+    { "item": "Kids Dress", "rate": 50 }
+  ],
+  "Ethnic Wear": [
+    { "item": "Payjama / Salwar / Legging", "rate": 40 },
+    { "item": "Plazo Plain", "rate": 50 },
+    { "item": "Plazo H", "rate": 100 },
+    { "item": "Kurta / Kameez", "rate": 40 },
+    { "item": "Kurta / Kameez Work", "rate": 55 },
+    { "item": "Kurta / Kameez Light Work", "rate": 50 },
+    { "item": "Kurta Kameez Work H", "rate": 70 },
+    { "item": "Sharara R", "rate": 120 },
+    { "item": "Sharara H", "rate": 150 },
+    { "item": "Dupatta", "rate": 30 },
+    { "item": "Dupatta H", "rate": 50 },
+    { "item": "Blouse", "rate": 30 },
+    { "item": "Blouse H", "rate": 40 },
+    { "item": "Lehnga H", "rate": 250 },
+    { "item": "Lengnga R", "rate": 200 },
+    { "item": "Bridal Gown", "rate": 250 },
+    { "item": "Choli R", "rate": 40 },
+    { "item": "Chaniya R", "rate": 60 },
+    { "item": "Anaekali Suit", "rate": 150 },
+    { "item": "Shrug Short", "rate": 40 },
+    { "item": "Kids Kurta", "rate": 30 },
+    { "item": "Kids Sherwani", "rate": 100 }
+  ],
+  "Woolen Wear": [
+    { "item": "Sweat Shirt", "rate": 50 },
+    { "item": "Sweat Pants", "rate": 50 },
+    { "item": "Sweater Half", "rate": 40 },
+    { "item": "Sweater Full", "rate": 60 },
+    { "item": "Waist Coat", "rate": 60 },
+    { "item": "Coat", "rate": 100 },
+    { "item": "Coat Designer", "rate": 120 },
+    { "item": "Over Coat", "rate": 120 },
+    { "item": "Over Coat Woolen", "rate": 150 },
+    { "item": "Half Koti R", "rate": 60 },
+    { "item": "Half Koti H", "rate": 80 },
+    { "item": "Jacket Half", "rate": 70 },
+    { "item": "Jacket Half H", "rate": 70 },
+    { "item": "Jacket Full", "rate": 90 },
+    { "item": "Shawl", "rate": 60 },
+    { "item": "Shawl Fancy", "rate": 80 }
+  ],
+  "Household Items": [
+    { "item": "Bedsheet S", "rate": 50 },
+    { "item": "Bedsheet D", "rate": 80 },
+    { "item": "Bed Cover S", "rate": 50 },
+    { "item": "Bed Cover D", "rate": 80 },
+    { "item": "Pillow Cover", "rate": 20 },
+    { "item": "Cushion Cover", "rate": 20 },
+    { "item": "Curtain Window", "rate": 30 },
+    { "item": "Curtain Door", "rate": 50 },
+    { "item": "Curtain Net", "rate": 60 }
+  ]
+};
 
   const filteredItems = pricingData[activeCategory].filter(item =>
     item.item.toLowerCase().includes(searchTerm.toLowerCase())
@@ -187,25 +163,25 @@ const DryCleanPage = () => {
   }, []);
 
   const services = [
-    { icon: <FaCheckCircle className="text-blue-500 text-3xl" />, title: "Expert Cleaning", description: "Specialized care for delicate fabrics", delay: "delay-100" },
-    { icon: <FaShieldAlt className="text-blue-500 text-3xl" />, title: "Stain Removal", description: "Advanced techniques for tough stains", delay: "delay-200" },
-    { icon: <FaClock className="text-blue-500 text-3xl" />, title: "Fast Service", description: "3-5 day turnaround with free delivery", delay: "delay-300" },
-    { icon: <FaRecycle className="text-blue-500 text-3xl" />, title: "Eco-Friendly", description: "Environmentally safe solvents", delay: "delay-400" },
+    { icon: <FaCheckCircle className="text-blue-500 text-3xl" />, title: "Professional Ironing", description: "Expert care for all fabric types", delay: "delay-100" },
+    { icon: <FaFire className="text-red-500 text-3xl" />, title: "Steam Technology", description: "Deep-penetrating steam removes wrinkles", delay: "delay-200" },
+    { icon: <FaClock className="text-blue-500 text-3xl" />, title: "Fast Service", description: "Same-day service available", delay: "delay-300" },
+    { icon: <FaLeaf className="text-green-500 text-3xl" />, title: "Eco-Friendly", description: "Water-efficient steam process", delay: "delay-400" },
   ];
 
   const processSteps = [
-    { icon: <FaCheckCircle className="text-green-500 text-2xl" />, title: "Inspection", description: "Detailed assessment of garments" },
-    { icon: <FaHeart className="text-red-500 text-2xl" />, title: "Specialized Cleaning", description: "Fabric-specific cleaning process" },
-    { icon: <FaAward className="text-yellow-500 text-2xl" />, title: "Quality Check", description: "Final inspection and pressing" },
+    { icon: <FaCheckCircle className="text-green-500 text-2xl" />, title: "Inspection", description: "Assessment of fabric type and condition" },
+    { icon: <FaFire className="text-red-500 text-2xl" />, title: "Steam Treatment", description: "Professional steam application" },
+    { icon: <FaTshirt className="text-blue-500 text-2xl" />, title: "Precision Ironing", description: "Careful pressing for perfect finish" },
     { icon: <FaTruck className="text-blue-500 text-2xl" />, title: "Delivery", description: "Free doorstep delivery" }
   ];
 
   const faqs = [
-    { question: "What is dry cleaning and how is it different from regular washing?", answer: "Dry cleaning uses chemical solvents instead of water, making it safer for delicate fabrics that might shrink or get damaged in water." },
-    { question: "Are the chemicals used in dry cleaning safe?", answer: "Yes, we use eco-friendly, non-toxic solvents that are safe for your clothes and the environment." },
-    { question: "Can you remove tough stains like ink or oil?", answer: "Our advanced stain removal techniques can handle most tough stains including ink, oil, wine, and more." },
-    { question: "How long does dry cleaning take?", answer: "Standard service takes 3-5 days including free pickup and delivery. Express service is available." },
-    { question: "Is dry cleaning suitable for all fabrics?", answer: "While ideal for wool, silk, and delicate fabrics, we assess each garment individually for the best cleaning method." },
+    { question: "What is steam ironing and how is it different from regular ironing?", answer: "Steam ironing uses pressurized steam to penetrate fabrics deeply, removing wrinkles more effectively than traditional dry ironing while being gentler on delicate materials." },
+    { question: "Can steam ironing remove stubborn wrinkles from stored clothes?", answer: "Yes, our professional steam irons generate high-temperature steam that effectively removes even deep-set wrinkles from clothes that have been stored or packed." },
+    { question: "Is steam ironing safe for all types of fabrics?", answer: "Our technicians are trained to adjust temperature and steam levels according to fabric type, making it safe for everything from delicate silks to heavy cottons." },
+    { question: "How long does steam ironing service take?", answer: "Standard service takes 24-48 hours. Express same-day service is available for urgent requirements." },
+    { question: "Do you offer pickup and delivery for steam ironing?", answer: "Yes, we provide free pickup and delivery service for all steam ironing orders within our service areas." },
   ];
 
   const toggleFaq = (index) => {
@@ -240,10 +216,10 @@ const DryCleanPage = () => {
         
         <div className="relative max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight animate-fade-in-up">
-            Premium Dry Cleaning Services
+            Professional Steam Ironing Services
           </h1>
           <p className="text-xl mb-8 opacity-90 animate-fade-in-up delay-300">
-            Professional care for your delicate garments with free pickup and delivery
+            Crisp, wrinkle-free garments with free pickup and delivery
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in-up delay-500">
             <button 
@@ -311,7 +287,28 @@ const DryCleanPage = () => {
         </div>
       </section>
 
-      
+      {/* Services */}
+      <section className="max-w-6xl mx-auto py-16 px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold mb-4">Our Steam Ironing Services</h2>
+          <p className="text-gray-700 dark:text-gray-300">Professional care for all your garments</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {services.map((service, index) => (
+            <div 
+              key={index} 
+              className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 text-center"
+            >
+              <div className="flex justify-center mb-4">
+                {service.icon}
+              </div>
+              <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
+              <p className="text-gray-600 dark:text-gray-400">{service.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* Process Steps */}
       <section className="bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-800 dark:via-gray-900 dark:to-blue-900 py-20 px-4 relative overflow-hidden">
@@ -323,14 +320,14 @@ const DryCleanPage = () => {
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-3 mb-6">
               <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
-                <FaRecycle className="text-white text-2xl" />
+                <FaFire className="text-white text-2xl" />
               </div>
               <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
-                Our Dry Cleaning Process
+                Our Steam Ironing Process
               </h2>
             </div>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
-              From pickup to delivery, we ensure quality at every step
+              Professional care that delivers crisp, wrinkle-free results every time
             </p>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mt-6 rounded-full"></div>
           </div>
@@ -395,7 +392,7 @@ const DryCleanPage = () => {
                 </div>
               </div>
               <span className="text-gray-700 dark:text-gray-300 font-medium">
-                Professional • Reliable • Quality Guaranteed
+                Professional • Fast • Quality Guaranteed
               </span>
             </div>
           </div>
@@ -407,7 +404,7 @@ const DryCleanPage = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Transparent Pricing</h2>
-            <p className="text-gray-700 dark:text-gray-300">Competitive rates for premium dry cleaning services</p>
+            <p className="text-gray-700 dark:text-gray-300">Competitive rates for professional steam ironing</p>
           </div>
 
           {/* Search Bar */}
@@ -469,7 +466,7 @@ const DryCleanPage = () => {
             {/* Rate information note */}
             <div className="bg-blue-50 dark:bg-blue-900/20 border-t border-blue-200 dark:border-blue-800 p-4">
               <p className="text-sm text-blue-800 dark:text-blue-200 text-center">
-                💼 Professional dry cleaning rates - Quality service guaranteed
+                💼 Professional steam ironing rates - Crisp finish guaranteed
               </p>
             </div>
           </div>
@@ -495,17 +492,17 @@ const DryCleanPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {[
             {
-              text: "My wedding lehenga was cleaned perfectly! They removed all stains while keeping the intricate embroidery intact.",
-              name: "Neha Sharma",
-              location: "South Delhi",
-              image: "https://images.unsplash.com/photo-1494790108755-2616b332e234?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&q=80",
+              text: "My office shirts have never looked better! The steam ironing service gives them a crisp, fresh-from-the-store look every time.",
+              name: "Rajiv Malhotra",
+              location: "Connaught Place",
+              image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&q=80",
               rating: 5
             },
             {
-              text: "Regular customer for my office suits. Always perfect cleaning and on-time delivery. Highly recommended!",
-              name: "Rahul Kapoor",
-              location: "Gurgaon",
-              image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&q=80",
+              text: "I was amazed at how they handled my delicate silk sarees. Perfect ironing without any damage to the fabric or embroidery.",
+              name: "Priya Singh",
+              location: "Saket",
+              image: "https://images.unsplash.com/photo-1494790108755-2616b332e234?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&q=80",
               rating: 5
             }
           ].map((testimonial, index) => (
@@ -597,9 +594,9 @@ const DryCleanPage = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/30 to-purple-600/30 animate-pulse" />
         
         <div className="relative max-w-3xl mx-auto">
-          <h2 className="text-4xl font-bold mb-6 animate-fade-in-up">Ready to Refresh Your Wardrobe?</h2>
+          <h2 className="text-4xl font-bold mb-6 animate-fade-in-up">Ready for Crisp, Wrinkle-Free Clothes?</h2>
           <p className="text-xl mb-8 opacity-90 animate-fade-in-up delay-200">
-            Schedule a pickup today and experience professional garment care
+            Schedule a pickup today and experience professional steam ironing
           </p>
           
           <div className="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in-up delay-400">
@@ -671,4 +668,4 @@ const DryCleanPage = () => {
   );
 };
 
-export default DryCleanPage;
+export default SteamIroningPage;

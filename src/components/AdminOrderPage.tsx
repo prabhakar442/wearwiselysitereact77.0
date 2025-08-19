@@ -22,23 +22,109 @@ const CONFIG = {
 };
 
 // Laundry items data
+
 const laundryItems = [
-  { name: "Shirt Starch", rate: 50, category: "Daily" },
-  { name: "Shirt", rate: 90, category: "Daily" },
-  { name: "Shirt Designer", rate: 120, category: "Daily" },
-  { name: "T Shirt", rate: 80, category: "Daily" },
-  { name: "Ladies Top", rate: 80, category: "Daily" },
-  { name: "Trouser/Pant Starch", rate: 100, category: "Daily" },
-  { name: "Trouser / Pant", rate: 90, category: "Daily" },
-  { name: "Jeans", rate: 100, category: "Daily" },
-  { name: "Skirt Half", rate: 100, category: "Daily" },
-  { name: "Skirt Long", rate: 150, category: "Daily" },
-  { name: "Jump Suit Heavy", rate: 300, category: "Daily" },
-  { name: "Jump Suit Plain", rate: 200, category: "Daily" },
-  { name: "Gown Plain", rate: 250, category: "Daily" },
-  { name: "Gown M", rate: 350, category: "Daily" },
-  { name: "Gown H", rate: 700, category: "Daily" }
+  // Shirts & Tops
+  { name: "Shirt (Regular)", rate: 90, category: "Shirts & Tops" },
+  { name: "Shirt with Starch", rate: 50, category: "Shirts & Tops" },
+  { name: "Designer Shirt", rate: 120, category: "Shirts & Tops" },
+  { name: "T-Shirt", rate: 80, category: "Shirts & Tops" },
+  { name: "Ladies Top", rate: 80, category: "Shirts & Tops" },
+
+  // Pants & Jeans
+  { name: "Trouser/Pant", rate: 90, category: "Pants & Jeans" },
+  { name: "Trouser with Starch", rate: 100, category: "Pants & Jeans" },
+  { name: "Jeans", rate: 100, category: "Pants & Jeans" },
+
+  // Skirts & Dresses
+  { name: "Short Skirt", rate: 100, category: "Skirts & Dresses" },
+  { name: "Long Skirt", rate: 150, category: "Skirts & Dresses" },
+  { name: "Plain Jumpsuit", rate: 200, category: "Skirts & Dresses" },
+  { name: "Heavy Jumpsuit", rate: 300, category: "Skirts & Dresses" },
+  { name: "Plain Gown", rate: 250, category: "Skirts & Dresses" },
+  { name: "Medium Gown", rate: 350, category: "Skirts & Dresses" },
+  { name: "Heavy Gown", rate: 700, category: "Skirts & Dresses" },
+
+  // Footwear Cleaning
+  { name: "Ankle Boots", rate: 300, category: "Footwear Cleaning" },
+  { name: "Premium Ankle Boots", rate: 400, category: "Footwear Cleaning" },
+  { name: "Bellies", rate: 200, category: "Footwear Cleaning" },
+  { name: "Designer Bellies", rate: 250, category: "Footwear Cleaning" },
+  { name: "Leather Shoes", rate: 300, category: "Footwear Cleaning" },
+  { name: "Premium Leather", rate: 400, category: "Footwear Cleaning" },
+  { name: "Boots", rate: 400, category: "Footwear Cleaning" },
+  { name: "Slippers", rate: 97, category: "Footwear Cleaning" },
+  { name: "Sports Shoes", rate: 200, category: "Footwear Cleaning" },
+  { name: "Premium Sports", rate: 250, category: "Footwear Cleaning" },
+  { name: "Sneakers", rate: 200, category: "Footwear Cleaning" },
+  { name: "Jordan Shoes", rate: 250, category: "Footwear Cleaning" },
+  { name: "Kids Shoes", rate: 150, category: "Footwear Cleaning" },
+  { name: "Suede Shoes", rate: 350, category: "Footwear Cleaning" },
+
+  // Jackets & Outerwear
+  { name: "Leather Jacket", rate: 400, category: "Jackets & Outerwear" },
+  { name: "Heavy Leather Jacket", rate: 300, category: "Jackets & Outerwear" },
+  { name: "Rexine Jacket", rate: 250, category: "Jackets & Outerwear" },
+  { name: "Suede Jacket", rate: 400, category: "Jackets & Outerwear" },
+  { name: "Half Jacket", rate: 70, category: "Jackets & Outerwear" },
+  { name: "Full Jacket", rate: 90, category: "Jackets & Outerwear" },
+
+  // Bags & Accessories
+  { name: "Leather Backpack", rate: 400, category: "Bags & Accessories" },
+  { name: "Hand Purse", rate: 200, category: "Bags & Accessories" },
+  { name: "Ladies Purse", rate: 300, category: "Bags & Accessories" },
+  { name: "Laptop Bag", rate: 200, category: "Bags & Accessories" },
+  { name: "Backpack", rate: 200, category: "Bags & Accessories" },
+  { name: "School Bag", rate: 200, category: "Bags & Accessories" },
+
+  // Traditional Wear
+  { name: "Pajama/Salwar", rate: 40, category: "Traditional Wear" },
+  { name: "Plain Palazzo", rate: 50, category: "Traditional Wear" },
+  { name: "Heavy Palazzo", rate: 100, category: "Traditional Wear" },
+  { name: "Kurta/Kameez", rate: 40, category: "Traditional Wear" },
+  { name: "Work Kurta", rate: 55, category: "Traditional Wear" },
+  { name: "Light Work Kurta", rate: 50, category: "Traditional Wear" },
+  { name: "Heavy Work Kurta", rate: 70, category: "Traditional Wear" },
+  { name: "Regular Sharara", rate: 120, category: "Traditional Wear" },
+  { name: "Heavy Sharara", rate: 150, category: "Traditional Wear" },
+  { name: "Dupatta", rate: 30, category: "Traditional Wear" },
+  { name: "Heavy Dupatta", rate: 50, category: "Traditional Wear" },
+  { name: "Blouse", rate: 30, category: "Traditional Wear" },
+  { name: "Heavy Blouse", rate: 40, category: "Traditional Wear" },
+  { name: "Heavy Lehenga", rate: 250, category: "Traditional Wear" },
+  { name: "Regular Lehenga", rate: 200, category: "Traditional Wear" },
+  { name: "Bridal Gown", rate: 250, category: "Traditional Wear" },
+  { name: "Choli", rate: 40, category: "Traditional Wear" },
+  { name: "Anarkali Suit", rate: 150, category: "Traditional Wear" },
+  { name: "Short Shrug", rate: 40, category: "Traditional Wear" },
+  { name: "Kids Kurta", rate: 30, category: "Traditional Wear" },
+  { name: "Kids Sherwani", rate: 100, category: "Traditional Wear" },
+
+  // Winter Collection
+  { name: "Sweatshirt", rate: 50, category: "Winter Collection" },
+  { name: "Sweatpants", rate: 50, category: "Winter Collection" },
+  { name: "Half Sweater", rate: 40, category: "Winter Collection" },
+  { name: "Full Sweater", rate: 60, category: "Winter Collection" },
+  { name: "Waistcoat", rate: 60, category: "Winter Collection" },
+  { name: "Coat", rate: 100, category: "Winter Collection" },
+  { name: "Designer Coat", rate: 120, category: "Winter Collection" },
+  { name: "Overcoat", rate: 120, category: "Winter Collection" },
+  { name: "Woolen Overcoat", rate: 150, category: "Winter Collection" },
+  { name: "Shawl", rate: 60, category: "Winter Collection" },
+  { name: "Fancy Shawl", rate: 80, category: "Winter Collection" },
+
+  // Home Textiles
+  { name: "Single Bedsheet", rate: 50, category: "Home Textiles" },
+  { name: "Double Bedsheet", rate: 80, category: "Home Textiles" },
+  { name: "Single Bed Cover", rate: 50, category: "Home Textiles" },
+  { name: "Double Bed Cover", rate: 80, category: "Home Textiles" },
+  { name: "Pillow Cover", rate: 20, category: "Home Textiles" },
+  { name: "Cushion Cover", rate: 20, category: "Home Textiles" },
+  { name: "Window Curtain", rate: 30, category: "Home Textiles" },
+  { name: "Door Curtain", rate: 50, category: "Home Textiles" },
+  { name: "Net Curtain", rate: 60, category: "Home Textiles" }
 ];
+
 
 const AdminOrderPage = () => {
   // Customer state
@@ -110,7 +196,7 @@ const AdminOrderPage = () => {
       setErrors({ ...errors, orders: null });
     }
   };
-
+  //  this is just a handle the quality 
   const handleCustomQuantity = (index, value) => {
     const updatedOrders = [...orders];
     const numValue = parseInt(value) || 1;
@@ -194,7 +280,7 @@ const AdminOrderPage = () => {
       doc.text(`${customer.email}`, 20, 127);
     }
     
-    // Address handling
+    // Address handling for adminn only
     const addressLines = doc.splitTextToSize(customer.address, 80);
     let yPos = customer.email ? 134 : 127;
     addressLines.forEach(line => {

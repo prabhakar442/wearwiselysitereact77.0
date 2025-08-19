@@ -1,5 +1,5 @@
 import React from 'react';
-import { Facebook, Twitter, Instagram, Youtube, Phone, Mail, Globe, Download } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Youtube, Phone, Mail, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import logo from './logo.jpg';
 
@@ -21,7 +21,7 @@ const Footer = () => {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           
-          {/* Company Info & App Download */}
+          {/* Company Info */}
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-3 mb-8">
               <div className="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center overflow-hidden shadow-lg">
@@ -36,44 +36,6 @@ const Footer = () => {
             <p className="text-gray-300 text-base mb-8 leading-relaxed">
               Handling all the daily chores for the part-time working professional with premium quality and care.
             </p>
-
-            {/* App Download Section */}
-            <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700">
-              <div className="flex items-center space-x-2 mb-4">
-                <Download className="h-5 w-5 text-orange-400" />
-                <h4 className="font-semibold text-white">Download Our App</h4>
-              </div>
-              
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <p className="text-sm text-gray-300 mb-2">Scan QR Code</p>
-                  <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center shadow-lg">
-                    <div className="w-16 h-16 bg-gray-900 rounded p-1">
-                      <div className="grid grid-cols-3 gap-1 h-full">
-                        <div className="bg-white rounded-sm"></div>
-                        <div className="bg-gray-900 rounded-sm"></div>
-                        <div className="bg-white rounded-sm"></div>
-                        <div className="bg-gray-900 rounded-sm"></div>
-                        <div className="bg-white rounded-sm"></div>
-                        <div className="bg-gray-900 rounded-sm"></div>
-                        <div className="bg-white rounded-sm"></div>
-                        <div className="bg-gray-900 rounded-sm"></div>
-                        <div className="bg-white rounded-sm"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-2">
-                  <div className="bg-black hover:bg-gray-900 transition-colors px-4 py-2 rounded-lg cursor-pointer shadow-lg">
-                    <p className="text-white text-xs font-medium">App Store</p>
-                  </div>
-                  <div className="bg-black hover:bg-gray-900 transition-colors px-4 py-2 rounded-lg cursor-pointer shadow-lg">
-                    <p className="text-white text-xs font-medium">Google Play</p>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Quick Links */}
@@ -133,8 +95,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3 text-gray-300 hover:text-orange-400 transition-colors">
                 <Mail className="h-5 w-5 text-orange-400" />
-                <span>
-wearwiselydrycleaner@gmail.com</span>
+                <span>wearwiselydrycleaner@gmail.com</span>
               </div>
               <div className="flex items-center space-x-3 text-gray-300 hover:text-orange-400 transition-colors">
                 <Globe className="h-5 w-5 text-orange-400" />
@@ -149,8 +110,10 @@ wearwiselydrycleaner@gmail.com</span>
                 <div className="p-3 rounded-xl bg-gray-800 border border-gray-700 cursor-pointer transition-all duration-300 hover:text-blue-500 hover:bg-gray-700 hover:scale-110">
                   <Facebook className="h-5 w-5" />
                 </div>
-                <div className="p-3 rounded-xl bg-gray-800 border border-gray-700 cursor-pointer transition-all duration-300 hover:text-blue-400 hover:bg-gray-700 hover:scale-110">
-                  <Twitter className="h-5 w-5" />
+                <div className="p-3 rounded-xl bg-gray-800 border border-gray-700 cursor-pointer transition-all duration-300 hover:text-black hover:bg-gray-700 hover:scale-110">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
+                  </svg>
                 </div>
                 <div className="p-3 rounded-xl bg-gray-800 border border-gray-700 cursor-pointer transition-all duration-300 hover:text-pink-500 hover:bg-gray-700 hover:scale-110">
                   <Instagram className="h-5 w-5" />
@@ -173,13 +136,13 @@ wearwiselydrycleaner@gmail.com</span>
               <p className="text-gray-500 text-xs mt-1">All rights reserved. Made with care in India</p>
             </div>
             
-            {/* Admin Panel Link */}
+            {/* Admin Panel Link
             <Link
               to="/admin"
               className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105"
             >
               <span className="text-sm font-medium">Admin Panel</span>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

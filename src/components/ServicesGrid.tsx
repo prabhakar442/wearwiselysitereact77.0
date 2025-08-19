@@ -64,62 +64,74 @@ const ServicesGrid = () => {
   const navigate = useNavigate();
 
   const services = [
-    {
-      id: 'dryclean',
-      icon: <Shirt className="w-12 h-12 text-blue-500" />,
-      title: 'DryClean',
-      price: 'Starts from ₹30',
-      description: 'Premium quality dry cleaning that extends the lifespan of your clothes.',
-      services: ['Non-Damaging Treatment', 'Spotting', 'Ironing and Pressing'],
-      buttonText: 'Explore',
-      bgColor:
-        'bg-gradient-to-br from-blue-50 via-blue-100 to-cyan-50 dark:from-blue-900/30 dark:via-blue-800/20 dark:to-cyan-900/30'
-    },
-    {
-      id: 'jacket-cleaning',
-      icon: <Shield className="w-12 h-12 text-purple-500" />,
-      title: 'Leather Jacket',
-      price: 'Starts from ₹99',
-      description: 'Dry cleaning for delicate leather preservation. Professional leather care specialists.',
-      services: ['Eco Treatment', 'Steam Cleaning', 'Caidron Cleaning', 'Drying & Finishing'],
-      buttonText: 'Explore',
-      bgColor:
-        'bg-gradient-to-br from-purple-50 via-purple-100 to-pink-50 dark:from-purple-900/30 dark:via-purple-800/20 dark:to-pink-900/30'
-    },
-    {
-      id: 'shoe-cleaning',
-      icon: <Footprints className="w-12 h-12 text-indigo-500" />,
-      title: 'Shoe',
-      price: 'Starts from ₹89',
-      description: 'Our specialized shoe care services maintain your footwear investment.',
-      services: ['Shoe Leather / Suede', 'Eco Treatment', 'Polishing and Finishing', 'Deodorizing and Disinfecting'],
-      buttonText: 'Explore',
-      bgColor:
-        'bg-gradient-to-br from-indigo-50 via-indigo-100 to-blue-50 dark:from-indigo-900/30 dark:via-indigo-800/20 dark:to-blue-900/30'
-    },
-    {
-      id: 'bag-cleaning',
-      icon: <Briefcase className="w-12 h-12 text-pink-500" />,
-      title: 'Bag',
-      price: 'Starts from ₹140 ',
-      description: 'Professional bag cleaning for all types including leather and fabric.',
-      services: ['Surface and Interior Cleaning', 'Stain Removal', 'Handle and Hardware Care', 'Packaging'],
-      buttonText: 'Explore',
-      bgColor:
-        'bg-gradient-to-br from-pink-50 via-pink-100 to-rose-50 dark:from-pink-900/30 dark:via-pink-800/20 dark:to-rose-900/30'
-    },
-    {
-      id: 'carpet-cleaning',
-      icon: <Sparkles className="w-12 h-12 text-red-500" />,
-      title: 'Carpet',
-      price: 'Starts from ₹18',
-      description: 'Professional carpet cleaning using advanced washing and steam methods.',
-      services: ['Vacuuming', 'Steam Cleaning', 'Low Moisture Cleaning', 'Spot Treatment', 'Drying'],
-      buttonText: 'Explore',
-      bgColor:
-        'bg-gradient-to-br from-red-50 via-red-100 to-orange-50 dark:from-red-900/30 dark:via-red-800/20 dark:to-orange-900/30'
-    }
-  ];
+  {
+    id: 'dryclean',
+    icon: <Shirt className="w-12 h-12 text-blue-500" />, // Clothes cleaning
+    title: 'DryClean',
+    price: 'Starts from ₹30',
+    description: 'Premium quality dry cleaning that extends the lifespan of your clothes.',
+    services: ['Non-Damaging Treatment', 'Spotting', 'Ironing and Pressing'],
+    buttonText: 'Explore',
+    bgColor:
+      'bg-gradient-to-br from-blue-50 via-blue-100 to-cyan-50 dark:from-blue-900/30 dark:via-blue-800/20 dark:to-cyan-900/30'
+  },
+  {
+    id: 'jacket-cleaning',
+    icon: <Shield className="w-12 h-12 text-purple-500" />, // Shield → Leather protection
+    title: 'Leather Jacket',
+    price: 'Starts from ₹99',
+    description: 'Dry cleaning for delicate leather preservation. Professional leather care specialists.',
+    services: ['Eco Treatment', 'Steam Cleaning', 'Caidron Cleaning', 'Drying & Finishing'],
+    buttonText: 'Explore',
+    bgColor:
+      'bg-gradient-to-br from-purple-50 via-purple-100 to-pink-50 dark:from-purple-900/30 dark:via-purple-800/20 dark:to-pink-900/30'
+  },
+  {
+    id: 'shoe-cleaning',
+    icon: <Footprints className="w-12 h-12 text-indigo-500" />, // Shoe cleaning
+    title: 'Shoe',
+    price: 'Starts from ₹89',
+    description: 'Our specialized shoe care services maintain your footwear investment.',
+    services: ['Shoe Leather / Suede', 'Eco Treatment', 'Polishing and Finishing', 'Deodorizing and Disinfecting'],
+    buttonText: 'Explore',
+    bgColor:
+      'bg-gradient-to-br from-indigo-50 via-indigo-100 to-blue-50 dark:from-indigo-900/30 dark:via-indigo-800/20 dark:to-blue-900/30'
+  },
+  {
+    id: 'bag-cleaning',
+    icon: <Briefcase className="w-12 h-12 text-pink-500" />, // Bags
+    title: 'Bag',
+    price: 'Starts from ₹140 ',
+    description: 'Professional bag cleaning for all types including leather and fabric.',
+    services: ['Surface and Interior Cleaning', 'Stain Removal', 'Handle and Hardware Care', 'Packaging'],
+    buttonText: 'Explore',
+    bgColor:
+      'bg-gradient-to-br from-pink-50 via-pink-100 to-rose-50 dark:from-pink-900/30 dark:via-pink-800/20 dark:to-rose-900/30'
+  },
+  {
+    id: 'carpet-cleaning',
+    icon: <Sparkles className="w-12 h-12 text-red-500" />, // Carpet cleaning (shine / dust removal)
+    title: 'Carpet',
+    price: 'Starts from ₹18',
+    description: 'Professional carpet cleaning using advanced washing and steam methods.',
+    services: ['Vacuuming', 'Steam Cleaning', 'Low Moisture Cleaning', 'Spot Treatment', 'Drying'],
+    buttonText: 'Explore',
+    bgColor:
+      'bg-gradient-to-br from-red-50 via-red-100 to-orange-50 dark:from-red-900/30 dark:via-red-800/20 dark:to-orange-900/30'
+  },
+  {
+    id: 'steam-ironing',
+    icon: <Shirt className="w-12 h-12 text-green-500" />, // Clothes ironing
+    title: 'Steam Ironing',
+    price: 'Starts from ₹20',
+    description: 'Gentle steam ironing that removes wrinkles while keeping fabric fresh and soft.',
+    services: ['Wrinkle Removal', 'Fabric Friendly', 'Fresh Finish'],
+    buttonText: 'Explore',
+    bgColor:
+      'bg-gradient-to-br from-green-50 via-green-100 to-emerald-50 dark:from-green-900/30 dark:via-green-800/20 dark:to-emerald-900/30'
+  }
+];
+
 
   return (
     <section className="py-20 bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/20">
