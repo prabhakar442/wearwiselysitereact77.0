@@ -21,17 +21,17 @@ const SteamIroningPage = () => {
   // Mock image URLs - replace with your actual imports
   const carouselImages = [
     {
-      url: 'https://imgs.search.brave.com/1U8hYh2vLh1hQv5kQy3Q0p9N8xL2wXq9J2f3Z3Z3Z3Z3/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudW5zcGxhc2gu/Y29tL3Bob3RvLTE1/ODQ4MjQ5ODQtNmQ0/MjE3YzM1Y2Y0P3E9/ODAmdz0xMDAwJmF1/dG89Zm9ybWF0JmZp/dD1jcm9wJml4bGli/PXJiLTQuMC4zJml4/aWQ9TTN3eE1qQTNm/REI4TUh4elpXRnlZ/Mmg4TVRKOGZIQmhi/R1ZsY21sdVp3dzlm/SEJ5YjJ4cFpYTjgm/Z3c9MTAwMCZzaXpl/PTEwMCZvcGFjaXR5/PTg1',
+      url: 'https://imgs.search.brave.com/StqTgaL3oO9D63Z55Uv90FrQ3LE5IZSV441s90Boelw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTIy/NjI1NjU1Ny9waG90/by9jbG9zZS11cC1v/Zi1hc2lhbi1jaGlu/ZXNlLWFjdGl2ZS1z/ZW5pb3Itd29tYW4t/aXJvbnMtaGVyLXNv/bi1zaGlydC1pbi10/aGUtbGl2aW5nLXJv/b20uanBnP3M9NjEy/eDYxMiZ3PTAmaz0y/MCZjPTVFUEdxdmdh/OHJtOXhJalA2OUVn/c3k2d3ZtNHpFcHQ5/RHZuWG9LaG9lLTg9',
       title: 'Professional Steam Ironing',
       description: 'Crisp, wrinkle-free finish for all your garments'
     },
     {
-      url: 'https://imgs.search.brave.com/2Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudW5zcGxhc2gu/Y29tL3Bob3RvLTE1/ODQ4MjQ5ODQtNmQ0/MjE3YzM1Y2Y0P3E9/ODAmdz0xMDAwJmF1/dG89Zm9ybWF0JmZp/dD1jcm9wJml4bGli/PXJiLTQuMC4zJml4/aWQ9TTN3eE1qQTNm/REI4TUh4elpXRnlZ/Mmg4TVRKOGZIQmhi/R1ZsY21sdVp3dzlm/SEJ5YjJ4cFpYTjgm/Z3c9MTAwMCZzaXpl/PTEwMCZvcGFjaXR5/PTg1',
+      url: 'https://imgs.search.brave.com/EvlSyy_UKAIBWXQpg7gJTCLo-9bZLW2C3O6-JEeWGgI/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTI0/OTg4NTk4OC9waG90/by9jbG9zZXVwLW9u/LXdvbWFuLWNsZWFu/aW5nLWlyb24td2l0/aC1jbG90aC5qcGc_/cz02MTJ4NjEyJnc9/MCZrPTIwJmM9bkh5/X1AwNzhUYmpXbWI4/OHBnMzVBdWhfcl8y/cUVEdG01QnAxdVhh/eXpsND0',
       title: 'Express Service',
       description: 'Quick turnaround for your urgent ironing needs'
     },
     {
-      url: 'https://imgs.search.brave.com/3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudW5zcGxhc2gu/Y29tL3Bob3RvLTE1/ODQ4MjQ5ODQtNmQ0/MjE3YzM1Y2Y0P3E9/ODAmdz0xMDAwJmF1/dG89Zm9ybWF0JmZp/dD1jcm9wJml4bGli/PXJiLTQuMC4zJml4/aWQ9TTN3eE1qQTNm/REI4TUh4elpXRnlZ/Mmg4TVRKOGZIQmhi/R1ZsY21sdVp3dzlm/SEJ5YjJ4cFpYTjgm/Z3c9MTAwMCZzaXpl/PTEwMCZvcGFjaXR5/PTg1',
+      url: 'https://imgs.search.brave.com/qoecgzV2I1BwjqDflES0r2ZpO0Z75ThlkJlzJUXHJDE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/dGhlc3BydWNlLmNv/bS90aG1iL2RQNl9T/RjBwZU56MTZqTlJR/Z2FTZV9QNm9GZz0v/Zml0LWluLzE1MDB4/MjY2OC9maWx0ZXJz/Om5vX3Vwc2NhbGUo/KTptYXhfYnl0ZXMo/MTUwMDAwKTpzdHJp/cF9pY2MoKS9zcHIt/aXJvbnMtYXVnLTI0/LXRlc3QtY2hpLWVs/ZWN0cmljLWVicm9j/a29iLTAwMi0yMi03/MWU4OWNmYTU2MmM0/OWZhYjA0NDE4M2Jl/Njg2YjIwOC5qcGVn',
       title: 'Eco-Friendly Process',
       description: 'Steam technology that is gentle on fabrics and environment'
     }
