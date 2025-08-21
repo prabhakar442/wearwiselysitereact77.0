@@ -216,7 +216,7 @@ const SteamIroningPage = () => {
         
         <div className="relative max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight animate-fade-in-up">
-            Professional Steam Ironing Services
+         Steam Ironing Services
           </h1>
           <p className="text-xl mb-8 opacity-90 animate-fade-in-up delay-300">
             Crisp, wrinkle-free garments with free pickup and delivery
@@ -230,11 +230,11 @@ const SteamIroningPage = () => {
               Request Call Back
             </button>
             <a 
-              href="tel:+918800414848"
+              href="tel:+917599764668"
               className="bg-white text-blue-700 hover:bg-gray-100 px-8 py-4 rounded-full font-medium transition-all duration-300 flex items-center justify-center"
             >
               <FaPhone className="mr-2" />
-              Call: +91-8800414848
+              Call: +91-7599764668
             </a>
           </div>
         </div>
@@ -608,7 +608,7 @@ const SteamIroningPage = () => {
               Book Service Now
             </button>
             <a 
-              href="tel:+918800414848"
+              href="tel:+917599764668"
               className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-700 px-8 py-3 sm:px-10 sm:py-4 rounded-full font-medium transition-all duration-300 flex items-center justify-center gap-2"
             >
               <FaPhone /> Call Now

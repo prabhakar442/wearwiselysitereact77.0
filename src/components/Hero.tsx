@@ -38,22 +38,34 @@ const Hero = () => {
           {/* Glassmorphism Background Card */}
           <div className="backdrop-blur-md bg-white/10 dark:bg-black/20 rounded-3xl p-8 md:p-12 border border-white/20 dark:border-white/10 shadow-2xl mx-auto max-w-4xl hover:bg-white/15 hover:border-white/30 transition-all duration-500 hover:scale-105 hover:shadow-orange-500/20 hover:shadow-2xl">
             
-            {/* Decorative Top Element */}
-            <div className="flex justify-center mb-6">
-              <div className="w-20 h-1 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full animate-pulse"></div>
-            </div>
-            
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl leading-tight tracking-tight">
-              <span className="inline-block animate-slideInLeft">Affordable Laundry &</span>
-              <br />
-              <span className="inline-block animate-slideInRight delay-300">Dry Cleaning Rates</span>
-              <br />
-              <span className="inline-block animate-slideInLeft delay-600">Near Me -</span>
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-orange-300 dark:from-orange-300 dark:via-orange-400 dark:to-orange-200 animate-gradient-x inline-block animate-slideInUp delay-900 drop-shadow-lg">
-                No Hidden Costs
-              </span>
-            </h1>
+           {/* Decorative Top Element */}
+<div className="flex justify-center mb-6">
+  <div className="w-20 h-1 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full animate-pulse"></div>
+</div>
+
+<h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl leading-tight tracking-tight">
+  <span className="inline-block animate-slideInLeft">
+    <span className="relative">
+      <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 animate-pulse font-extrabold text-4xl md:text-6xl lg:text-7xl drop-shadow-2xl">
+        Affordable
+      </span>
+      <span className="absolute inset-0 text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-orange-300 to-red-400 blur-sm animate-pulse opacity-60">
+        Affordable
+      </span>
+      {/* Sparkling effect */}
+      <span className="absolute -top-2 -right-2 text-yellow-300 text-2xl animate-bounce">✨</span>
+      <span className="absolute -bottom-1 -left-1 text-orange-400 text-xl animate-ping">💰</span>
+    </span>
+    {" "}Laundry &
+  </span>
+  <br />
+  <span className="inline-block animate-slideInRight delay-300">Dry Cleaning </span>
+  <br />
+  <br />
+  <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-orange-300 dark:from-orange-300 dark:via-orange-400 dark:to-orange-200 animate-gradient-x inline-block animate-slideInUp delay-900 drop-shadow-lg">
+    No Hidden Costs
+  </span>
+</h1>
 
             {/* Decorative Bottom Elements */}
             <div className="flex justify-center mt-8 space-x-2">

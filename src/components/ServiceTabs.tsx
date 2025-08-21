@@ -9,7 +9,7 @@ const ServiceTabs = () => {
   const backgroundRef = useRef(null);
 
   const tabs = [
-    { id: 'dryclean', label: 'Dry-clean Rates', icon: '🧥' },
+    { id: 'dryclean', label: 'Dry-clean', icon: '🧥' },
     { id: 'laundry', label: 'Laundry Service', icon: '👕' },
     { id: 'ironing', label: 'Premium Ironing', icon: '🔥' },
     { id: 'express', label: 'Express Delivery', icon: '⚡' }
@@ -203,7 +203,7 @@ const ServiceTabs = () => {
           <div className="inline-flex items-center gap-2 px-6 py-3 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-full border border-white/30 dark:border-gray-700/30 shadow-lg">
             <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
             <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Real-time pricing updates available
+              Real-time pricing on site
             </span>
           </div>
         </div>

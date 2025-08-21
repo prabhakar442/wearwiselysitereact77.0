@@ -254,11 +254,11 @@ const DryCleanPage = () => {
               Request Call Back
             </button>
             <a 
-              href="tel:+918800414848"
+              href="tel:+917599764668"
               className="bg-white text-blue-700 hover:bg-gray-100 px-8 py-4 rounded-full font-medium transition-all duration-300 flex items-center justify-center"
             >
               <FaPhone className="mr-2" />
-              Call: +91-8800414848
+              Call: +91-7599764668
             </a>
           </div>
         </div>
@@ -611,7 +611,7 @@ const DryCleanPage = () => {
               Book Service Now
             </button>
             <a 
-              href="tel:+918800414848"
+              href="tel:+917599764668"
               className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-700 px-8 py-3 sm:px-10 sm:py-4 rounded-full font-medium transition-all duration-300 flex items-center justify-center gap-2"
             >
               <FaPhone /> Call Now
