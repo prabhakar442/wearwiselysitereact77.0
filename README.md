@@ -1,34 +1,26 @@
-👕 Wearsiely Laundry
 
-Welcome to Wearsiely Laundry – your smart, fast, and reliable laundry service!
-We make your laundry experience effortless, hygienic, and affordable, so you can focus on the things that matter the most.
+# WearWisely Dryclean
+Welcome to Wearsiely Laundry – your smart, fast, and reliable laundry service! We make your laundry experience effortless, hygienic, and affordable, so you can focus on the things that matter the most.
 
-✨ Features
+# Features
+✅ Doorstep Pickup & Delivery – Schedule a pickup from your home/work and get fresh, clean clothes delivered back. ✅ Affordable Pricing – Transparent and budget-friendly rates. ✅ Express Service – Same-day or next-day delivery available. ✅ Eco-Friendly Wash – Safe detergents & sustainable practices. ✅ Track Your Order – Real-time order tracking for convenience. ✅ Hygienic Care – Separate washes to maintain fabric quality and hygiene.
 
-✅ Doorstep Pickup & Delivery – Schedule a pickup from your home/work and get fresh, clean clothes delivered back.
-✅ Affordable Pricing – Transparent and budget-friendly rates.
-✅ Express Service – Same-day or next-day delivery available.
-✅ Eco-Friendly Wash – Safe detergents & sustainable practices.
-✅ Track Your Order – Real-time order tracking for convenience.
-✅ Hygienic Care – Separate washes to maintain fabric quality and hygiene.
 
-📸 Screenshots
+# 📸 Screenshots
 
-(Add images of your website/app UI here for more attraction)
 
-🚀 Tech Stack
+## 🛠 Tech Stack
+Frontend: React / Tailwind CSS
 
-Frontend: React / Next.js / Tailwind CSS
+Backend: Express.js
 
-Backend: Node.js / Express.js
+Database: MongoDB
 
-Database: MongoDB / MySQL
+Authentication:  Firebase
 
-Authentication: JWT / Firebase
+Deployment: Vercel
 
-Deployment: Vercel / Netlify / Heroku
-
-📲 How It Works
+# 📲 How It Works
 
 Book a Pickup – Choose your time slot.
 
@@ -38,13 +30,10 @@ We Wash & Dry – Clothes handled with premium care.
 
 We Deliver – Fresh & clean laundry back to you.
 
-🌟 Why Wearsiely?
+# 🌟 Why Wearsiely?
+Because we believe laundry shouldn’t be your problem anymore. We blend technology + trust to ensure your clothes get the love they deserve.
 
-Because we believe laundry shouldn’t be your problem anymore.
-We blend technology + trust to ensure your clothes get the love they deserve.
-
-🤝 Contributing
-
+# 🤝 Contributing
 We welcome contributions to improve Wearsiely!
 
 Fork the repo
@@ -55,12 +44,11 @@ Make your changes
 
 Submit a pull request
 
-📧 Contact
+## Deployment
 
-📍 Location: [Your City, India]
-📞 Phone: +91-XXXXXXXXXX
-✉️ Email: support@wearsiely.com
+To deploy this project run
 
-🌐 Website: www.wearsiely.com
+```bash
+  npm run dev
+```
 
-👉 "Wearsiely – Wear Fresh. Live Fresh." 🌿
