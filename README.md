@@ -7,6 +7,11 @@ Welcome to Wearsiely Laundry – your smart, fast, and reliable laundry service!
 
 
 # 📸 Screenshots
+<img width="1888" height="999" alt="Screenshot 2025-08-23 001052" src="https://github.com/user-attachments/assets/0280f780-20ab-4894-94a9-64f67ce55586" />
+<img width="1880" height="1004" alt="Screenshot 2025-08-23 001105" src="https://github.com/user-attachments/assets/22b235b9-954e-41ca-bc2b-dbf529a8c4dd" />
+<img width="1874" height="984" alt="Screenshot 2025-08-23 001135" src="https://github.com/user-attachments/assets/ef34872b-21df-4421-bac8-b0d2c47f281f" />
+<img width="760" height="601" alt="Screenshot 2025-08-23 001201" src="https://github.com/user-attachments/assets/d6c54ac3-b553-46f3-a8d1-29fee7367a87" />
+
 
 
 ## 🛠 Tech Stack
