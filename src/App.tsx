@@ -19,10 +19,12 @@ import AboutUs from './components/AboutUs';
 import WhatsappFloat from './components/WhatsappFloat';
 import FloatingProductCalculator from './components/FloatingProductCalculator';
 import ImageOverlay from './components/ImageOverlay';
+import TermsAndConditions from './components/TermsAndConditions';
+import PrivacyPolicy from './components/PrivacyPolicy';
 
-function App() {
-  const [darkMode, setDarkMode] = useState(false);
-  const [showWelcomeBanner, setShowWelcomeBanner] = useState(false);
+function App(): JSX.Element {
+  const [darkMode, setDarkMode] = useState<boolean>(false);
+  const [showWelcomeBanner, setShowWelcomeBanner] = useState<boolean>(false);
 
   // Initialize dark mode and welcome banner
   useEffect(() => {
@@ -48,7 +50,7 @@ function App() {
     localStorage.setItem('darkMode', String(darkMode));
   }, [darkMode]);
 
-  const handleCloseWelcomeBanner = () => {
+  const handleCloseWelcomeBanner = (): void => {
     setShowWelcomeBanner(false);
   };
 
@@ -58,6 +60,7 @@ function App() {
         <Header darkMode={darkMode} setDarkMode={setDarkMode} />
 
         <Routes>
+          {/* Home Page Route */}
           <Route
             path="/"
             element={
@@ -69,14 +72,24 @@ function App() {
               </>
             }
           />
+          
+          {/* About Us Page */}
           <Route path="/about" element={<AboutUs />} />
+          
+          {/* Service Pages */}
           <Route path="/dryclean" element={<DryCleanPage />} />
           <Route path="/steam-ironing" element={<SteamIroningPage />} />
           <Route path="/jacket-cleaning" element={<JacketPage />} />
           <Route path="/shoe-cleaning" element={<ShoePage />} />
           <Route path="/bag-cleaning" element={<BagPage />} />
           <Route path="/carpet-cleaning" element={<CarpetPage />} />
+          
+          {/* Admin Page */}
           <Route path="/admin" element={<AdminOrderPage />} />
+          
+          {/* Legal Pages */}
+          <Route path="/terms-conditions" element={<TermsAndConditions />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         </Routes>
 
         <Footer />
