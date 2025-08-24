@@ -171,12 +171,11 @@ const Header = ({ darkMode, setDarkMode }) => {
         Dryclean     
       </span>   
     </span>
-    <span className="text-xs text-gray-600 dark:text-gray-300 font-medium italic -mt-1">
+    <span className="text-xs text-gray-600 dark:text-gray-300 font-medium italic mt-0.5">
       Wisely Clean. Always Seen.
     </span>
   </div>
 </Link>
-
           {/* Desktop Menu */}
           <nav className="hidden md:flex space-x-8 items-center">
             
