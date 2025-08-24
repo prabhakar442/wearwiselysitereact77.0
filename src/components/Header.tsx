@@ -160,27 +160,16 @@ const Header = ({ darkMode, setDarkMode }) => {
     <header className="bg-white dark:bg-gray-800 shadow-sm border-b relative transition-colors duration-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-
-          <Link to="/" className="flex items-center space-x-2">
-  <div className="w-12 h-12 rounded-full overflow-hidden">
-    <img src={logo} alt="WW" className="w-full h-full object-contain" />
-  </div>
-  <span className="text-xl text-gray-900 dark:text-white">
-    <span className="relative font-extrabold">
-      <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 animate-pulse drop-shadow-lg">
-        WearWisely
-      </span>
-      <span className="absolute inset-0 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 blur-sm animate-pulse opacity-50">
-        WearWisely
-      </span>
-      {/* Sparkle effect */}
-      <span className="absolute -top-1 -right-1 text-pink-400 text-sm animate-bounce">✨</span>
-    </span>
-    {" "}
-    <span className="font-black text-gray-900 dark:text-white">
-      Dryclean
-    </span>
-  </span>
+<Link to="/" className="flex items-center space-x-2">   
+  <div className="w-12 h-12 rounded-full overflow-hidden">     
+    <img src={logo} alt="WW" className="w-full h-full object-contain" />   
+  </div>   
+  <span className="text-xl text-gray-900 dark:text-white font-bold">     
+    WearWisely     
+    <span className="font-bold text-blue-600 dark:text-blue-400 ml-1">       
+      Dryclean     
+    </span>   
+  </span> 
 </Link>
 
           {/* Desktop Menu */}
