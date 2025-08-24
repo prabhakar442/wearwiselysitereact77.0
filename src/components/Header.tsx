@@ -164,12 +164,17 @@ const Header = ({ darkMode, setDarkMode }) => {
   <div className="w-12 h-12 rounded-full overflow-hidden">     
     <img src={logo} alt="WW" className="w-full h-full object-contain" />   
   </div>   
-  <span className="text-xl text-gray-900 dark:text-white font-bold">     
-    WearWisely     
-    <span className="font-bold text-blue-600 dark:text-blue-400 ml-1">       
-      Dryclean     
-    </span>   
-  </span> 
+  <div className="flex flex-col">
+    <span className="text-xl text-gray-900 dark:text-white font-bold leading-tight">     
+      WearWisely     
+      <span className="font-bold text-blue-600 dark:text-blue-400 ml-1">       
+        Dryclean     
+      </span>   
+    </span>
+    <span className="text-xs text-gray-600 dark:text-gray-300 font-medium italic -mt-1">
+      Wisely Clean. Always Seen.
+    </span>
+  </div>
 </Link>
 
           {/* Desktop Menu */}
