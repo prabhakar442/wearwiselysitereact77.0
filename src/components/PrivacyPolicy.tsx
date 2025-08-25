@@ -73,7 +73,7 @@ const PrivacyPolicy = () => {
             <ul className="space-y-2 text-gray-700">
               <li className="flex items-start">
                 <span className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                Provide and manage our laundry and dry cleaning services.
+                Provide and manage our dryclean and dry cleaning services.
               </li>
               <li className="flex items-start">
                 <span className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
@@ -215,7 +215,7 @@ const PrivacyPolicy = () => {
           {/* Footer Note */}
           <div className="border-t border-gray-200 pt-8 text-center">
             <p className="text-gray-600 italic">
-              Thank you for trusting Wear Wisely with your laundry and dry cleaning needs. Your privacy and trust are important to us.
+              Thank you for trusting Wear Wisely with your dryclean and dry cleaning needs. Your privacy and trust are important to us.
             </p>
           </div>
 

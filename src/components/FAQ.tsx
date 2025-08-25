@@ -7,11 +7,11 @@ const FAQ = () => {
 
   const faqs = [
     {
-      question: "How does WearWisely Laundry determine laundry and dry-cleaning prices?",
+      question: "How does WearWisely dryclean determine dryclean and dry-cleaning prices?",
       answer: "Our pricing is based on weight for most services, with transparent rates per kg. Special items like leather jackets, shoes, and bags have per-piece pricing."
     },
     {
-      question: "Are there any discounts available on laundry and dry-cleaning services?",
+      question: "Are there any discounts available on dryclean and dry-cleaning services?",
       answer: "Yes, we offer bulk order discounts, subscription plans, and seasonal offers. Check our prepaid plans for better rates."
     },
     {
@@ -19,7 +19,7 @@ const FAQ = () => {
       answer: "Yes, pickup and delivery are included within our coverage areas. No extra charges for standard pickup and delivery."
     },
     {
-      question: "Are dry cleaning prices different from regular laundry prices?",
+      question: "Are dry cleaning prices different from regular dryclean prices?",
       answer: "Yes, dry cleaning costs more due to specialized solvents and equipment. Check our rate cards for specific pricing."
     }
   ];
@@ -36,7 +36,7 @@ const FAQ = () => {
             Frequently Asked Questions
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 font-medium">
-            WearWisely Laundry - Affordable Laundry & Dry Clean Pricing
+            WearWisely dryclean - Affordable dryclean & Dry Clean Pricing
           </p>
         </div>
         

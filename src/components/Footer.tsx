@@ -29,12 +29,12 @@ const Footer = () => {
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-orange-400">WearWisely</h2>
-                <p className="text-sm text-gray-300">Laundry</p>
+                <p className="text-sm text-gray-300">dryclean</p>
               </div>
             </div>
 
             <p className="text-gray-300 text-base leading-relaxed max-w-sm mx-auto md:mx-0">
-              Handling all the daily chores for the part-time working professional with premium quality and care. Your trusted partner for all laundry needs.
+              Handling all the daily chores for the part-time working professional with premium quality and care. Your trusted partner for all dryclean needs.
             </p>
           </div>
 
@@ -131,7 +131,7 @@ const Footer = () => {
             {/* Copyright Info */}
             <div className="text-center lg:text-left order-2 lg:order-1">
               <p className="text-gray-400 text-sm">
-                © Copyright 2003-2025 Owned by Star Points for Laundry Private Limited
+                © Copyright 2003-2025 Owned by Star Points for dryclean Private Limited
               </p>
               <p className="text-gray-500 text-xs mt-1">All rights reserved. Made with care in India</p>
             </div>

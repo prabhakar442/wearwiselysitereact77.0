@@ -11,8 +11,8 @@ emailjs.init("XTMFu1O4ZXhgU_alV"); // Replace with your actual public key
 const CONFIG = {
   PASSWORD: "admin123",
   ADMIN_EMAIL: "", // Your admin email
-  COMPANY_NAME: "WearWisely Laundry",
-  COMPANY_ADDRESS: "123 Service Street, Laundry District",
+  COMPANY_NAME: "WearWisely dryclean",
+  COMPANY_ADDRESS: "123 Service Street, dryclean District",
   COMPANY_PHONE: "+91 9876543210",
   COMPANY_EMAIL: "info@wearwisely.com",
   COMPANY_GST: "12ABCDE3456F7Z8",
@@ -21,9 +21,9 @@ const CONFIG = {
   EMAILJS_TEMPLATE_ID: "template_qqo32i9"
 };
 
-// Laundry items data
+// dryclean items data
 
-const laundryItems = [
+const drycleanItems = [
   // Shirts & Tops
   { name: "Shirt (Regular)", rate: 90, category: "Shirts & Tops" },
   { name: "Shirt with Starch", rate: 50, category: "Shirts & Tops" },
@@ -184,7 +184,7 @@ const AdminOrderPage = () => {
   const handleOrderChange = (index, field, value) => {
     const updated = [...orders];
     if (field === "item") {
-      const selected = laundryItems.find((i) => i.name === value);
+      const selected = drycleanItems.find((i) => i.name === value);
       updated[index].item = value;
       updated[index].rate = selected?.rate || 0;
     } else {
@@ -348,7 +348,7 @@ const AdminOrderPage = () => {
     doc.setTextColor(102, 102, 102);
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(9);
-    doc.text('Thank you for choosing Professional Laundry Service!', 20, footerY);
+    doc.text('Thank you for choosing Professional dryclean Service!', 20, footerY);
     doc.text(`For any queries, please contact us at ${CONFIG.COMPANY_PHONE}`, 20, footerY + 8);
     doc.text(`Visit us: ${CONFIG.COMPANY_EMAIL}`, 20, footerY + 16);
     doc.setFontSize(8);
@@ -464,7 +464,7 @@ const AdminOrderPage = () => {
 
   // Filter items based on search and category
   const filteredItems = useMemo(() => {
-    return laundryItems.filter(item => {
+    return drycleanItems.filter(item => {
       const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
       return matchesSearch && matchesCategory;
@@ -473,7 +473,7 @@ const AdminOrderPage = () => {
 
   // Get unique categories
   const categories = useMemo(() => {
-    const uniqueCategories = [...new Set(laundryItems.map(item => item.category))];
+    const uniqueCategories = [...new Set(drycleanItems.map(item => item.category))];
     return ["All", ...uniqueCategories];
   }, []);
 
@@ -548,9 +548,9 @@ const AdminOrderPage = () => {
               <div>
                 <h1 className="text-2xl font-bold text-white flex items-center gap-3">
                   <FileText className="w-8 h-8" />
-                  Laundry Management System
+                  dryclean Management System
                 </h1>
-                <p className="text-blue-100 mt-1">Create and manage laundry orders with professional invoicing</p>
+                <p className="text-blue-100 mt-1">Create and manage dryclean orders with professional invoicing</p>
               </div>
               <button
                 onClick={() => setIsLocked(true)}

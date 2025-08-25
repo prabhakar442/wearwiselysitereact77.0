@@ -226,7 +226,7 @@ const FloatingProductCalculator: React.FC = () => {
           
           {/* Tooltip */}
           <div className="absolute left-full ml-3 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white text-sm px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-            Laundry Calculator
+            dryclean Calculator
           </div>
         </button>
       </div>
@@ -254,7 +254,7 @@ const FloatingProductCalculator: React.FC = () => {
                   <Shirt size={20} />
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold">Laundry Services</h2>
+                  <h2 className="text-lg font-bold">dryclean Services</h2>
                   <p className="text-blue-100 text-sm">Price Calculator</p>
                 </div>
               </div>
@@ -272,7 +272,7 @@ const FloatingProductCalculator: React.FC = () => {
             <div className="relative">
               <input
                 type="text"
-                placeholder="Search laundry services..."
+                placeholder="Search dryclean services..."
                 value={searchTerm}
                 onChange={(e) => {
                   setSearchTerm(e.target.value);
@@ -347,7 +347,7 @@ const FloatingProductCalculator: React.FC = () => {
                   <Shirt size={32} className="text-gray-400" />
                 </div>
                 <p className="text-gray-500 text-lg mb-2">No items selected</p>
-                <p className="text-gray-400 text-sm">Search and add laundry services above</p>
+                <p className="text-gray-400 text-sm">Search and add dryclean services above</p>
               </div>
             ) : (
               <div className="space-y-3">

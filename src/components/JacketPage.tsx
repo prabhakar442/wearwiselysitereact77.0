@@ -76,7 +76,7 @@ const JacketPage = () => {
   ];
 
   const faqs = [
-    { question: "How does WearWisely Laundry clean leather jackets?", answer: "We use specialized leather cleaning solutions and techniques that gently remove dirt while preserving the natural oils in the leather. Our process includes conditioning to keep the leather supple." },
+    { question: "How does WearWisely dryclean clean leather jackets?", answer: "We use specialized leather cleaning solutions and techniques that gently remove dirt while preserving the natural oils in the leather. Our process includes conditioning to keep the leather supple." },
     { question: "How long does cleaning take?", answer: "Standard cleaning takes 3-5 business days. For deep cleaning or repairs, it may take up to 7 days. We offer express services at an additional charge." },
     { question: "Is pickup and delivery free?", answer: "Yes, we provide free pickup and delivery for all jacket cleaning services within our service areas in Delhi/NCR." },
     { question: "Can you remove tough stains from jackets?", answer: "Our stain removal experts can handle most common stains including oil, ink, and food stains. We evaluate each stain individually for the best treatment approach." },

@@ -10,7 +10,7 @@ const ServiceTabs = () => {
 
   const tabs = [
     { id: 'dryclean', label: 'Dry-clean', icon: '🧥' },
-    { id: 'laundry', label: 'Laundry Service', icon: '👕' },
+    { id: 'dryclean', label: 'dryclean Service', icon: '👕' },
     { id: 'ironing', label: 'Premium Ironing', icon: '🔥' },
     { id: 'express', label: 'Express Delivery', icon: '⚡' }
   ];
@@ -145,15 +145,15 @@ const ServiceTabs = () => {
             ref={titleRef}
             className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-900 dark:from-white dark:via-blue-200 dark:to-indigo-200 bg-clip-text text-transparent mb-6 leading-tight"
           >
-            Get The Best Rates with WearWisely Laundry
+            Get The Best Rates with WearWisely dryclean
           </h2>
           <p 
             ref={descriptionRef}
             className="text-lg text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed"
           >
-            At WearWisely Laundry, we believe in transparent pricing. You deserve to know exactly what you're paying for,
-            whether it's regular laundry, organic dry cleaning, or on-demand ironing. Besides competitive rates and 
-            transparent laundry and dry cleaning prices, we also offer real-time updates from a laundry near you.
+            At WearWisely dryclean, we believe in transparent pricing. You deserve to know exactly what you're paying for,
+            whether it's regular dryclean, organic dry cleaning, or on-demand ironing. Besides competitive rates and 
+            transparent dryclean and dry cleaning prices, we also offer real-time updates from a dryclean near you.
             <span className="font-semibold text-blue-600 dark:text-blue-400"> No surcharge, no hidden pricing!</span>
           </p>
         </div>

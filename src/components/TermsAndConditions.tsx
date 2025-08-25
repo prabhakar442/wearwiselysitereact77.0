@@ -29,7 +29,7 @@ const TermsAndConditions = ({ onNavigate }) => {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">Terms & Conditions</h1>
-                <p className="text-sm text-gray-500">WearWisely Laundry Services</p>
+                <p className="text-sm text-gray-500">WearWisely dryclean Services</p>
               </div>
             </div>
           </div>
@@ -52,7 +52,7 @@ const TermsAndConditions = ({ onNavigate }) => {
           {/* Introduction */}
           <div className="mb-8">
             <p className="text-gray-700 leading-relaxed">
-              Welcome to <strong className="text-orange-600">WearWisely</strong> . By availing our dry cleaning, laundry, and related services, you ("Customer", "you", or "your") agree to the following Terms & Conditions. Please read them carefully before using our services.
+              Welcome to <strong className="text-orange-600">WearWisely</strong> . By availing our dry cleaning, dryclean, and related services, you ("Customer", "you", or "your") agree to the following Terms & Conditions. Please read them carefully before using our services.
             </p>
           </div>
 
