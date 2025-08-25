@@ -9,11 +9,11 @@ const ServiceTabs = () => {
   const backgroundRef = useRef(null);
 
   const tabs = [
-    { id: 'dryclean', label: 'Dry-clean', icon: '🧥' },
-    { id: 'dryclean', label: 'dryclean Service', icon: '👕' },
-    { id: 'ironing', label: 'Premium Ironing', icon: '🔥' },
-    { id: 'express', label: 'Express Delivery', icon: '⚡' }
-  ];
+  { id: 'dryclean', label: 'Dry-clean', icon: '🧥' },
+  { id: 'premium', label: 'Premium Service', icon: '👕' },
+  { id: 'ironing', label: 'Premium Ironing', icon: '🔥' },
+  { id: 'express', label: 'Express Delivery', icon: '⚡' }
+];
 
   useEffect(() => {
     // Dynamically load GSAP from CDN
